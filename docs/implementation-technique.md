@@ -255,6 +255,38 @@ Le champ `customName` permet d'envisager une déclaration qui ne correspond pas 
 
 La règle de validation entre `competenceId` et `customName` reste à implémenter.
 
+### 4.5 Profession
+
+La classe `Profession` représente une entrée du catalogue des métiers d'Alltech.
+
+**Collection MongoDB :** `professions`
+
+| Attribut      | Type      | Description                                      |
+|---------------|-----------|--------------------------------------------------|
+| `id`          | `String`  | Identifiant unique du document                   |
+| `name`        | `String`  | Nom du métier                                    |
+| `description` | `String`  | Description du métier                            |
+| `categoryId`  | `String`  | Référence vers une catégorie de métier           |
+| `active`      | `boolean` | Indique si le métier est actif dans le catalogue |
+
+Le champ `categoryId` est actuellement une référence simple sous forme de chaîne de caractères. La classe
+`ProfessionCategory` n'est pas encore implémentée.
+
+La classe est associée à `ProfessionRepository`, qui étend `MongoRepository<Profession, String>` et fournit les
+opérations standard de persistance.
+
+**Test de persistance :**
+
+`ProfessionRepositoryTest` vérifie :
+
+- La création et l'enregistrement d'un métier.
+- La génération de son identifiant MongoDB.
+- La récupération du document à partir de cet identifiant.
+- La cohérence des attributs enregistrés.
+- La suppression du document après vérification.
+
+**Statut : Implémenté et testé.**
+
 ---
 
 ## 5. Relations entre les modèles
@@ -363,13 +395,23 @@ spring.mongodb.uri=mongodb://localhost:27017/eca
 
 ### 7.3 Configuration des tests
 
-Les tests utilisent une base de données distincte :
+Les tests utilisent une base de données MongoDB distincte de celle utilisée par l'application :
 
 `eca_test`
 
-La configuration est définie au niveau de l'annotation `@DataMongoTest` dans les classes de test.
+La configuration de cette base est centralisée dans le fichier :
 
-Cela permet de séparer les données de test des données utilisées par l'application.
+`src/test/resources/application.properties`
+
+La propriété `spring.mongodb.uri` y définit l'URI de connexion à la base de données de test.
+
+Cette configuration est automatiquement chargée par Spring Boot lors de l'exécution des tests utilisant l'annotation
+`@DataMongoTest`.
+
+Il n'est donc pas nécessaire de répéter l'URI de connexion dans chaque classe de test.
+
+Cette séparation permet d'isoler les données de test des données utilisées par l'application et de simplifier la
+configuration des tests.
 
 ---
 
