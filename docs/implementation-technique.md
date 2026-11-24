@@ -88,11 +88,13 @@ Nom de la base de données :
 
 Les trois collections actuellement implémentées sont :
 
-| Collection      | Modèle Java  | Type                 |
-|-----------------|--------------|----------------------|
-| `collaborators` | Collaborator | Document indépendant |
-| `agencies`      | Agency       | Document indépendant |
-| `competences`   | Competence   | Document indépendant |
+| Collection              | Modèle Java        | Type                 |
+|-------------------------|--------------------|----------------------|
+| `collaborators`         | Collaborator       | Document indépendant |
+| `agencies`              | Agency             | Document indépendant |
+| `competences`           | Competence         | Document indépendant |
+| `professions`           | Profession         | Document indépendant |
+| `profession_categories` | ProfessionCategory | Document indépendant |
 
 `CompetenceDeclaration` est un objet embarqué dans le document `Collaborator`. Il ne possède donc pas de collection
 indépendante.
@@ -100,19 +102,48 @@ indépendante.
 ### 3.2 Architecture conceptuelle actuelle
 
 ```text
-MongoDB — eca
-│
-├── collaborators
-│   └── Collaborator
-│       └── competences[]
-│           └── CompetenceDeclaration
-│
-├── agencies
-│   └── Agency
-│
-└── competences
-    └── Competence
+ MongoDB — eca
+    │
+    ├── collaborators
+    │   └── Collaborator
+    │       ├── agencyId
+    │       ├── professionId
+    │       ├── experienceLevelId
+    │       └── competences[]
+    │           └── CompetenceDeclaration
+    │               └── competenceId
+    │
+    ├── agencies
+    │   └── Agency
+    │
+    ├── competences
+    │   └── Competence
+    │
+    ├── professions
+    │   └── Profession
+    │       └── categoryId
+    │
+    └── profession_categories
+        └── ProfessionCategory
 ```
+
+**Principes de structuration :**
+
+- Les modèles `Collaborator`, `Agency`, `Competence`, `Profession` et `ProfessionCategory` correspondent chacun à une
+  collection MongoDB indépendante.
+- `CompetenceDeclaration` est embarqué dans `Collaborator`, car une déclaration appartient au profil d'un collaborateur.
+- `Collaborator.agencyId` représente une référence vers une agence.
+- `Collaborator.professionId` représente une référence vers un métier.
+- `Collaborator.experienceLevelId` représente une référence vers un niveau d'expérience, dont le modèle n'est pas encore
+  implémenté.
+- `CompetenceDeclaration.competenceId` permet de référencer une entrée du catalogue central des compétences.
+- `Profession.categoryId` permet de référencer une catégorie de métier.
+
+Les références entre collections sont actuellement représentées par des identifiants simples. Leur résolution nécessite
+une interrogation explicite des repositories concernés.
+
+Cette architecture décrit l'état actuel de l'implémentation et pourra évoluer en fonction des besoins fonctionnels et
+des décisions techniques à venir.
 
 ### 3.3 Identifiants
 
@@ -135,7 +166,8 @@ Les références entre documents sont actuellement représentées par des identi
 
 Le modèle `Collaborator` représente un collaborateur Alltech.
 
-Il regroupe les informations d'identification, les informations professionnelles et les déclarations de compétences.
+Il regroupe les informations d'identification, les informations professionnelles et les déclarations de compétences
+associées à son profil.
 
 | Attribut            | Type Java                   | Description                            |
 |---------------------|-----------------------------|----------------------------------------|
@@ -148,7 +180,7 @@ Il regroupe les informations d'identification, les informations professionnelles
 | professionId        | String                      | Référence vers un métier               |
 | experienceLevelId   | String                      | Référence vers un niveau d'expérience  |
 | hireDate            | LocalDate                   | Date d'arrivée chez Alltech            |
-| presentation        | String                      | Présentation professionnelle courte    |
+| presentation        | String                      | Présentation professionnelle           |
 | photoUrl            | String                      | Adresse de la photographie             |
 | profileStatus       | String                      | Statut du profil                       |
 | onboardingCompleted | boolean                     | Indique si l'onboarding est terminé    |
@@ -160,19 +192,31 @@ Il regroupe les informations d'identification, les informations professionnelles
 Le modèle dispose :
 
 - D'un constructeur sans argument.
-- D'un constructeur permettant d'initialiser les principales informations du collaborateur.
+- D'un constructeur permettant d'initialiser les principales informations du collaborateur : identifiant AD, prénom,
+  nom, adresse électronique et identifiant d'agence.
 
-Le constructeur ne réalise aucune communication avec Active Directory. Il permet uniquement d'initialiser un objet Java
-avec les informations attendues.
+Le constructeur ne réalise aucune communication avec Active Directory. Il permet uniquement d'initialiser un objet Java.
 
 **Initialisation des compétences**
 
 La liste `competences` est initialisée avec une `ArrayList` vide.
 
-Cela permet d'ajouter des déclarations sans devoir vérifier préalablement si la liste est nulle.
+Le setter de cette propriété garantit également qu'une valeur `null` est remplacée par une liste vide.
 
-**Remarque :** le nom `biography` pourra être remplacé par `presentation`, plus représentatif d'une courte présentation
-professionnelle. Ce changement reste à effectuer dans le code et dans la documentation.
+Cette organisation permet de manipuler les déclarations de compétences sans devoir vérifier systématiquement si la liste
+est initialisée.
+
+**Validation des déclarations**
+
+La méthode `validate()` parcourt les déclarations de compétences embarquées et appelle leur propre méthode de
+validation.
+
+Elle permet ainsi de vérifier la cohérence des déclarations avant leur persistance dans MongoDB.
+
+La validation est déclenchée automatiquement par le mécanisme `CollaboratorValidationCallback`, exécuté avant la
+conversion du collaborateur en document MongoDB.
+
+**Statut : Implémenté et testé.**
 
 ### 4.2 Agency
 
@@ -246,14 +290,37 @@ Le champ `competenceId` contient l'identifiant du document `Competence` correspo
 Il s'agit d'une référence logique entre deux documents MongoDB. Ce mécanisme ne constitue pas une relation de clé
 étrangère et n'est pas résolu automatiquement par MongoDB.
 
-La résolution de cette référence nécessite une interrogation du catalogue des compétences à partir de l'identifiant
-enregistré.
+La résolution de cette référence nécessite une interrogation explicite du catalogue des compétences à partir de
+l'identifiant enregistré.
 
 **Déclaration personnalisée**
 
-Le champ `customName` permet d'envisager une déclaration qui ne correspond pas encore à une entrée du catalogue central.
+Le champ `customName` permet de représenter une compétence ou un sujet qui ne correspond pas encore à une entrée du
+catalogue central.
 
-La règle de validation entre `competenceId` et `customName` reste à implémenter.
+Cette possibilité permet de distinguer les déclarations associées au catalogue central des déclarations personnalisées.
+
+**Validation**
+
+La méthode `validate()` applique une règle d'exclusivité entre `competenceId` et `customName`.
+
+Une déclaration doit obligatoirement :
+
+- Référencer une compétence existante dans le catalogue à travers `competenceId`, ou
+- Fournir un nom personnalisé à travers `customName`.
+
+Les deux champs ne peuvent pas être renseignés simultanément. Ils ne peuvent pas non plus être tous les deux absents ou
+contenir uniquement des espaces.
+
+Cette validation est déclenchée lors de la persistance d'un `Collaborator`, par l'intermédiaire de
+`CollaboratorValidationCallback`.
+
+Six tests unitaires couvrent les différents scénarios de validation.
+
+**Statut : Implémenté et testé.**
+
+`CompetenceDeclaration` ne possède pas de repository indépendant. Sa persistance est assurée par le document
+`Collaborator` qui la contient.
 
 ### 4.5 Profession
 
@@ -261,33 +328,28 @@ La classe `Profession` représente une entrée du catalogue des métiers d'Allte
 
 **Collection MongoDB :** `professions`
 
-| Attribut      | Type      | Description                                      |
-|---------------|-----------|--------------------------------------------------|
-| `id`          | `String`  | Identifiant unique du document                   |
-| `name`        | `String`  | Nom du métier                                    |
-| `description` | `String`  | Description du métier                            |
-| `categoryId`  | `String`  | Référence vers une catégorie de métier           |
-| `active`      | `boolean` | Indique si le métier est actif dans le catalogue |
+| Attribut      | Type      | Description                            |
+|---------------|-----------|----------------------------------------|
+| `id`          | `String`  | Identifiant unique du document         |
+| `name`        | `String`  | Nom du métier                          |
+| `description` | `String`  | Description du métier                  |
+| `categoryId`  | `String`  | Référence vers une catégorie de métier |
+| `active`      | `boolean` | Indique si le métier est actif         |
 
-Le champ `categoryId` est actuellement une référence simple sous forme de chaîne de caractères. La classe
-`ProfessionCategory` n'est pas encore implémentée.
+Le champ `categoryId` représente une référence logique vers un document `ProfessionCategory`.
 
 La classe est associée à `ProfessionRepository`, qui étend `MongoRepository<Profession, String>` et fournit les
 opérations standard de persistance.
 
-**Test de persistance :**
+**Tests :**
 
-`ProfessionRepositoryTest` vérifie :
+La persistance du modèle est couverte par `ProfessionRepositoryTest`.
 
-- La création et l'enregistrement d'un métier.
-- La génération de son identifiant MongoDB.
-- La récupération du document à partir de cet identifiant.
-- La cohérence des attributs enregistrés.
-- La suppression du document après vérification.
+Le fonctionnement de la relation avec les catégories est également vérifié par `ProfessionCategoryIntegrationTest`.
 
 **Statut : Implémenté et testé.**
 
-### 4.6. ProfessionCategory
+### 4.6 ProfessionCategory
 
 La classe `ProfessionCategory` représente une catégorie permettant de regrouper plusieurs métiers au sein du catalogue
 des professions.
@@ -315,10 +377,42 @@ fournit les opérations standard de persistance.
 - La création et l'enregistrement d'une catégorie.
 - La génération de son identifiant MongoDB.
 - La récupération du document à partir de cet identifiant.
-- La cohérence du nom et de la description enregistrés.
+- La cohérence des attributs enregistrés.
 - La suppression du document après vérification.
 
 **Statut : Implémenté et testé.**
+
+### 4.6.1 Relation entre Profession et ProfessionCategory
+
+Le modèle `Profession` contient un attribut `categoryId` de type `String`, permettant de référencer une catégorie du
+catalogue `ProfessionCategory`.
+
+Cette relation est représentée par un identifiant stocké dans le document `Profession`. Elle ne constitue pas une
+relation de clé étrangère et n'est pas gérée automatiquement par MongoDB.
+
+La résolution de cette référence est réalisée explicitement à l'aide des repositories concernés.
+
+La vérification de l'existence de la catégorie référencée n'est pas actuellement intégrée à la couche de persistance.
+
+### 4.6.2 Test d'intégration entre Profession et ProfessionCategory
+
+La classe `ProfessionCategoryIntegrationTest` vérifie le fonctionnement de la référence entre un métier et sa catégorie.
+
+Le scénario testé comprend les opérations suivantes :
+
+- Création et enregistrement d'une catégorie de métier.
+- Récupération de l'identifiant MongoDB généré.
+- Création d'un métier utilisant cet identifiant dans son attribut `categoryId`.
+- Enregistrement et récupération du métier.
+- Récupération de la catégorie à partir de l'identifiant référencé.
+- Vérification de la cohérence entre `categoryId` et l'identifiant de la catégorie.
+- Vérification des informations de la catégorie récupérée.
+- Nettoyage des documents de test.
+
+Ce test confirme que les deux documents peuvent être persistés indépendamment et que leur association logique peut être
+exploitée à travers leurs identifiants respectifs.
+
+**Statut : Test d'intégration implémenté et réussi.**
 
 ### 4.6.1. Relation entre Profession et ProfessionCategory
 
@@ -367,21 +461,42 @@ Le modèle `Collaborator` possède un champ `agencyId`.
 
 Ce champ représente une référence vers un document de la collection `agencies`.
 
-La relation est actuellement représentée par un identifiant de type String.
+La relation est actuellement représentée par un identifiant de type `String`.
 
 La gestion de l'affectation d'agence est externe et ne doit pas être confondue avec une responsabilité de
 synchronisation Active Directory du présent projet.
 
-### 5.2 Collaborator et Competence
+### 5.2 Collaborator et Profession
+
+Le modèle `Collaborator` possède un champ `professionId`.
+
+Ce champ représente une référence vers un document de la collection `professions`.
+
+La relation est représentée par un identifiant de type `String`.
+
+La résolution de cette référence nécessite une interrogation explicite du repository correspondant.
+
+### 5.3 Collaborator et Competence
 
 Un collaborateur peut déclarer plusieurs compétences.
 
 Ces déclarations sont stockées directement dans le document `Collaborator`, sous la forme d'une liste de
 `CompetenceDeclaration`.
 
-Chaque déclaration peut contenir une référence vers une entrée du catalogue central.
+Chaque déclaration peut contenir une référence vers une entrée du catalogue central à travers `competenceId`, ou un nom
+personnalisé à travers `customName`.
 
-### 5.3 Choix de l'embarquement
+### 5.4 Profession et ProfessionCategory
+
+Le modèle `Profession` contient un champ `categoryId` permettant de référencer une catégorie de la collection
+`profession_categories`.
+
+La relation est représentée par un identifiant de type `String`.
+
+Les deux documents sont persistés indépendamment et leur association est résolue explicitement à l'aide des
+repositories.
+
+### 5.5 Choix de l'embarquement des déclarations de compétences
 
 Le choix d'embarquer `CompetenceDeclaration` dans `Collaborator` repose sur plusieurs considérations :
 
@@ -392,10 +507,19 @@ Le choix d'embarquer `CompetenceDeclaration` dans `Collaborator` repose sur plus
 
 Le catalogue `Competence` reste indépendant afin de centraliser les définitions des compétences.
 
-Ce choix est une proposition technique actuelle, qui pourra être réévaluée selon les besoins de recherche, de mise à
-jour et de gestion des déclarations.
+Ce choix est une proposition technique retenue pour l'implémentation initiale. Il pourra être réévalué selon les besoins
+de recherche, de mise à jour et de gestion des déclarations.
 
----
+### 5.6 Gestion des références
+
+Les relations entre les documents MongoDB sont actuellement représentées par des identifiants simples de type `String`.
+
+MongoDB ne vérifie pas automatiquement l'existence des documents référencés et ne fournit pas de contraintes de clés
+étrangères.
+
+La résolution des références est réalisée explicitement à l'aide des repositories concernés.
+
+La validation de l'existence des documents référencés est différée à une future couche de services applicatifs.
 
 ## 6. Couche d'accès aux données
 
@@ -411,13 +535,15 @@ Aucune implémentation manuelle des opérations CRUD standards n'est nécessaire
 
 ### 6.2 Repositories implémentés
 
-| Repository             | Modèle géré  | Type d'identifiant |
-|------------------------|--------------|--------------------|
-| CollaboratorRepository | Collaborator | String             |
-| AgencyRepository       | Agency       | String             |
-| CompetenceRepository   | Competence   | String             |
+| Repository                   | Modèle géré        | Type d'identifiant |
+|------------------------------|--------------------|--------------------|
+| CollaboratorRepository       | Collaborator       | String             |
+| AgencyRepository             | Agency             | String             |
+| CompetenceRepository         | Competence         | String             |
+| ProfessionRepository         | Profession         | String             |
+| ProfessionCategoryRepository | ProfessionCategory | String             |
 
-Les trois interfaces héritent de `MongoRepository`.
+Les cinq interfaces héritent de `MongoRepository`.
 
 ### 6.3 Opérations disponibles
 
@@ -440,7 +566,7 @@ Les méthodes personnalisées ne sont pas encore nécessaires pour le périmètr
 
 Son enregistrement est effectué dans le cadre de la sauvegarde du document `Collaborator` qui la contient.
 
----
+La persistance du document parent entraîne l'enregistrement de ses objets embarqués.
 
 ## 7. Configuration MongoDB
 
@@ -485,11 +611,12 @@ configuration des tests.
 
 ---
 
-## 8. Tests d'intégration
+## 8. Tests
 
 ### 8.1 Objectif
 
-Les tests actuels vérifient le fonctionnement réel de la persistance MongoDB à travers les repositories Spring Data.
+Les tests actuels vérifient le fonctionnement des modèles, de la validation et de la persistance MongoDB à travers
+Spring Data.
 
 Ils utilisent :
 
@@ -498,111 +625,163 @@ Ils utilisent :
 - `@DataMongoTest` pour charger le contexte de test dédié à MongoDB.
 - AssertJ pour les assertions.
 
-Les tests se connectent à MongoDB sur la base `eca_test`.
+Les tests de persistance se connectent à MongoDB sur la base `eca_test`.
 
-### 8.2 CollaboratorRepositoryTest
+### 8.2 Tests de persistance des repositories
 
-**Objectif :** vérifier la persistance d'un document Collaborator et de ses déclarations embarquées.
+Les tests de repositories vérifient les opérations fondamentales de persistance des documents.
 
-Le test :
+Ils couvrent notamment :
 
-1. Crée un collaborateur.
-2. Ajoute une déclaration de compétence.
-3. Enregistre le collaborateur.
-4. Récupère le document à partir de son identifiant.
-5. Vérifie les informations principales et la présence de la déclaration.
-6. Supprime le document de test.
+- `CollaboratorRepositoryTest` : création, enregistrement et récupération d'un collaborateur avec ses déclarations de
+  compétences embarquées.
+- `CompetenceRepositoryTest` : persistance et récupération d'une entrée du catalogue des compétences.
+- `ProfessionRepositoryTest` : persistance et récupération d'un métier.
+- `ProfessionCategoryRepositoryTest` : persistance et récupération d'une catégorie de métier.
 
-**Résultat :** test exécuté avec succès.
+Ces tests vérifient notamment la génération des identifiants MongoDB et la cohérence des informations enregistrées.
 
-### 8.3 CompetenceRepositoryTest
+### 8.3 Tests unitaires de CompetenceDeclaration
 
-**Objectif :** vérifier la persistance du catalogue des compétences.
+Six tests unitaires vérifient la méthode `validate()` de `CompetenceDeclaration`.
 
-Le test :
+Les scénarios couverts sont :
 
-1. Crée une compétence.
-2. Enregistre la compétence.
-3. Récupère le document à partir de son identifiant.
-4. Vérifie ses informations.
-5. Supprime le document de test.
+- Déclaration valide utilisant `competenceId`.
+- Déclaration valide utilisant `customName`.
+- Rejet d'une déclaration sans `competenceId` ni `customName`.
+- Rejet d'une déclaration contenant simultanément les deux champs.
+- Rejet d'un `competenceId` vide ou composé uniquement d'espaces.
+- Rejet d'un `customName` vide ou composé uniquement d'espaces.
 
-**Résultat :** test exécuté avec succès.
+Ces tests vérifient l'application de la règle d'exclusivité entre les deux modes de déclaration.
 
-### 8.4 CollaboratorCompetenceIntegrationTest
+### 8.4 Validation lors de la persistance : CollaboratorValidationCallback
 
-**Objectif :** vérifier le fonctionnement de la relation logique entre un document Collaborator et une entrée du
-catalogue Competence.
+La classe `CollaboratorValidationCallback` implémente `BeforeConvertCallback<Collaborator>`.
 
-Le test :
+Elle déclenche automatiquement la méthode `validate()` du collaborateur avant que Spring Data MongoDB ne convertisse
+celui-ci en document MongoDB.
 
-1. Crée une compétence.
-2. Enregistre cette compétence dans la collection `competences`.
-3. Récupère l'identifiant généré par MongoDB.
-4. Crée une `CompetenceDeclaration` contenant cet identifiant.
-5. Ajoute la déclaration à la liste des compétences du collaborateur.
-6. Enregistre le collaborateur.
-7. Récupère le collaborateur depuis MongoDB.
-8. Vérifie la présence de la déclaration et la correspondance de son identifiant.
-9. Utilise l'identifiant stocké dans la déclaration pour récupérer la compétence originale.
-10. Vérifie que la compétence récupérée correspond à celle initialement créée.
-11. Supprime les documents de test.
+Le test `CollaboratorRepositoryTest` couvre également deux scénarios :
 
-**Résultat :** test exécuté avec succès.
+1. Un collaborateur contenant une déclaration de compétence valide peut être enregistré et récupéré.
+2. Un collaborateur contenant une déclaration invalide provoque une `IllegalArgumentException` lors de sa sauvegarde.
 
-### 8.5 Limites des tests actuels
+Le second scénario vérifie également qu'aucun document invalide ne reste enregistré dans la collection.
 
-Les tests démontrent le fonctionnement de la persistance et de la référence logique entre les documents.
+Le callback est explicitement importé dans le contexte du test à l'aide de
+`@Import(CollaboratorValidationCallback.class)`.
+
+Cette validation s'applique aux opérations passant par le mécanisme de conversion Spring Data MongoDB. Elle ne protège
+pas contre les écritures directes effectuées en dehors de l'application.
+
+### 8.5 Tests d'intégration
+
+#### CollaboratorCompetenceIntegrationTest
+
+**Objectif :** vérifier le fonctionnement de la relation logique entre un document `Collaborator` et une entrée du
+catalogue `Competence`.
+
+Le test couvre :
+
+1. La création et l'enregistrement d'une compétence.
+2. La récupération de son identifiant MongoDB.
+3. La création d'une `CompetenceDeclaration` utilisant cet identifiant.
+4. L'enregistrement et la récupération du collaborateur.
+5. La récupération explicite de la compétence référencée à travers `CompetenceRepository`.
+6. La vérification de la cohérence entre la déclaration et le document du catalogue.
+
+#### ProfessionCategoryIntegrationTest
+
+**Objectif :** vérifier le fonctionnement de la relation logique entre `Profession` et `ProfessionCategory`.
+
+Le test couvre :
+
+1. La création et l'enregistrement d'une catégorie.
+2. La récupération de son identifiant MongoDB.
+3. La création d'un métier utilisant cet identifiant dans `categoryId`.
+4. L'enregistrement et la récupération du métier.
+5. La récupération explicite de la catégorie référencée.
+6. La vérification de la cohérence entre les deux documents.
+
+Ces deux tests démontrent que les relations logiques entre les documents peuvent être exploitées à travers les
+identifiants et les repositories concernés.
+
+### 8.6 Nettoyage et isolation des tests
+
+Les classes de test concernées utilisent `@AfterEach` afin de nettoyer les données après chaque test.
+
+Pour les tests portant sur plusieurs repositories, le nettoyage est effectué explicitement pour chacun des repositories
+concernés.
+
+Cette organisation permet de limiter les interactions entre les tests et de conserver un environnement de test
+reproductible.
+
+### 8.7 Résultat et limites
+
+L'ensemble des tests actuels a été exécuté avec succès.
+
+Les tests vérifient le fonctionnement des modèles, de la validation des déclarations embarquées, de la persistance et
+des références logiques entre documents.
 
 Ils ne valident pas encore :
 
-- L'existence obligatoire de la compétence référencée.
-- La suppression ou la désactivation d'une compétence encore référencée.
-- Les règles métier des déclarations personnalisées.
+- L'existence obligatoire des documents référencés dans tous les modèles.
+- La suppression ou la désactivation d'une entrée de catalogue encore référencée.
+- Les règles métier définitives concernant les déclarations personnalisées.
 - Les recherches multicritères.
 - Les performances sur des volumes représentatifs de données.
-- Les règles de validation des autres modèles.
 - Les index métier.
 
-Ces éléments devront être traités dans les prochaines étapes.
-
----
+Ces éléments restent à traiter dans les prochaines étapes du développement.
 
 ## 9. État actuel de l'implémentation
 
 ### 9.1 Éléments implémentés
 
-| Élément                                  | État        |
-|------------------------------------------|-------------|
-| Projet Spring Boot                       | Implémenté  |
-| Configuration MongoDB                    | Implémentée |
-| Modèle Collaborator                      | Implémenté  |
-| Modèle Agency                            | Implémenté  |
-| Modèle Competence                        | Implémenté  |
-| Modèle CompetenceDeclaration             | Implémenté  |
-| CollaboratorRepository                   | Implémenté  |
-| AgencyRepository                         | Implémenté  |
-| CompetenceRepository                     | Implémenté  |
-| Test de persistance Collaborator         | Réussi      |
-| Test de persistance Competence           | Réussi      |
-| Test de relation Collaborator–Competence | Réussi      |
+| Élément                                      | État        |
+|----------------------------------------------|-------------|
+| Projet Spring Boot                           | Implémenté  |
+| Configuration MongoDB                        | Implémentée |
+| Séparation des bases `eca` et `eca_test`     | Implémentée |
+| Modèle Collaborator                          | Implémenté  |
+| Modèle Agency                                | Implémenté  |
+| Modèle Competence                            | Implémenté  |
+| Modèle CompetenceDeclaration                 | Implémenté  |
+| Modèle Profession                            | Implémenté  |
+| Modèle ProfessionCategory                    | Implémenté  |
+| CollaboratorRepository                       | Implémenté  |
+| AgencyRepository                             | Implémenté  |
+| CompetenceRepository                         | Implémenté  |
+| ProfessionRepository                         | Implémenté  |
+| ProfessionCategoryRepository                 | Implémenté  |
+| Embarquement des déclarations de compétences | Implémenté  |
+| Validation des déclarations de compétences   | Implémentée |
+| CollaboratorValidationCallback               | Implémenté  |
+| Tests unitaires et de persistance            | Réussis     |
+| Tests d'intégration des références           | Réussis     |
+| Nettoyage des données après les tests        | Implémenté  |
 
-### 9.2 Éléments restant à développer
+### 9.2 Éléments restant à développer ou à étudier
 
-Les éléments suivants sont envisagés pour les prochaines étapes :
+Les éléments suivants restent envisagés pour les prochaines étapes :
 
-- Modèle Profession.
-- Modèle ExperienceLevel.
-- Modèle Domain.
-- Relation entre Competence et Domain.
-- Initialisation de la base de données.
+- Modèle `ExperienceLevel`.
+- Modèle `Domain`.
+- Relation entre `Competence` et `Domain`.
+- Éventuels modèles complémentaires selon le périmètre fonctionnel retenu.
+- Initialisation contrôlée de la base de données.
+- Étude et mise en place éventuelle de Liquibase.
 - Gestion des index métier.
-- Règles de validation.
-- Extension des tests d'intégration.
+- Validation de l'existence des références dans une future couche de services.
+- Définition des règles de gestion des catalogues et de leurs éléments désactivés.
+- Évolution de la couverture des besoins de recherche.
 
-La priorité reste la construction d'une structure de données cohérente et documentée.
+Les intégrations externes, notamment Active Directory et les systèmes RH, restent hors périmètre de cette phase.
 
----
+La priorité reste la construction d'une structure de données cohérente, documentée et réutilisable par les futurs
+développements ECA.
 
 ## 10. Principes de développement retenus
 
@@ -621,34 +800,50 @@ Les principes suivants guident l'implémentation actuelle :
 
 ## 11. Points à valider
 
-Les décisions suivantes nécessitent encore une validation technique ou fonctionnelle.
+Les points suivants nécessitent encore une validation fonctionnelle ou technique.
 
-| Sujet                         | Question                                                                                                         |
-|-------------------------------|------------------------------------------------------------------------------------------------------------------|
-| Périmètre du socle de données | Le modèle doit-il être spécifique à ECA ou constituer une fondation réutilisable pour d'autres projets Alltech ? |
-| Référence agence              | Quel identifiant métier doit être utilisé pour représenter une agence gérée extérieurement ?                     |
-| Métier                        | Le catalogue Profession doit-il être associé à des catégories ?                                                  |
-| Compétences                   | Comment gérer les compétences personnalisées qui ne figurent pas dans le catalogue ?                             |
-| Domaines                      | Une compétence doit-elle obligatoirement appartenir à au moins un domaine ?                                      |
-| Expérience                    | Quelle nomenclature doit être utilisée pour les niveaux d'expérience ?                                           |
-| Suppression                   | Comment gérer les références lorsqu'un élément de catalogue est désactivé ou supprimé ?                          |
-| Initialisation                | Quel mécanisme d'initialisation et de migration doit être retenu pour MongoDB ?                                  |
-| Indexation                    | Quels critères de recherche nécessitent des index spécifiques ?                                                  |
+Ils ne constituent pas nécessairement des blocages pour l'implémentation actuelle. Ils doivent cependant être clarifiés
+avant que les choix concernés deviennent des règles définitives du projet ECA.
 
----
+| Sujet                         | Question                                                                                     |
+|-------------------------------|----------------------------------------------------------------------------------------------|
+| Périmètre du socle de données | Le modèle doit-il constituer une fondation réutilisable pour d'autres projets Alltech ?      |
+| Référence agence              | Quel identifiant métier doit être utilisé pour représenter une agence gérée extérieurement ? |
+| Affectation agence            | Quelle est la source officielle des affectations d'agence et qui en assure la gestion ?      |
+| Expérience                    | Quelle nomenclature officielle doit être utilisée pour les niveaux d'expérience ?            |
+| Compétences personnalisées    | Quelles règles doivent encadrer la gestion et la validation des compétences personnalisées ? |
+| Catalogue compétences         | Comment gérer la désactivation ou la suppression d'une compétence encore référencée ?        |
+| Domaines                      | Une compétence doit-elle obligatoirement appartenir à au moins un domaine ?                  |
+| Initialisation                | Quel mécanisme d'initialisation et de migration doit être retenu pour MongoDB ?              |
+| Indexation                    | Quels critères de recherche nécessitent des index spécifiques ?                              |
+| Références                    | Quelles règles de cohérence doivent être appliquées aux références entre documents ?         |
+
+Les décisions concernant l'identité des collaborateurs, les affectations, les catalogues et les règles métier devront
+être confirmées avec les interlocuteurs Alltech concernés.
+
+Les choix d'implémentation technique pourront être approfondis progressivement au cours du développement.
 
 ## 12. Conclusion
 
-La première étape du backend ECA a permis de mettre en place une structure initiale de données persistantes avec MongoDB
-et Spring Data.
+La première phase du backend ECA a permis de mettre en place un socle initial de données persistantes reposant sur
+MongoDB et Spring Data MongoDB.
 
-Les modèles principaux du premier périmètre sont implémentés et leurs opérations de persistance ont été vérifiées par
-des tests d'intégration.
+Cinq modèles indépendants sont actuellement implémentés : `Collaborator`, `Agency`, `Competence`, `Profession` et
+`ProfessionCategory`.
 
-La relation entre les déclarations de compétences des collaborateurs et le catalogue central a également été démontrée.
+Les déclarations de compétences sont intégrées directement dans les documents `Collaborator` à travers le modèle
+embarqué `CompetenceDeclaration`.
 
-Le travail peut maintenant se poursuivre vers l'extension progressive du modèle de données, l'initialisation de la base
-et la définition des règles de validation et d'indexation.
+La couche d'accès aux données repose sur cinq repositories Spring Data MongoDB.
 
-**Ce document décrit l'état actuel du développement. Il ne constitue pas une spécification fonctionnelle définitive ni
-une validation officielle des choix métier par Alltech.**
+Un mécanisme de validation automatique des déclarations de compétences a également été mis en place à travers
+`CollaboratorValidationCallback`.
+
+Les opérations de persistance, les relations logiques entre documents et les règles de validation actuellement
+implémentées sont couvertes par des tests unitaires, de persistance et d'intégration.
+
+Le socle technique est ainsi établi pour poursuivre progressivement la modélisation des données, la gestion de
+l'initialisation de la base et les évolutions nécessaires à la future application ECA.
+
+**Ce document décrit l'état réel de l'implémentation au 24 novembre 2026. Il ne constitue pas une spécification
+fonctionnelle définitive ni une validation officielle des choix métier par Alltech.**

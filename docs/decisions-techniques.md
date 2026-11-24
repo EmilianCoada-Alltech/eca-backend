@@ -58,9 +58,79 @@ leur lecture technique, un glossaire de correspondance est maintenu.
 
 Ce glossaire sera enrichi progressivement au fur et à mesure de l'implémentation du modèle de données.
 
+Les termes `Assignment`, `Client`, `Role` et `AuditLog` correspondent à des concepts envisagés dans le modèle
+fonctionnel et technique global d'ECA.
+
+Leur présence dans ce glossaire ne signifie pas que les classes ou collections correspondantes sont actuellement
+implémentées dans le backend.
+
 ## Modélisation des déclarations de compétences
 
 **Statut : Proposition technique retenue pour l'implémentation initiale — à réévaluer si les besoins évoluent.**
+
+## Validation des données et gestion des références
+
+**Statut : Décision technique retenue pour l'implémentation initiale.**
+
+### Contexte
+
+La persistance des documents MongoDB nécessite de garantir une cohérence minimale des données enregistrées.
+
+Deux catégories de validation ont été distinguées :
+
+- La validation structurelle des objets et de leurs données internes.
+- La vérification de la cohérence des références entre les différents documents MongoDB.
+
+Ces deux responsabilités ne nécessitent pas nécessairement d'être traitées au même niveau de l'application.
+
+### Décision technique retenue
+
+La validation structurelle des déclarations de compétences est effectuée dans le modèle `CompetenceDeclaration`, à
+travers sa méthode `validate()`.
+
+Cette validation garantit qu'une déclaration contient exactement l'un des deux éléments suivants :
+
+- Un identifiant de compétence `competenceId`.
+- Un nom personnalisé `customName`.
+
+La méthode `Collaborator.validate()` parcourt les déclarations embarquées et déclenche leur validation individuelle.
+
+L'exécution automatique de cette validation lors de la persistance est assurée par `CollaboratorValidationCallback`, qui
+implémente `BeforeConvertCallback<Collaborator>`.
+
+### Responsabilité de la vérification des références
+
+La vérification de l'existence des documents référencés n'est pas intégrée au callback de persistance.
+
+Les champs tels que `agencyId`, `professionId`, `experienceLevelId`, `competenceId` et `categoryId` restent des
+identifiants simples de type `String`.
+
+La vérification de leur correspondance avec des documents existants est différée à une future couche de services
+applicatifs.
+
+Cette séparation permet de conserver un callback de persistance simple, sans introduire de dépendances vers plusieurs
+repositories pour effectuer des contrôles relevant de la logique applicative.
+
+### Justification
+
+Cette organisation permet :
+
+- De centraliser la validation structurelle des déclarations de compétences.
+- D'assurer son exécution avant la conversion des objets en documents MongoDB.
+- De conserver une couche de persistance indépendante des règles de résolution des références.
+- D'éviter d'introduire prématurément une logique métier dans les mécanismes de persistance.
+
+### Limites et évolutions possibles
+
+Le callback intervient uniquement lors des opérations passant par le mécanisme de conversion Spring Data MongoDB.
+
+Il ne garantit pas la cohérence des données écrites directement dans MongoDB en dehors de l'application.
+
+La vérification des références, ainsi que les règles métier associées aux catalogues et à leurs éléments, devront être
+définies dans les futures couches applicatives.
+
+Cette décision représente une organisation technique retenue pour l'implémentation initiale. Elle ne constitue pas une
+validation officielle des règles métier par Alltech.
 
 ### Contexte
 
