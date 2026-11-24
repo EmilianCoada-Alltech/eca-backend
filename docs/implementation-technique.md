@@ -331,7 +331,32 @@ relation objet directement gérée par MongoDB.
 La résolution de cette référence et la vérification de l'existence de la catégorie associée ne sont pas encore
 implémentées.
 
-Cette organisation permet de conserver deux collections indépendantes tout en établissant un lien entre les métiers et leurs catégories.
+Cette organisation permet de conserver deux collections indépendantes tout en établissant un lien entre les métiers et
+leurs catégories.
+
+### 4.6.2. Test d'intégration entre Profession et ProfessionCategory
+
+La classe `ProfessionCategoryIntegrationTest` vérifie le fonctionnement de la référence entre un métier et sa catégorie.
+
+Le scénario testé comprend les opérations suivantes :
+
+- Création et enregistrement d'une catégorie de métier.
+- Récupération de l'identifiant MongoDB généré.
+- Création d'un métier utilisant cet identifiant dans son attribut `categoryId`.
+- Enregistrement et récupération du métier.
+- Récupération de la catégorie à partir de l'identifiant référencé.
+- Vérification de la cohérence entre `categoryId` et l'identifiant de la catégorie.
+- Vérification des informations de la catégorie récupérée.
+- Suppression des deux documents après vérification.
+
+Ce test confirme que les deux documents peuvent être persistés indépendamment et que leur association logique peut être
+exploitée à travers leurs identifiants respectifs.
+
+La résolution de la référence est réalisée explicitement à l'aide des repositories. Elle n'est pas effectuée
+automatiquement par MongoDB.
+
+**Statut : Test d'intégration implémenté et réussi.**
+
 ---
 
 ## 5. Relations entre les modèles
