@@ -1,9 +1,11 @@
 
-package fr.alltech.eca.repository;
+package fr.alltech.eca.integration;
 
 import fr.alltech.eca.model.Collaborator;
 import fr.alltech.eca.model.Competence;
 import fr.alltech.eca.model.CompetenceDeclaration;
+import fr.alltech.eca.repository.CollaboratorRepository;
+import fr.alltech.eca.repository.CompetenceRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest;
@@ -12,9 +14,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataMongoTest(properties = {
-        "spring.mongodb.uri=mongodb://localhost:27017/eca_test"
-})
+@DataMongoTest
 class CollaboratorCompetenceIntegrationTest {
 
     @Autowired

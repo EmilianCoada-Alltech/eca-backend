@@ -10,9 +10,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataMongoTest(properties = {
-        "spring.mongodb.uri=mongodb://localhost:27017/eca_test"
-})
+@DataMongoTest
 class CompetenceRepositoryTest {
 
     @Autowired
