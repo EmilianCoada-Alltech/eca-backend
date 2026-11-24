@@ -64,4 +64,18 @@ public class CompetenceDeclaration {
     public void setSource(String source) {
         this.source = source;
     }
+
+    public void validate() {
+        boolean hasCompetenceId =
+                competenceId != null && !competenceId.isBlank();
+
+        boolean hasCustomName =
+                customName != null && !customName.isBlank();
+
+        if (hasCompetenceId == hasCustomName) {
+            throw new IllegalArgumentException(
+                    "A declaration must reference a competence or provide a custom name, but not both."
+            );
+        }
+    }
 }

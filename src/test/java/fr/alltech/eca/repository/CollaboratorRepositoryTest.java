@@ -1,19 +1,23 @@
 
 package fr.alltech.eca.repository;
 
+import fr.alltech.eca.config.CollaboratorValidationCallback;
 import fr.alltech.eca.model.Collaborator;
 import fr.alltech.eca.model.CompetenceDeclaration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest;
+import org.springframework.context.annotation.Import;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DataMongoTest
+@Import(CollaboratorValidationCallback.class)
 class CollaboratorRepositoryTest {
 
     @Autowired
@@ -46,6 +50,7 @@ class CollaboratorRepositoryTest {
         Collaborator savedCollaborator =
                 collaboratorRepository.save(collaborator);
 
+
         // Retrieve the saved collaborator
         Optional<Collaborator> result =
                 collaboratorRepository.findById(savedCollaborator.getId());
@@ -67,6 +72,34 @@ class CollaboratorRepositoryTest {
                 .isEqualTo("spring-boot-test-id");
         assertThat(retrievedCollaborator.getCompetences().getFirst().isExpertise())
                 .isTrue();
+    }
+
+    @Test
+    void shouldRejectCollaboratorWithInvalidCompetenceDeclaration() {
+
+        Collaborator collaborator = new Collaborator(
+                "test-ad-" + UUID.randomUUID(),
+                "John",
+                "Doe",
+                "john.doe@example.test",
+                "agency-test-id"
+        );
+
+        CompetenceDeclaration competence = new CompetenceDeclaration(
+                null,
+                null,
+                true,
+                true,
+                "catalogue"
+        );
+
+        collaborator.getCompetences().add(competence);
+
+        assertThatThrownBy(() -> {
+            collaboratorRepository.save(collaborator);
+        }).isInstanceOf(IllegalArgumentException.class);
+
+        assertThat(collaboratorRepository.count()).isZero();
     }
 
     @AfterEach

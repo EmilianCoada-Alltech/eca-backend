@@ -169,6 +169,12 @@ public class Collaborator {
     }
 
     public void setCompetences(List<CompetenceDeclaration> competences) {
-        this.competences = competences;
+        this.competences = competences != null ? competences : new ArrayList<>();
+    }
+
+    public void validate() {
+        for (CompetenceDeclaration declaration : competences) {
+            declaration.validate();
+        }
     }
 }
