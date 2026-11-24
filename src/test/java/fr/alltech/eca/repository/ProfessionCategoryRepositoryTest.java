@@ -17,7 +17,9 @@ public class ProfessionCategoryRepositoryTest {
 
     @Test
     void shouldSaveAndRetrieveProfessionCategory() {
-        ProfessionCategory professionCategory = new ProfessionCategory("Development", "Groups professions related to software development, including frontend and backend development, full-stack engineering, application design, software architecture, and maintenance. Covers the creation, evolution, and improvement of software solutions.");
+        ProfessionCategory professionCategory = new ProfessionCategory(
+                "Development",
+                "Groups professions related to software development, including frontend and backend development, full-stack engineering, application design, software architecture, and maintenance. Covers the creation, evolution, and improvement of software solutions.");
 
         ProfessionCategory savedCategory = professionCategoryRepository.save(professionCategory);
 
