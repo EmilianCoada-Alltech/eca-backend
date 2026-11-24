@@ -287,6 +287,51 @@ opérations standard de persistance.
 
 **Statut : Implémenté et testé.**
 
+### 4.6. ProfessionCategory
+
+La classe `ProfessionCategory` représente une catégorie permettant de regrouper plusieurs métiers au sein du catalogue
+des professions.
+
+**Collection MongoDB :** `profession_categories`
+
+| Attribut      | Type     | Description                    |
+|---------------|----------|--------------------------------|
+| `id`          | `String` | Identifiant unique du document |
+| `name`        | `String` | Nom de la catégorie            |
+| `description` | `String` | Description de la catégorie    |
+
+La classe dispose d'un constructeur sans argument, d'un constructeur paramétré ainsi que des accesseurs nécessaires à la
+manipulation de ses attributs.
+
+**Accès aux données :**
+
+La classe est associée à `ProfessionCategoryRepository`, qui étend `MongoRepository<ProfessionCategory, String>` et
+fournit les opérations standard de persistance.
+
+**Test de persistance :**
+
+`ProfessionCategoryRepositoryTest` vérifie :
+
+- La création et l'enregistrement d'une catégorie.
+- La génération de son identifiant MongoDB.
+- La récupération du document à partir de cet identifiant.
+- La cohérence du nom et de la description enregistrés.
+- La suppression du document après vérification.
+
+**Statut : Implémenté et testé.**
+
+### 4.6.1. Relation entre Profession et ProfessionCategory
+
+Le modèle `Profession` contient un attribut `categoryId` de type `String`, permettant de référencer une catégorie du
+catalogue `ProfessionCategory`.
+
+Cette relation est représentée par un identifiant stocké dans le document `Profession`. Elle ne constitue pas une
+relation objet directement gérée par MongoDB.
+
+La résolution de cette référence et la vérification de l'existence de la catégorie associée ne sont pas encore
+implémentées.
+
+Cette organisation permet de conserver deux collections indépendantes tout en établissant un lien entre les métiers et leurs catégories.
 ---
 
 ## 5. Relations entre les modèles
