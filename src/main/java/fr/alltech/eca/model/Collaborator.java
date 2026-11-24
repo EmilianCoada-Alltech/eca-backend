@@ -1,10 +1,12 @@
 
 package fr.alltech.eca.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.time.LocalDate;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.LocalDate;
 
 @Document(collection = "collaborators")
 public class Collaborator {
@@ -29,6 +31,8 @@ public class Collaborator {
     private String profileStatus;
     private boolean onboardingCompleted;
     private boolean searchable;
+
+    private List<CompetenceDeclaration> competences = new ArrayList<>();
 
 
     public Collaborator() {
@@ -160,4 +164,11 @@ public class Collaborator {
         this.searchable = searchable;
     }
 
+    public List<CompetenceDeclaration> getCompetences() {
+        return competences;
+    }
+
+    public void setCompetences(List<CompetenceDeclaration> competences) {
+        this.competences = competences;
+    }
 }

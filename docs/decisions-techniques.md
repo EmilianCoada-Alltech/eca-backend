@@ -48,3 +48,47 @@ Afin de faciliter la compréhension du modèle de données par les collaborateur
 | Journal d'audit | AuditLog |
 
 Ce glossaire sera enrichi progressivement au fur et à mesure de l'implémentation du modèle de données.
+
+## Modélisation des déclarations de compétences
+
+**Statut : Proposition technique retenue pour l'implémentation initiale — à réévaluer si les besoins évoluent.**
+
+### Contexte
+
+ECA doit permettre à chaque collaborateur de déclarer ses compétences, ses domaines d'expertise et les sujets sur lesquels il accepte d'aider ses collègues.
+
+Deux approches ont été étudiées pour stocker ces déclarations dans MongoDB :
+
+- Une collection indépendante contenant les déclarations de compétences de chaque collaborateur.
+- Un tableau de déclarations intégré directement dans le document du collaborateur.
+
+### Décision technique provisoire
+
+Les déclarations de compétences seront intégrées au document `Collaborator`, sous la forme d'un tableau d'objets `CompetenceDeclaration`.
+
+Le catalogue central des compétences restera indépendant dans la collection `competences`.
+
+Chaque déclaration pourra ainsi :
+- Référencer une compétence du catalogue via `competenceId`.
+- Ou contenir un intitulé personnalisé via `customName`.
+- Indiquer si le collaborateur considère cette compétence comme une expertise (`expertise`).
+- Indiquer s'il accepte d'être sollicité sur ce sujet (`solicitable`).
+- Conserver une information sur l'origine de la déclaration (`source`).
+
+### Justification
+
+Le volume envisagé est d'environ 2 000 collaborateurs, avec une estimation indicative de 10 déclarations par collaborateur, soit environ 20 000 déclarations.
+
+Ce volume reste modeste pour MongoDB. Les déclarations sont directement liées au profil d'un collaborateur et devraient généralement être consultées avec celui-ci.
+
+L'intégration dans le document `Collaborator` permet donc de conserver une structure simple et d'éviter une collection supplémentaire ainsi que des opérations de rapprochement pour récupérer les déclarations d'un profil.
+
+### Points de vigilance
+
+Cette approche devra être réévaluée si :
+- Le nombre de déclarations par collaborateur devient important ou non maîtrisé.
+- Les déclarations nécessitent un cycle de vie ou un historique indépendant.
+- Des besoins d'analyse ou de traitement indépendant apparaissent.
+- Les performances observées montrent que cette organisation n'est plus adaptée.
+
+Cette décision est un choix d'architecture pour la première version et ne constitue pas une exigence fonctionnelle définitivement validée par Alltech.
