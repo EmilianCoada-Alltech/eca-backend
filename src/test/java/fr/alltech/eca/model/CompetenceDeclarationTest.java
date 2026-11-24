@@ -45,5 +45,23 @@ public class CompetenceDeclarationTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void shouldRejectBlankCompetenceId() {
+        CompetenceDeclaration declaration = new CompetenceDeclaration(
+                " ", null, false, false, "catalogue"
+        );
 
+        assertThatThrownBy(declaration::validate)
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void shouldRejectBlankCustomName() {
+        CompetenceDeclaration declaration = new CompetenceDeclaration(
+                null, " ", false, false, "catalogue"
+        );
+
+        assertThatThrownBy(declaration::validate)
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
