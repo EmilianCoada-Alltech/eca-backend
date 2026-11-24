@@ -2,6 +2,7 @@
 package fr.alltech.eca.repository;
 
 import fr.alltech.eca.model.Competence;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest;
@@ -47,8 +48,10 @@ class CompetenceRepositoryTest {
                 .isEqualTo("Java framework for building applications");
 
         assertThat(retrievedCompetence.isActive()).isTrue();
+    }
 
-        // Clean up the test document
-        competenceRepository.deleteById(savedCompetence.getId());
+    @AfterEach
+    void cleanUp() {
+        competenceRepository.deleteAll();
     }
 }

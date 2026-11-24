@@ -3,6 +3,7 @@ package fr.alltech.eca.repository;
 
 import fr.alltech.eca.model.Collaborator;
 import fr.alltech.eca.model.CompetenceDeclaration;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest;
@@ -66,8 +67,10 @@ class CollaboratorRepositoryTest {
                 .isEqualTo("spring-boot-test-id");
         assertThat(retrievedCollaborator.getCompetences().getFirst().isExpertise())
                 .isTrue();
+    }
 
-        // Clean up the test document
-        collaboratorRepository.deleteById(savedCollaborator.getId());
+    @AfterEach
+    void cleanUp() {
+        collaboratorRepository.deleteAll();
     }
 }

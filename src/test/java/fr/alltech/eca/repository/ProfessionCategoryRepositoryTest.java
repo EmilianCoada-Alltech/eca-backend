@@ -1,6 +1,7 @@
 package fr.alltech.eca.repository;
 
 import fr.alltech.eca.model.ProfessionCategory;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest;
@@ -33,7 +34,10 @@ public class ProfessionCategoryRepositoryTest {
 
         assertThat(retrievedCategory.getName()).isEqualTo(savedCategory.getName());
         assertThat(retrievedCategory.getDescription()).isEqualTo(savedCategory.getDescription());
+    }
 
-        professionCategoryRepository.deleteById(savedCategory.getId());
+    @AfterEach
+    void cleanUp() {
+        professionCategoryRepository.deleteAll();
     }
 }
