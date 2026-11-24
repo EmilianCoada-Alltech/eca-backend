@@ -27,7 +27,6 @@ Ce choix concerne exclusivement la nomenclature technique. Il ne modifie pas la 
 ### Correspondance terminologique français / anglais
 
 Afin de faciliter la compréhension du modèle de données par les collaborateurs ne souhaitant pas utiliser l'anglais dans leur lecture technique, un glossaire de correspondance est maintenu.
-
 | Terminologie métier (FR) | Nomenclature technique (EN) |
 |---|---|
 | Collaborateur | Collaborator |
@@ -39,9 +38,13 @@ Afin de faciliter la compréhension du modèle de données par les collaborateur
 | Niveau d'expérience | ExperienceLevel |
 | Date d'arrivée chez Alltech | hireDate |
 | Présentation | biography |
-| Compétence | Skill |
-| Expertise | Expertise |
-| Sujet sur lequel le collaborateur peut être sollicité | SolicitableTopic |
+| Compétence | Competence |
+| Déclaration de compétence | CompetenceDeclaration |
+| Identifiant de compétence | competenceId |
+| Nom personnalisé de compétence | customName |
+| Expertise | expertise |
+| Sujet sur lequel le collaborateur peut être sollicité | solicitable |
+| Origine de la déclaration | source |
 | Mission | Assignment |
 | Client | Client |
 | Rôle | Role |
