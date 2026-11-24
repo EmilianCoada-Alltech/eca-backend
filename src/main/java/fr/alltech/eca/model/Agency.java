@@ -16,6 +16,15 @@ public class Agency {
     private String country;
     private String phoneNumber;
 
+    public Agency() {
+    }
+
+    public Agency(String name, String city, String country) {
+        this.name = name;
+        this.city = city;
+        this.country = country;
+    }
+
     public String getId() {
         return id;
     }
@@ -72,12 +81,5 @@ public class Agency {
         this.phoneNumber = phoneNumber;
     }
 
-    public Agency() {
-    }
 
-    public Agency(String name, String city, String country) {
-        this.name = name;
-        this.city = city;
-        this.country = country;
-    }
 }

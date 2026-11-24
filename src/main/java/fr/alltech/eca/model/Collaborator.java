@@ -1,12 +1,12 @@
 
 package fr.alltech.eca.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.time.LocalDate;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "collaborators")
 public class Collaborator {
@@ -25,7 +25,7 @@ public class Collaborator {
 
     private LocalDate hireDate;
 
-    private String biography;
+    private String presentation;
     private String photoUrl;
 
     private String profileStatus;
@@ -124,12 +124,12 @@ public class Collaborator {
         this.hireDate = hireDate;
     }
 
-    public String getBiography() {
-        return biography;
+    public String getPresentation() {
+        return presentation;
     }
 
-    public void setBiography(String biography) {
-        this.biography = biography;
+    public void setPresentation(String presentation) {
+        this.presentation = presentation;
     }
 
     public String getPhotoUrl() {
