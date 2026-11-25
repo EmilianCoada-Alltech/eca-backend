@@ -15,7 +15,7 @@ class ToolCategoryRepositoryTest {
     private ToolCategoryRepository ToolCategoryRepository;
 
     @AfterEach
-    void tearDown() {
+    void cleanUp() {
         ToolCategoryRepository.deleteAll();
     }
 

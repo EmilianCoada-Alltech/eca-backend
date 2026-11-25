@@ -1,4 +1,3 @@
-
 package fr.alltech.eca.repository;
 
 import fr.alltech.eca.model.AuditLog;
@@ -18,7 +17,7 @@ class AuditLogRepositoryTest {
     private AuditLogRepository auditLogRepository;
 
     @AfterEach
-    void tearDown() {
+    void cleanUp() {
         auditLogRepository.deleteAll();
     }
 

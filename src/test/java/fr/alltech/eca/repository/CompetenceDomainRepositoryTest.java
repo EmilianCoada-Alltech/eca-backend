@@ -16,6 +16,11 @@ class CompetenceDomainRepositoryTest {
     @Autowired
     private CompetenceDomainRepository competenceDomainRepository;
 
+    @AfterEach
+    void cleanUp() {
+        competenceDomainRepository.deleteAll();
+    }
+
     @Test
     void shouldSaveAndRetrieveCompetenceDomain() {
         // Arrange: create a competence-domain association
@@ -42,10 +47,5 @@ class CompetenceDomainRepositoryTest {
                 .isEqualTo("competence-123");
         assertThat(retrievedCompetenceDomain.getDomainId())
                 .isEqualTo("Backend development");
-    }
-
-    @AfterEach
-    void cleanUp() {
-        competenceDomainRepository.deleteAll();
     }
 }

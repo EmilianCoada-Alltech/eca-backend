@@ -16,6 +16,11 @@ class ClientRepositoryTest {
     @Autowired
     private ClientRepository clientRepository;
 
+    @AfterEach
+    void cleanUp() {
+        clientRepository.deleteAll();
+    }
+
     @Test
     void shouldSaveAndRetrieveClient() {
         // Arrange: create a client
@@ -51,10 +56,5 @@ class ClientRepositoryTest {
         assertThat(retrievedClient.getPhoneNumber()).isEqualTo("+33123456789");
         assertThat(retrievedClient.getEmail()).isEqualTo("contact@acme.example");
         assertThat(retrievedClient.isVisible()).isTrue();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        clientRepository.deleteAll();
     }
 }

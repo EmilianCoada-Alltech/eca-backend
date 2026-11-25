@@ -17,6 +17,11 @@ class MissionRepositoryTest {
     @Autowired
     private MissionRepository missionRepository;
 
+    @AfterEach
+    void cleanUp() {
+        missionRepository.deleteAll();
+    }
+
     @Test
     void shouldSaveAndRetrieveMission() {
         // Arrange: create a mission
@@ -53,10 +58,5 @@ class MissionRepositoryTest {
         assertThat(retrievedMission.getDescription())
                 .isEqualTo("Development of the ECA backend application");
         assertThat(retrievedMission.isVisible()).isTrue();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        missionRepository.deleteAll();
     }
 }

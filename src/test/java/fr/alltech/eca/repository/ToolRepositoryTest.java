@@ -1,4 +1,3 @@
-
 package fr.alltech.eca.repository;
 
 import fr.alltech.eca.model.Tool;
@@ -16,7 +15,7 @@ class ToolRepositoryTest {
     private ToolRepository toolRepository;
 
     @AfterEach
-    void tearDown() {
+    void cleanUp() {
         toolRepository.deleteAll();
     }
 

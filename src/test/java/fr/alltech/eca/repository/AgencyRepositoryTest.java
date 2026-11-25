@@ -1,4 +1,3 @@
-
 package fr.alltech.eca.repository;
 
 import fr.alltech.eca.model.Agency;
@@ -16,6 +15,11 @@ class AgencyRepositoryTest {
 
     @Autowired
     private AgencyRepository agencyRepository;
+
+    @AfterEach
+    void cleanUp() {
+        agencyRepository.deleteAll();
+    }
 
     @Test
     void shouldSaveAndRetrieveAgency() {
@@ -48,10 +52,5 @@ class AgencyRepositoryTest {
 
         assertThat(retrievedAgency.getCountry())
                 .isEqualTo("France");
-    }
-
-    @AfterEach
-    void cleanUp() {
-        agencyRepository.deleteAll();
     }
 }

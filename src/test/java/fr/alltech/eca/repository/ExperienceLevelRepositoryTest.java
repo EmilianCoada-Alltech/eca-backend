@@ -17,7 +17,7 @@ class ExperienceLevelRepositoryTest {
     private ExperienceLevelRepository experienceLevelRepository;
 
     @AfterEach
-    void tearDown() {
+    void cleanUp() {
         experienceLevelRepository.deleteAll();
     }
 

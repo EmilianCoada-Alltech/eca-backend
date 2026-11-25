@@ -1,4 +1,3 @@
-
 package fr.alltech.eca.repository;
 
 import fr.alltech.eca.model.Domain;
@@ -16,6 +15,11 @@ class DomainRepositoryTest {
 
     @Autowired
     private DomainRepository domainRepository;
+
+    @AfterEach
+    void cleanUp() {
+        domainRepository.deleteAll();
+    }
 
     @Test
     void shouldSaveAndRetrieveDomain() {
@@ -47,10 +51,5 @@ class DomainRepositoryTest {
                 .isEqualTo("Competences related to backend development");
 
         assertThat(retrievedDomain.isActive()).isTrue();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        domainRepository.deleteAll();
     }
 }

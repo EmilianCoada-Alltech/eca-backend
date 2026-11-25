@@ -16,6 +16,11 @@ class ProfessionCompetenceRepositoryTest {
     @Autowired
     private ProfessionCompetenceRepository professionCompetenceRepository;
 
+    @AfterEach
+    void cleanUp() {
+        professionCompetenceRepository.deleteAll();
+    }
+
     @Test
     void shouldSaveAndRetrieveProfessionCompetence() {
         // Arrange: create a profession-competence association
@@ -42,10 +47,5 @@ class ProfessionCompetenceRepositoryTest {
                 .isEqualTo("profession-123");
         assertThat(retrievedProfessionCompetence.getCompetenceId())
                 .isEqualTo("competence-456");
-    }
-
-    @AfterEach
-    void cleanUp() {
-        professionCompetenceRepository.deleteAll();
     }
 }

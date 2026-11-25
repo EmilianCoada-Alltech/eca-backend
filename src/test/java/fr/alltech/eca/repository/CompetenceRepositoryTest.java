@@ -1,4 +1,3 @@
-
 package fr.alltech.eca.repository;
 
 import fr.alltech.eca.model.Competence;
@@ -16,6 +15,11 @@ class CompetenceRepositoryTest {
 
     @Autowired
     private CompetenceRepository competenceRepository;
+
+    @AfterEach
+    void cleanUp() {
+        competenceRepository.deleteAll();
+    }
 
     @Test
     void shouldSaveAndRetrieveCompetence() {
@@ -48,10 +52,5 @@ class CompetenceRepositoryTest {
                 .isEqualTo("Java framework for building applications");
 
         assertThat(retrievedCompetence.isActive()).isTrue();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        competenceRepository.deleteAll();
     }
 }

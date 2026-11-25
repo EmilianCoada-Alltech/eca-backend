@@ -1,4 +1,3 @@
-
 package fr.alltech.eca.repository;
 
 import fr.alltech.eca.model.Role;
@@ -14,6 +13,11 @@ class RoleRepositoryTest {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @AfterEach
+    void cleanUp() {
+        roleRepository.deleteAll();
+    }
 
     @Test
     void shouldSaveAndRetrieveRole() {
@@ -39,10 +43,5 @@ class RoleRepositoryTest {
                     assertThat(foundRole.getDescription())
                             .isEqualTo("Application administrator");
                 });
-    }
-
-    @AfterEach
-    void cleanUp() {
-        roleRepository.deleteAll();
     }
 }

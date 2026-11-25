@@ -16,6 +16,12 @@ public class ProfessionCategoryRepositoryTest {
     @Autowired
     private ProfessionCategoryRepository professionCategoryRepository;
 
+
+    @AfterEach
+    void cleanUp() {
+        professionCategoryRepository.deleteAll();
+    }
+
     @Test
     void shouldSaveAndRetrieveProfessionCategory() {
         ProfessionCategory professionCategory = new ProfessionCategory(
@@ -34,10 +40,5 @@ public class ProfessionCategoryRepositoryTest {
 
         assertThat(retrievedCategory.getName()).isEqualTo(savedCategory.getName());
         assertThat(retrievedCategory.getDescription()).isEqualTo(savedCategory.getDescription());
-    }
-
-    @AfterEach
-    void cleanUp() {
-        professionCategoryRepository.deleteAll();
     }
 }

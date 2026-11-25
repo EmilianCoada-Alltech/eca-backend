@@ -17,6 +17,11 @@ class CollaboratorMissionRepositoryTest {
     @Autowired
     private CollaboratorMissionRepository collaboratorMissionRepository;
 
+    @AfterEach
+    void cleanUp() {
+        collaboratorMissionRepository.deleteAll();
+    }
+
     @Test
     void shouldSaveAndRetrieveCollaboratorMission() {
         // Arrange: create a collaborator-mission assignment
@@ -48,10 +53,5 @@ class CollaboratorMissionRepositoryTest {
         assertThat(retrievedCollaboratorMission.getStartDate())
                 .isEqualTo(LocalDate.of(2026, 11, 23));
         assertThat(retrievedCollaboratorMission.getEndDate()).isNull();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        collaboratorMissionRepository.deleteAll();
     }
 }

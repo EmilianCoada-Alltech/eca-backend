@@ -24,6 +24,11 @@ class CollaboratorRepositoryTest {
     @Autowired
     private CollaboratorRepository collaboratorRepository;
 
+    @AfterEach
+    void cleanUp() {
+        collaboratorRepository.deleteAll();
+    }
+
     @Test
     void shouldSaveAndRetrieveCollaborator() {
 
@@ -132,10 +137,5 @@ class CollaboratorRepositoryTest {
                                 "COLLABORATEUR",
                                 "REDACTEUR"
                         ));
-    }
-
-    @AfterEach
-    void cleanUp() {
-        collaboratorRepository.deleteAll();
     }
 }
