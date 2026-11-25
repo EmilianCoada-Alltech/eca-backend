@@ -1,0 +1,136 @@
+# Référence API — ECA Backend
+
+**Version :** 0.1  
+**Date :** 25/11/2026  
+**Statut :** En cours de développement
+
+---
+
+## 1. Présentation
+
+Ce document décrit les endpoints HTTP exposés par le backend de l'application ECA (Espace Collaborateur Alltech).
+
+Il constitue la référence fonctionnelle et technique des API disponibles pour les applications clientes.
+
+Pour chaque endpoint, il précise :
+
+- La méthode HTTP et le chemin d'accès.
+- La description de son objectif.
+- Les paramètres éventuels.
+- La structure des données retournées.
+- Les codes de réponse HTTP identifiés.
+
+Ce document sera enrichi au fur et à mesure du développement des endpoints.
+
+## 2. Conventions générales
+
+### 2.1 Préfixe des routes
+
+Les endpoints de l'API utilisent le préfixe suivant :
+
+`/api`
+
+Les routes sont organisées par domaine fonctionnel. Les données de référence sont regroupées sous :
+
+`/api/references`
+
+### 2.2 Format des échanges
+
+Les réponses de l'API sont retournées au format JSON.
+
+Les DTO (*Data Transfer Objects*) définissent les structures de données exposées aux applications clientes. Les modèles
+de persistance MongoDB ne sont pas directement exposés.
+
+## 3. API de référence
+
+Cette API regroupe les endpoints permettant de consulter les données de référence utilisées par l'application.
+
+### 3.1 Professions
+
+#### Récupérer les professions actives
+
+| Propriété             | Valeur                                     |
+|-----------------------|--------------------------------------------|
+| Méthode HTTP          | `GET`                                      |
+| Endpoint              | `/api/references/professions`              |
+| Description           | Récupérer la liste des professions actives |
+| Paramètres de chemin  | Aucun                                      |
+| Paramètres de requête | Aucun                                      |
+| Corps de la requête   | Aucun                                      |
+| Réponse nominale      | `200 OK`                                   |
+
+**Fonctionnement**
+
+L'endpoint retourne les professions enregistrées dans la collection MongoDB `professions`, pour lesquelles le champ
+`active` est égal à `true`.
+
+Les professions inactives ne sont pas retournées.
+
+**Exemple de réponse**
+
+```json
+[
+  {
+    "id": "PROF-001",
+    "name": "Développeur Frontend",
+    "description": "Conçoit et développe les interfaces utilisateur des applications.",
+    "categoryId": "CAT-01",
+    "active": true
+  },
+  {
+    "id": "PROF-002",
+    "name": "Développeur Backend",
+    "description": "Conçoit et développe les composants serveur et les API.",
+    "categoryId": "CAT-01",
+    "active": true
+  }
+]
+```
+
+*Les descriptions ci-dessus sont illustratives. La réponse réelle dépend des données enregistrées en base.*
+
+**DTO de réponse : `ProfessionResponse`**
+
+| Champ         | Type    | Description                          |
+|---------------|---------|--------------------------------------|
+| `id`          | String  | Identifiant de la profession         |
+| `name`        | String  | Nom de la profession                 |
+| `description` | String  | Description de la profession         |
+| `categoryId`  | String  | Identifiant de la catégorie associée |
+| `active`      | Boolean | Indique si la profession est active  |
+
+**Codes de réponse**
+
+| Code HTTP | Signification                                                                                      |
+|-----------|----------------------------------------------------------------------------------------------------|
+| `200 OK`  | La requête a été traitée avec succès. Une liste de professions est retournée, éventuellement vide. |
+
+**Implémentation technique**
+
+- Controller : `ProfessionController`
+- Service : `ProfessionService`
+- Repository : `ProfessionRepository`
+- Mapper : `ProfessionMapper`
+- DTO : `ProfessionResponse`
+- Collection MongoDB : `professions`
+
+La récupération des données utilise la méthode Spring Data MongoDB `findByActiveTrue()`.
+
+---
+
+## 4. Évolutions à documenter
+
+Les prochaines fonctionnalités de l'API seront documentées dans les sections correspondantes au fur et à mesure de leur
+implémentation.
+
+Les éléments suivants restent notamment à définir ou à documenter lorsqu'ils seront développés :
+
+- Consultation des catégories de professions.
+- Consultation des niveaux d'expérience.
+- Consultation des compétences.
+- Consultation des domaines.
+- Consultation des rôles.
+- Consultation des outils et de leurs catégories.
+- Règles d'authentification et d'autorisation.
+- Gestion standardisée des erreurs HTTP.
+- Pagination et filtrage, si nécessaires.
