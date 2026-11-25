@@ -86,7 +86,7 @@ Nom de la base de données :
 
 `eca`
 
-Les trois collections actuellement implémentées sont :
+La base de données comporte actuellement sept collections correspondant aux modèles indépendants implémentés :
 
 | Collection              | Modèle Java        | Type                 |
 |-------------------------|--------------------|----------------------|
@@ -95,14 +95,18 @@ Les trois collections actuellement implémentées sont :
 | `competences`           | Competence         | Document indépendant |
 | `professions`           | Profession         | Document indépendant |
 | `profession_categories` | ProfessionCategory | Document indépendant |
+| `experience_levels`     | ExperienceLevel    | Document indépendant |
+| `domains`               | Domain             | Document indépendant |
 
 `CompetenceDeclaration` est un objet embarqué dans le document `Collaborator`. Il ne possède donc pas de collection
 indépendante.
 
+La relation `CompetenceDomain` entre les compétences et les domaines n'est pas encore implémentée.
+
 ### 3.2 Architecture conceptuelle actuelle
 
 ```text
- MongoDB — eca
+MongoDB — eca
     │
     ├── collaborators
     │   └── Collaborator
@@ -123,21 +127,29 @@ indépendante.
     │   └── Profession
     │       └── categoryId
     │
-    └── profession_categories
-        └── ProfessionCategory
+    ├── profession_categories
+    │   └── ProfessionCategory
+    │
+    ├── experience_levels
+    │   └── ExperienceLevel
+    │
+    └── domains
+        └── Domain
 ```
 
 **Principes de structuration :**
 
-- Les modèles `Collaborator`, `Agency`, `Competence`, `Profession` et `ProfessionCategory` correspondent chacun à une
-  collection MongoDB indépendante.
+- Les modèles `Collaborator`, `Agency`, `Competence`, `Profession`, `ProfessionCategory`, `ExperienceLevel` et `Domain`
+  correspondent chacun à une collection MongoDB indépendante.
 - `CompetenceDeclaration` est embarqué dans `Collaborator`, car une déclaration appartient au profil d'un collaborateur.
 - `Collaborator.agencyId` représente une référence vers une agence.
 - `Collaborator.professionId` représente une référence vers un métier.
-- `Collaborator.experienceLevelId` représente une référence vers un niveau d'expérience, dont le modèle n'est pas encore
-  implémenté.
+- `Collaborator.experienceLevelId` représente une référence vers un niveau d'expérience, défini par le modèle
+  `ExperienceLevel`.
 - `CompetenceDeclaration.competenceId` permet de référencer une entrée du catalogue central des compétences.
 - `Profession.categoryId` permet de référencer une catégorie de métier.
+- `Domain` représente un domaine permettant de regrouper des compétences. La relation entre les compétences et les
+  domaines reste à implémenter.
 
 Les références entre collections sont actuellement représentées par des identifiants simples. Leur résolution nécessite
 une interrogation explicite des repositories concernés.
@@ -414,7 +426,7 @@ exploitée à travers leurs identifiants respectifs.
 
 **Statut : Test d'intégration implémenté et réussi.**
 
-### 4.6.1. Relation entre Profession et ProfessionCategory
+### 4.6.3. Relation entre Profession et ProfessionCategory
 
 Le modèle `Profession` contient un attribut `categoryId` de type `String`, permettant de référencer une catégorie du
 catalogue `ProfessionCategory`.
@@ -428,7 +440,7 @@ implémentées.
 Cette organisation permet de conserver deux collections indépendantes tout en établissant un lien entre les métiers et
 leurs catégories.
 
-### 4.6.2. Test d'intégration entre Profession et ProfessionCategory
+### 4.6.4. Test d'intégration entre Profession et ProfessionCategory
 
 La classe `ProfessionCategoryIntegrationTest` vérifie le fonctionnement de la référence entre un métier et sa catégorie.
 
@@ -450,6 +462,62 @@ La résolution de la référence est réalisée explicitement à l'aide des repo
 automatiquement par MongoDB.
 
 **Statut : Test d'intégration implémenté et réussi.**
+
+### 4.7 ExperienceLevel
+
+**Collection :** `experience_levels`  
+**Annotation :** `@Document(collection = "experience_levels")`
+
+Le modèle `ExperienceLevel` représente un niveau d'expérience pouvant être associé au profil d'un collaborateur.
+
+| Attribut | Type Java | Description                     |
+|----------|-----------|---------------------------------|
+| id       | String    | Identifiant MongoDB du document |
+| name     | String    | Nom du niveau d'expérience      |
+
+Le modèle dispose d'un constructeur sans argument et d'un constructeur permettant d'initialiser le nom du niveau.
+
+Le champ `Collaborator.experienceLevelId` permet de référencer un document de cette collection.
+
+**Accès aux données :**
+
+La classe est associée à `ExperienceLevelRepository`, qui étend `MongoRepository<ExperienceLevel, String>`.
+
+**Tests :**
+
+La persistance du modèle est couverte par `ExperienceLevelRepositoryTest`.
+
+**Statut : Implémenté et testé.**
+
+### 4.8 Domain
+
+**Collection :** `domains`  
+**Annotation :** `@Document(collection = "domains")`
+
+Le modèle `Domain` représente un domaine permettant de regrouper des compétences liées à un même sujet ou secteur.
+
+| Attribut    | Type Java | Description                     |
+|-------------|-----------|---------------------------------|
+| id          | String    | Identifiant MongoDB du document |
+| name        | String    | Nom du domaine                  |
+| description | String    | Description du domaine          |
+| active      | boolean   | Indique si le domaine est actif |
+
+Le modèle dispose d'un constructeur sans argument et d'un constructeur permettant d'initialiser le nom, la description
+et le statut actif.
+
+**Accès aux données :**
+
+La classe est associée à `DomainRepository`, qui étend `MongoRepository<Domain, String>`.
+
+**Tests :**
+
+La persistance du modèle est couverte par `DomainRepositoryTest`.
+
+Le test vérifie la création du document, la génération de son identifiant MongoDB, sa récupération et la cohérence de
+ses attributs.
+
+**Statut : Implémenté et testé.**
 
 ---
 
@@ -521,6 +589,24 @@ La résolution des références est réalisée explicitement à l'aide des repos
 
 La validation de l'existence des documents référencés est différée à une future couche de services applicatifs.
 
+### 5.7 Relation envisagée entre Competence et Domain
+
+Le modèle conceptuel prévoit une relation entre les compétences du catalogue central et les domaines permettant de les
+regrouper.
+
+Cette relation est envisagée sous la forme d'un modèle indépendant `CompetenceDomain`, contenant les identifiants des
+deux documents associés :
+
+- `competenceId` : référence vers une compétence.
+- `domainId` : référence vers un domaine.
+
+Cette structure permettrait de représenter une relation plusieurs-à-plusieurs entre les compétences et les domaines.
+
+Le modèle `CompetenceDomain` et sa collection MongoDB ne sont pas encore implémentés.
+
+La règle selon laquelle chaque compétence du catalogue central devrait appartenir à au moins un domaine reste à valider
+avec les interlocuteurs Alltech.
+
 ## 6. Couche d'accès aux données
 
 ### 6.1 Principe général
@@ -542,8 +628,10 @@ Aucune implémentation manuelle des opérations CRUD standards n'est nécessaire
 | CompetenceRepository         | Competence         | String             |
 | ProfessionRepository         | Profession         | String             |
 | ProfessionCategoryRepository | ProfessionCategory | String             |
+| ExperienceLevelRepository    | ExperienceLevel    | String             |
+| DomainRepository             | Domain             | String             |
 
-Les cinq interfaces héritent de `MongoRepository`.
+Les sept interfaces héritent de `MongoRepository`.
 
 ### 6.3 Opérations disponibles
 
@@ -638,6 +726,8 @@ Ils couvrent notamment :
 - `CompetenceRepositoryTest` : persistance et récupération d'une entrée du catalogue des compétences.
 - `ProfessionRepositoryTest` : persistance et récupération d'un métier.
 - `ProfessionCategoryRepositoryTest` : persistance et récupération d'une catégorie de métier.
+- `ExperienceLevelRepositoryTest` : persistance et récupération d'un niveau d'expérience.
+- `DomainRepositoryTest` : persistance et récupération d'un domaine.
 
 Ces tests vérifient notamment la génération des identifiants MongoDB et la cohérence des informations enregistrées.
 
@@ -762,14 +852,20 @@ Ces éléments restent à traiter dans les prochaines étapes du développement.
 | Tests unitaires et de persistance            | Réussis     |
 | Tests d'intégration des références           | Réussis     |
 | Nettoyage des données après les tests        | Implémenté  |
+| Modèle ExperienceLevel                       | Implémenté  |
+| Modèle Domain                                | Implémenté  |
+| ExperienceLevelRepository                    | Implémenté  |
+| DomainRepository                             | Implémenté  |
+| Tests de persistance ExperienceLevel         | Réussis     |
+| Tests de persistance Domain                  | Réussis     |
 
 ### 9.2 Éléments restant à développer ou à étudier
 
 Les éléments suivants restent envisagés pour les prochaines étapes :
 
-- Modèle `ExperienceLevel`.
-- Modèle `Domain`.
-- Relation entre `Competence` et `Domain`.
+- Relation entre `Competence` et `Domain` à travers le modèle envisagé `CompetenceDomain`.
+- Éventuels modèles complémentaires selon le périmètre fonctionnel retenu.
+- Initialisation contrôlée de la base de données.
 - Éventuels modèles complémentaires selon le périmètre fonctionnel retenu.
 - Initialisation contrôlée de la base de données.
 - Étude et mise en place éventuelle de Liquibase.
@@ -828,13 +924,13 @@ Les choix d'implémentation technique pourront être approfondis progressivement
 La première phase du backend ECA a permis de mettre en place un socle initial de données persistantes reposant sur
 MongoDB et Spring Data MongoDB.
 
-Cinq modèles indépendants sont actuellement implémentés : `Collaborator`, `Agency`, `Competence`, `Profession` et
-`ProfessionCategory`.
+Sept modèles indépendants sont actuellement implémentés : `Collaborator`, `Agency`, `Competence`, `Profession`,
+`ProfessionCategory`, `ExperienceLevel` et `Domain`.
 
 Les déclarations de compétences sont intégrées directement dans les documents `Collaborator` à travers le modèle
 embarqué `CompetenceDeclaration`.
 
-La couche d'accès aux données repose sur cinq repositories Spring Data MongoDB.
+La couche d'accès aux données repose sur sept repositories Spring Data MongoDB.
 
 Un mécanisme de validation automatique des déclarations de compétences a également été mis en place à travers
 `CollaboratorValidationCallback`.
