@@ -19,6 +19,8 @@
     <!-- Agencies-->
     <include file="db/changelog/data/003-insert-agencies.xml"/>
 
+    <!-- Experience Levels -->
+    <include file="db/changelog/data/004-insert-experience-levels.xml"/>
 </databaseChangeLog>
 
 
