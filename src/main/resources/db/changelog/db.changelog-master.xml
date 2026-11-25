@@ -16,6 +16,9 @@
     <!-- Professions -->
     <include file="db/changelog/data/002-insert-professions.xml"/>
 
+    <!-- Agencies-->
+    <include file="db/changelog/data/003-insert-agencies.xml"/>
+
 </databaseChangeLog>
 
 

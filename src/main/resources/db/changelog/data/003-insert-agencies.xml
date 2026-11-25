@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="020-insert-agencies" author="eca">
+
+        <mongodb:insertMany collectionName="agencies">
+            <mongodb:documents>
+                [
+                {
+                "_id": "AG-001",
+                "name": "Agence de Niort",
+                "streetAddress": "7 Esp. de la République",
+                "postalCode": "79000",
+                "city": "Niort",
+                "country": "France"
+                },
+                {
+                "_id": "AG-002",
+                "name": "Agence de Nantes",
+                "streetAddress": "1 Rue du Guesclin",
+                "postalCode": "44000",
+                "city": "Nantes",
+                "country": "France"
+                },
+                {
+                "_id": "AG-003",
+                "name": "Agence de Bordeaux",
+                "streetAddress": "67 Quai Virginie Hériot",
+                "postalCode": "33300",
+                "city": "Bordeaux",
+                "country": "France"
+                },
+                {
+                "_id": "AG-004",
+                "name": "Agence de Bayonne",
+                "streetAddress": "1 Rue de Donzac",
+                "postalCode": "64100",
+                "city": "Bayonne",
+                "country": "France"
+                },
+                {
+                "_id": "AG-005",
+                "name": "Agence de Toulouse",
+                "streetAddress": "Boulevard Lascrosses, 8 Esp. Compans Caffarelli",
+                "postalCode": "31000",
+                "city": "Toulouse",
+                "country": "France"
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>
