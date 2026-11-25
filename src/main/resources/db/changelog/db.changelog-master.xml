@@ -15,6 +15,7 @@
 
     <!-- Professions -->
     <include file="db/changelog/data/002-insert-professions.xml"/>
+
 </databaseChangeLog>
 
 
