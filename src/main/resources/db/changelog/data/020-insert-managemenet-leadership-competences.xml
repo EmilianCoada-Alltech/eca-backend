@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="037-insert-management-leadership-competences" author="eca">
+
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-334",
+                "name": "Management d'équipe",
+                "description": "Organisation, coordination et accompagnement d'une équipe afin d'atteindre des objectifs
+                communs et de favoriser la collaboration.",
+                "active": true
+                },
+                {
+                "_id": "COMP-335",
+                "name": "Management transversal",
+                "description": "Coordination et animation de collaborateurs issus de différentes équipes ou fonctions
+                sans lien hiérarchique direct.",
+                "active": true
+                },
+                {
+                "_id": "COMP-336",
+                "name": "Management à distance",
+                "description": "Encadrement et accompagnement de collaborateurs travaillant à distance, en maintenant la
+                communication, la cohésion et le suivi des activités.",
+                "active": true
+                },
+                {
+                "_id": "COMP-337",
+                "name": "Leadership",
+                "description": "Capacité à mobiliser, influencer et inspirer des personnes ou des équipes autour d'une
+                vision et d'objectifs communs.",
+                "active": true
+                },
+                {
+                "_id": "COMP-338",
+                "name": "Gestion des conflits",
+                "description": "Identification, analyse et résolution des situations de désaccord ou de tension au sein
+                d'une équipe ou d'une organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-339",
+                "name": "Coaching professionnel",
+                "description": "Accompagnement individuel visant à développer les capacités professionnelles,
+                l'autonomie et l'atteinte d'objectifs personnels ou professionnels.",
+                "active": true
+                },
+                {
+                "_id": "COMP-340",
+                "name": "Mentorat",
+                "description": "Transmission d'expérience et accompagnement d'une personne dans son développement
+                professionnel par le partage de conseils et de pratiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-341",
+                "name": "Accompagnement des collaborateurs",
+                "description": "Soutien des collaborateurs dans leurs missions, leur évolution professionnelle et leur
+                adaptation aux changements de l'organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-342",
+                "name": "Gestion des performances",
+                "description": "Définition, suivi et évaluation des objectifs et résultats individuels ou collectifs
+                afin d'améliorer la performance.",
+                "active": true
+                },
+                {
+                "_id": "COMP-343",
+                "name": "Gestion des compétences",
+                "description": "Identification, évaluation et développement des compétences nécessaires aux
+                collaborateurs et à l'organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-344",
+                "name": "Gestion des carrières",
+                "description": "Accompagnement des parcours professionnels, identification des perspectives d'évolution
+                et planification des mobilités.",
+                "active": true
+                },
+                {
+                "_id": "COMP-345",
+                "name": "Recrutement et intégration",
+                "description": "Participation au processus de recrutement, sélection des candidats et organisation de
+                leur intégration au sein de l'organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-346",
+                "name": "Définition d'objectifs",
+                "description": "Détermination d'objectifs clairs, mesurables et cohérents avec les priorités de l'équipe
+                ou de l'organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-347",
+                "name": "Pilotage stratégique",
+                "description": "Définition des orientations, suivi des priorités et coordination des actions nécessaires
+                à la réalisation de la stratégie de l'organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-348",
+                "name": "Gestion budgétaire",
+                "description": "Élaboration, suivi et contrôle des budgets, analyse des écarts et gestion des ressources
+                financières.",
+                "active": true
+                },
+                {
+                "_id": "COMP-349",
+                "name": "Gestion des ressources",
+                "description": "Planification et allocation des ressources humaines, matérielles et financières en
+                fonction des besoins et des priorités.",
+                "active": true
+                },
+                {
+                "_id": "COMP-350",
+                "name": "Prise de décision",
+                "description": "Analyse des situations, évaluation des options et choix d'orientations adaptés aux
+                objectifs et aux contraintes.",
+                "active": true
+                },
+                {
+                "_id": "COMP-351",
+                "name": "Communication managériale",
+                "description": "Transmission claire des informations, des orientations et des décisions auprès des
+                équipes afin de favoriser la compréhension et l'engagement.",
+                "active": true
+                },
+                {
+                "_id": "COMP-352",
+                "name": "Animation d'équipe",
+                "description": "Organisation et conduite de réunions, ateliers et activités collectives favorisant la
+                participation, la coordination et la cohésion d'équipe.",
+                "active": true
+                },
+                {
+                "_id": "COMP-353",
+                "name": "Gestion du changement",
+                "description": "Préparation, accompagnement et suivi des transformations organisationnelles ou
+                opérationnelles afin de faciliter leur adoption par les collaborateurs.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="034-insert-support-operations-competences" author="eca">
+
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-267",
+                "name": "Support informatique",
+                "description": "Assistance technique et accompagnement des utilisateurs dans l'utilisation des
+                équipements, logiciels et services informatiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-268",
+                "name": "Support utilisateur niveau 1",
+                "description": "Prise en charge initiale des demandes utilisateurs, résolution des incidents courants et
+                orientation vers les équipes spécialisées si nécessaire.",
+                "active": true
+                },
+                {
+                "_id": "COMP-269",
+                "name": "Support utilisateur niveau 2",
+                "description": "Diagnostic et résolution des incidents techniques nécessitant une expertise approfondie,
+                avec escalade vers le niveau supérieur si nécessaire.",
+                "active": true
+                },
+                {
+                "_id": "COMP-270",
+                "name": "Support utilisateur niveau 3",
+                "description": "Résolution des incidents complexes nécessitant une expertise technique avancée, une
+                analyse approfondie ou une intervention spécialisée.",
+                "active": true
+                },
+                {
+                "_id": "COMP-271",
+                "name": "Gestion des incidents",
+                "description": "Identification, enregistrement, priorisation, suivi et résolution des incidents afin de
+                rétablir rapidement le fonctionnement normal des services.",
+                "active": true
+                },
+                {
+                "_id": "COMP-272",
+                "name": "Gestion des demandes de service",
+                "description": "Traitement et suivi des demandes standard des utilisateurs selon des processus définis
+                et des niveaux de service convenus.",
+                "active": true
+                },
+                {
+                "_id": "COMP-273",
+                "name": "Gestion des problèmes",
+                "description": "Analyse des causes profondes des incidents et mise en œuvre d'actions correctives pour
+                prévenir leur réapparition.",
+                "active": true
+                },
+                {
+                "_id": "COMP-274",
+                "name": "Gestion des changements",
+                "description": "Évaluation, planification, validation et suivi des modifications apportées aux systèmes
+                et services informatiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-275",
+                "name": "Gestion des configurations",
+                "description": "Identification, documentation et suivi des composants informatiques, de leurs
+                caractéristiques et de leurs relations.",
+                "active": true
+                },
+                {
+                "_id": "COMP-276",
+                "name": "ITIL",
+                "description": "Connaissance et application du référentiel ITIL pour organiser et améliorer la gestion
+                des services informatiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-277",
+                "name": "Exploitation applicative",
+                "description": "Administration opérationnelle, surveillance et maintien en conditions opérationnelles
+                des applications et de leurs environnements.",
+                "active": true
+                },
+                {
+                "_id": "COMP-278",
+                "name": "Exploitation des infrastructures",
+                "description": "Administration quotidienne, maintenance et maintien en conditions opérationnelles des
+                infrastructures informatiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-279",
+                "name": "Supervision des services",
+                "description": "Surveillance de la disponibilité, des performances et du bon fonctionnement des services
+                informatiques afin de détecter les anomalies.",
+                "active": true
+                },
+                {
+                "_id": "COMP-280",
+                "name": "Gestion des sauvegardes",
+                "description": "Planification, exécution, contrôle et restauration des sauvegardes afin de garantir la
+                disponibilité et l'intégrité des données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-281",
+                "name": "Plan de reprise d'activité (PRA)",
+                "description": "Définition et mise en œuvre des procédures permettant de rétablir les systèmes
+                informatiques après un sinistre ou une interruption majeure.",
+                "active": true
+                },
+                {
+                "_id": "COMP-282",
+                "name": "Plan de continuité d'activité (PCA)",
+                "description": "Définition des dispositions organisationnelles et techniques permettant de maintenir les
+                activités essentielles lors d'une perturbation majeure.",
+                "active": true
+                },
+                {
+                "_id": "COMP-283",
+                "name": "Gestion des SLA",
+                "description": "Définition, suivi et contrôle des engagements de niveaux de service entre les équipes
+                informatiques et leurs utilisateurs ou clients.",
+                "active": true
+                },
+                {
+                "_id": "COMP-284",
+                "name": "Gestion des connaissances",
+                "description": "Collecte, structuration, documentation et partage des connaissances utiles à la
+                résolution des incidents et à l'exploitation des services.",
+                "active": true
+                },
+                {
+                "_id": "COMP-285",
+                "name": "Rédaction de procédures techniques",
+                "description": "Rédaction et mise à jour de documentations décrivant les opérations techniques, les
+                consignes d'exploitation et les procédures de résolution.",
+                "active": true
+                },
+                {
+                "_id": "COMP-286",
+                "name": "Assistance à distance",
+                "description": "Diagnostic et résolution de problèmes informatiques en intervenant à distance sur les
+                postes et environnements des utilisateurs.",
+                "active": true
+                },
+                {
+                "_id": "COMP-287",
+                "name": "ServiceNow",
+                "description": "Utilisation de la plateforme ServiceNow pour la gestion des services informatiques, des
+                incidents, des demandes et des changements.",
+                "active": true
+                },
+                {
+                "_id": "COMP-288",
+                "name": "GLPI",
+                "description": "Utilisation de GLPI pour la gestion du parc informatique, des tickets de support, des
+                incidents et des demandes de service.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+
+    </changeSet>
+
+</databaseChangeLog>

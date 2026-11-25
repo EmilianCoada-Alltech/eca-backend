@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="031-insert-project-product-competences" author="eca">
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-199",
+                "name": "Gestion de projet",
+                "description": "Organisation, planification, pilotage et suivi de projets afin d'atteindre les objectifs
+                définis dans les délais et budgets impartis.",
+                "active": true
+                },
+                {
+                "_id": "COMP-200",
+                "name": "Gestion de programme",
+                "description": "Coordination et pilotage de plusieurs projets liés afin d'obtenir des bénéfices et
+                objectifs stratégiques communs.",
+                "active": true
+                },
+                {
+                "_id": "COMP-201",
+                "name": "Gestion de portefeuille de projets",
+                "description": "Sélection, priorisation et suivi d'un ensemble de projets en fonction des objectifs et
+                priorités stratégiques d'une organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-202",
+                "name": "Méthode Agile",
+                "description": "Application des principes et pratiques Agiles pour organiser le développement de
+                produits et la réalisation de projets de manière itérative et collaborative.",
+                "active": true
+                },
+                {
+                "_id": "COMP-203",
+                "name": "Scrum",
+                "description": "Mise en œuvre du cadre de travail Scrum, incluant les rôles, événements et artefacts
+                permettant de gérer le travail en sprints.",
+                "active": true
+                },
+                {
+                "_id": "COMP-204",
+                "name": "Kanban",
+                "description": "Organisation et optimisation des flux de travail à l'aide de tableaux visuels et de la
+                limitation du travail en cours.",
+                "active": true
+                },
+                {
+                "_id": "COMP-205",
+                "name": "SAFe",
+                "description": "Mise en œuvre du Scaled Agile Framework pour coordonner les pratiques Agiles à l'échelle
+                de plusieurs équipes et organisations.",
+                "active": true
+                },
+                {
+                "_id": "COMP-206",
+                "name": "Gestion de produit",
+                "description": "Pilotage du cycle de vie d'un produit, de la définition de sa vision à son évolution en
+                fonction des besoins utilisateurs et des objectifs métier.",
+                "active": true
+                },
+                {
+                "_id": "COMP-207",
+                "name": "Product Ownership",
+                "description": "Définition, clarification et priorisation des besoins produit afin de maximiser la
+                valeur délivrée par l'équipe de développement.",
+                "active": true
+                },
+                {
+                "_id": "COMP-208",
+                "name": "Product Management",
+                "description": "Définition de la stratégie produit, de sa vision, de son positionnement et de sa feuille
+                de route tout au long de son cycle de vie.",
+                "active": true
+                },
+                {
+                "_id": "COMP-209",
+                "name": "Gestion du backlog",
+                "description": "Organisation, priorisation, affinage et suivi des éléments du backlog produit ou
+                projet.",
+                "active": true
+                },
+                {
+                "_id": "COMP-210",
+                "name": "Rédaction de user stories",
+                "description": "Formalisation des besoins utilisateurs sous forme de user stories accompagnées de
+                critères d'acceptation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-211",
+                "name": "Gestion des exigences",
+                "description": "Recueil, analyse, documentation, traçabilité et gestion de l'évolution des exigences
+                fonctionnelles et non fonctionnelles.",
+                "active": true
+                },
+                {
+                "_id": "COMP-212",
+                "name": "Planification de projet",
+                "description": "Définition des activités, jalons, dépendances, ressources et échéances nécessaires à la
+                réalisation d'un projet.",
+                "active": true
+                },
+                {
+                "_id": "COMP-213",
+                "name": "Estimation des charges",
+                "description": "Évaluation de l'effort, des ressources et du temps nécessaires à la réalisation des
+                tâches et activités d'un projet.",
+                "active": true
+                },
+                {
+                "_id": "COMP-214",
+                "name": "Gestion des risques projet",
+                "description": "Identification, évaluation, priorisation et suivi des risques susceptibles d'affecter la
+                réalisation d'un projet.",
+                "active": true
+                },
+                {
+                "_id": "COMP-215",
+                "name": "Gestion des budgets",
+                "description": "Élaboration, suivi et contrôle des budgets et dépenses associés aux projets et
+                activités.",
+                "active": true
+                },
+                {
+                "_id": "COMP-216",
+                "name": "Suivi des indicateurs projet",
+                "description": "Définition, mesure et analyse des indicateurs de performance permettant de suivre
+                l'avancement et la santé d'un projet.",
+                "active": true
+                },
+                {
+                "_id": "COMP-217",
+                "name": "Coordination d'équipe",
+                "description": "Organisation et coordination des activités, responsabilités et interactions entre les
+                membres d'une équipe projet.",
+                "active": true
+                },
+                {
+                "_id": "COMP-218",
+                "name": "Animation d'ateliers",
+                "description": "Préparation et animation d'ateliers collaboratifs pour recueillir des besoins, résoudre
+                des problèmes et faciliter la prise de décision.",
+                "active": true
+                },
+                {
+                "_id": "COMP-219",
+                "name": "Gestion des parties prenantes",
+                "description": "Identification, analyse et coordination des parties prenantes afin de prendre en compte
+                leurs attentes et leur niveau d'implication dans un projet.",
+                "active": true
+                },
+                {
+                "_id": "COMP-220",
+                "name": "Conduite de réunions",
+                "description": "Préparation, animation et suivi de réunions afin de favoriser les échanges, la prise de
+                décision et le suivi des actions.",
+                "active": true
+                },
+                {
+                "_id": "COMP-221",
+                "name": "Jira",
+                "description": "Utilisation de Jira pour la gestion des projets, le suivi des tâches, des anomalies et
+                des workflows d'équipe.",
+                "active": true
+                },
+                {
+                "_id": "COMP-222",
+                "name": "Confluence",
+                "description": "Création, organisation et partage de documentation collaborative et de connaissances
+                avec Confluence.",
+                "active": true
+                },
+                {
+                "_id": "COMP-223",
+                "name": "Microsoft Project",
+                "description": "Planification, organisation et suivi de projets à l'aide des fonctionnalités de gestion
+                de planning et de ressources de Microsoft Project.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

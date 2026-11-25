@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xmlns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="026-insert-data-ai-competences" author="eca">
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-061",
+                "name": "Data analysis",
+                "description": "Analyse de données afin d'identifier des tendances, des relations et des informations
+                utiles à la prise de décision.",
+                "active": true
+                },
+                {
+                "_id": "COMP-062",
+                "name": "Data engineering",
+                "description": "Conception, développement et maintenance des infrastructures et pipelines permettant de
+                collecter, transformer et distribuer les données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-063",
+                "name": "Data science",
+                "description": "Application de méthodes statistiques, mathématiques et informatiques pour extraire des
+                connaissances et construire des modèles à partir des données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-064",
+                "name": "Data mining",
+                "description": "Exploration de grands ensembles de données afin d'identifier des motifs, des
+                corrélations et des relations significatives.",
+                "active": true
+                },
+                {
+                "_id": "COMP-065",
+                "name": "Data visualisation",
+                "description": "Représentation graphique des données afin de faciliter leur compréhension et leur
+                interprétation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-066",
+                "name": "Business Intelligence (BI)",
+                "description": "Collecte, organisation, analyse et restitution des données pour soutenir le pilotage et
+                les décisions métier.",
+                "active": true
+                },
+                {
+                "_id": "COMP-067",
+                "name": "Machine Learning",
+                "description": "Conception et entraînement de modèles capables d'apprendre à partir de données pour
+                effectuer des prédictions ou des classifications.",
+                "active": true
+                },
+                {
+                "_id": "COMP-068",
+                "name": "Deep Learning",
+                "description": "Conception et entraînement de réseaux de neurones profonds pour résoudre des problèmes
+                complexes à partir de données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-069",
+                "name": "Intelligence artificielle générative",
+                "description": "Conception et utilisation de systèmes d'intelligence artificielle capables de générer du
+                texte, des images, du code ou d'autres contenus.",
+                "active": true
+                },
+                {
+                "_id": "COMP-070",
+                "name": "Traitement du langage naturel (NLP)",
+                "description": "Développement de méthodes et systèmes permettant aux machines d'analyser, comprendre et
+                traiter le langage humain.",
+                "active": true
+                },
+                {
+                "_id": "COMP-071",
+                "name": "Computer Vision",
+                "description": "Développement de systèmes capables d'analyser, interpréter et extraire des informations
+                à partir d'images et de vidéos.",
+                "active": true
+                },
+                {
+                "_id": "COMP-072",
+                "name": "Analyse prédictive",
+                "description": "Utilisation de données historiques et de modèles statistiques ou d'apprentissage
+                automatique pour anticiper des événements ou des tendances.",
+                "active": true
+                },
+                {
+                "_id": "COMP-073",
+                "name": "Modélisation statistique",
+                "description": "Construction et utilisation de modèles statistiques pour décrire des phénomènes,
+                analyser des données et tester des hypothèses.",
+                "active": true
+                },
+                {
+                "_id": "COMP-074",
+                "name": "Préparation et nettoyage des données",
+                "description": "Collecte, transformation, validation et correction des données afin d'assurer leur
+                cohérence et leur qualité avant exploitation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-075",
+                "name": "Gouvernance des données",
+                "description": "Définition et mise en œuvre des règles, responsabilités et processus encadrant la
+                gestion, l'accès et l'utilisation des données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-076",
+                "name": "Qualité des données",
+                "description": "Évaluation et amélioration de l'exactitude, de la cohérence, de la complétude et de la
+                fiabilité des données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-077",
+                "name": "Modélisation des données",
+                "description": "Conception de modèles représentant la structure, les relations et les règles
+                d'organisation des données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-078",
+                "name": "Conception de pipelines ETL",
+                "description": "Conception de processus d'extraction, de transformation et de chargement des données
+                entre différentes sources et destinations.",
+                "active": true
+                },
+                {
+                "_id": "COMP-079",
+                "name": "Conception de pipelines ELT",
+                "description": "Conception de processus d'extraction et de chargement des données avant leur
+                transformation dans le système de destination.",
+                "active": true
+                },
+                {
+                "_id": "COMP-080",
+                "name": "Big Data",
+                "description": "Conception et exploitation de solutions permettant de collecter, stocker et traiter des
+                volumes importants de données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-081",
+                "name": "Data Warehousing",
+                "description": "Conception et administration d'entrepôts de données destinés à centraliser et exploiter
+                les données à des fins analytiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-082",
+                "name": "Data Lakes",
+                "description": "Conception et exploitation de plateformes permettant de stocker des données brutes ou
+                transformées dans différents formats.",
+                "active": true
+                },
+                {
+                "_id": "COMP-083",
+                "name": "Python pour la data",
+                "description": "Utilisation de Python et de ses bibliothèques spécialisées pour l'analyse, la
+                manipulation et le traitement des données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-084",
+                "name": "Power BI",
+                "description": "Création de rapports interactifs, tableaux de bord et modèles analytiques avec Microsoft
+                Power BI.",
+                "active": true
+                },
+                {
+                "_id": "COMP-085",
+                "name": "Tableau",
+                "description": "Analyse et visualisation interactive de données à l'aide de la plateforme Tableau.",
+                "active": true
+                },
+                {
+                "_id": "COMP-086",
+                "name": "Apache Spark",
+                "description": "Traitement distribué de grands volumes de données avec le moteur Apache Spark.",
+                "active": true
+                },
+                {
+                "_id": "COMP-087",
+                "name": "Apache Kafka",
+                "description": "Conception et exploitation de systèmes de diffusion et de traitement de flux de données
+                en temps réel avec Apache Kafka.",
+                "active": true
+                },
+                {
+                "_id": "COMP-088",
+                "name": "dbt",
+                "description": "Transformation, modélisation et documentation de données dans des entrepôts de données
+                avec dbt.",
+                "active": true
+                },
+                {
+                "_id": "COMP-089",
+                "name": "TensorFlow",
+                "description": "Développement, entraînement et déploiement de modèles de machine learning et de deep
+                learning avec TensorFlow.",
+                "active": true
+                },
+                {
+                "_id": "COMP-090",
+                "name": "PyTorch",
+                "description": "Développement et entraînement de modèles de machine learning et de deep learning avec
+                PyTorch.",
+                "active": true
+                },
+                {
+                "_id": "COMP-091",
+                "name": "SQL avancé",
+                "description": "Maîtrise des fonctionnalités avancées de SQL, notamment les jointures complexes,
+                fonctions analytiques, CTE et optimisation des requêtes.",
+                "active": true
+                },
+                {
+                "_id": "COMP-092",
+                "name": "Prompt engineering",
+                "description": "Conception et optimisation d'instructions destinées aux modèles d'intelligence
+                artificielle générative afin d'obtenir des résultats pertinents et fiables.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

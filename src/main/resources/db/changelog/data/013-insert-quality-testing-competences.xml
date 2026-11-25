@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="030-insert-quality-testing-competences" author="eca">
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-174",
+                "name": "Tests unitaires",
+                "description": "Vérification du comportement de composants logiciels isolés au moyen de tests ciblés.",
+                "active": true
+                },
+                {
+                "_id": "COMP-175",
+                "name": "Tests d'intégration",
+                "description": "Vérification du bon fonctionnement des interactions entre plusieurs composants ou
+                systèmes intégrés.",
+                "active": true
+                },
+                {
+                "_id": "COMP-176",
+                "name": "Tests fonctionnels",
+                "description": "Vérification de la conformité d'une application avec les exigences et fonctionnalités
+                attendues.",
+                "active": true
+                },
+                {
+                "_id": "COMP-177",
+                "name": "Tests end-to-end",
+                "description": "Validation de parcours complets d'utilisation d'une application en simulant les
+                interactions réelles des utilisateurs.",
+                "active": true
+                },
+                {
+                "_id": "COMP-178",
+                "name": "Tests de non-régression",
+                "description": "Vérification qu'une évolution logicielle n'introduit pas de régression dans les
+                fonctionnalités existantes.",
+                "active": true
+                },
+                {
+                "_id": "COMP-179",
+                "name": "Tests de performance",
+                "description": "Évaluation des performances d'une application ou d'un système en matière de temps de
+                réponse, consommation de ressources et capacité de traitement.",
+                "active": true
+                },
+                {
+                "_id": "COMP-180",
+                "name": "Tests de charge",
+                "description": "Évaluation du comportement d'un système lorsqu'il est soumis à différents niveaux de
+                charge et de concurrence.",
+                "active": true
+                },
+                {
+                "_id": "COMP-181",
+                "name": "Tests de sécurité",
+                "description": "Vérification de la résistance d'une application ou d'un système face aux vulnérabilités
+                et menaces de sécurité.",
+                "active": true
+                },
+                {
+                "_id": "COMP-182",
+                "name": "Tests d'API",
+                "description": "Vérification du fonctionnement, des réponses, des contrats et des performances des
+                interfaces de programmation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-183",
+                "name": "Tests automatisés",
+                "description": "Conception et exécution de scénarios de tests réalisés automatiquement à l'aide d'outils
+                et de scripts.",
+                "active": true
+                },
+                {
+                "_id": "COMP-184",
+                "name": "Tests manuels",
+                "description": "Exécution de scénarios de tests par un testeur afin de vérifier le comportement et la
+                conformité d'un logiciel.",
+                "active": true
+                },
+                {
+                "_id": "COMP-185",
+                "name": "Tests exploratoires",
+                "description": "Exploration libre et structurée d'une application afin d'identifier des anomalies et
+                comportements inattendus sans s'appuyer exclusivement sur des scénarios prédéfinis.",
+                "active": true
+                },
+                {
+                "_id": "COMP-186",
+                "name": "Tests d'acceptation utilisateur (UAT)",
+                "description": "Validation d'une solution par les utilisateurs ou représentants métier afin de vérifier
+                qu'elle répond aux besoins et exigences opérationnelles.",
+                "active": true
+                },
+                {
+                "_id": "COMP-187",
+                "name": "Automatisation des tests",
+                "description": "Mise en place de frameworks, scripts et processus permettant d'automatiser l'exécution
+                et le suivi des tests logiciels.",
+                "active": true
+                },
+                {
+                "_id": "COMP-188",
+                "name": "Selenium",
+                "description": "Automatisation des tests d'interfaces web et des interactions avec les navigateurs à
+                l'aide de Selenium.",
+                "active": true
+                },
+                {
+                "_id": "COMP-189",
+                "name": "Cypress",
+                "description": "Automatisation des tests d'applications web, notamment les tests end-to-end et les tests
+                de composants, avec Cypress.",
+                "active": true
+                },
+                {
+                "_id": "COMP-190",
+                "name": "Playwright",
+                "description": "Automatisation des tests de navigateurs et des parcours utilisateur sur plusieurs
+                moteurs de navigation avec Playwright.",
+                "active": true
+                },
+                {
+                "_id": "COMP-191",
+                "name": "JUnit",
+                "description": "Conception et exécution de tests automatisés pour les applications Java avec le
+                framework JUnit.",
+                "active": true
+                },
+                {
+                "_id": "COMP-192",
+                "name": "Mockito",
+                "description": "Utilisation de mocks et objets simulés pour isoler et tester les composants logiciels
+                Java avec Mockito.",
+                "active": true
+                },
+                {
+                "_id": "COMP-193",
+                "name": "Postman",
+                "description": "Conception, exécution et automatisation de requêtes et scénarios de tests d'API avec
+                Postman.",
+                "active": true
+                },
+                {
+                "_id": "COMP-194",
+                "name": "Gestion des anomalies",
+                "description": "Identification, documentation, qualification, priorisation et suivi des anomalies
+                logicielles jusqu'à leur résolution.",
+                "active": true
+                },
+                {
+                "_id": "COMP-195",
+                "name": "Assurance qualité logicielle",
+                "description": "Mise en œuvre de processus et pratiques visant à garantir la qualité, la fiabilité et la
+                conformité des logiciels.",
+                "active": true
+                },
+                {
+                "_id": "COMP-196",
+                "name": "Stratégie de tests",
+                "description": "Définition de l'approche, des niveaux, des types, des ressources et des critères de
+                validation des tests logiciels.",
+                "active": true
+                },
+                {
+                "_id": "COMP-197",
+                "name": "Analyse de couverture de tests",
+                "description": "Mesure et analyse de la couverture des tests sur le code, les fonctionnalités et les
+                exigences d'une application.",
+                "active": true
+                },
+                {
+                "_id": "COMP-198",
+                "name": "Méthodes de validation logicielle",
+                "description": "Application de méthodes et processus permettant de vérifier qu'un logiciel répond aux
+                exigences fonctionnelles et techniques définies.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

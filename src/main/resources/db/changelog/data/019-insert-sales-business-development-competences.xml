@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="036-insert-sales-business-development-competences" author="eca">
+
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-314",
+                "name": "Prospection commerciale",
+                "description": "Identification et recherche de nouveaux prospects à travers des actions de prospection,
+                de qualification et de prise de contact.",
+                "active": true
+                },
+                {
+                "_id": "COMP-315",
+                "name": "Développement commercial",
+                "description": "Mise en œuvre d'actions visant à développer l'activité commerciale, acquérir de nouveaux
+                clients et accroître le chiffre d'affaires.",
+                "active": true
+                },
+                {
+                "_id": "COMP-316",
+                "name": "Négociation commerciale",
+                "description": "Conduite de négociations avec les clients et partenaires afin de parvenir à des accords
+                commerciaux équilibrés.",
+                "active": true
+                },
+                {
+                "_id": "COMP-317",
+                "name": "Gestion de portefeuille clients",
+                "description": "Suivi et développement d'un portefeuille de clients, gestion des opportunités et
+                identification des besoins et perspectives commerciales.",
+                "active": true
+                },
+                {
+                "_id": "COMP-318",
+                "name": "Gestion de comptes clés (Key Account Management)",
+                "description": "Gestion stratégique des comptes clients majeurs, développement des relations
+                commerciales et coordination des actions visant à renforcer les partenariats.",
+                "active": true
+                },
+                {
+                "_id": "COMP-319",
+                "name": "Relation client",
+                "description": "Gestion des interactions avec les clients, compréhension de leurs attentes et maintien
+                d'une relation professionnelle de qualité.",
+                "active": true
+                },
+                {
+                "_id": "COMP-320",
+                "name": "Fidélisation client",
+                "description": "Mise en place d'actions visant à renforcer la satisfaction, la confiance et la relation
+                à long terme avec les clients.",
+                "active": true
+                },
+                {
+                "_id": "COMP-321",
+                "name": "Réponse aux appels d'offres",
+                "description": "Analyse des dossiers d'appels d'offres, coordination des contributions et préparation
+                des réponses techniques, fonctionnelles et commerciales.",
+                "active": true
+                },
+                {
+                "_id": "COMP-322",
+                "name": "Rédaction de propositions commerciales",
+                "description": "Élaboration de propositions commerciales présentant les solutions, prestations,
+                conditions et bénéfices adaptés aux besoins des clients.",
+                "active": true
+                },
+                {
+                "_id": "COMP-323",
+                "name": "Élaboration de devis",
+                "description": "Évaluation des prestations et des coûts, définition des conditions tarifaires et
+                préparation de devis adaptés aux demandes des clients.",
+                "active": true
+                },
+                {
+                "_id": "COMP-324",
+                "name": "Vente de services informatiques",
+                "description": "Commercialisation de prestations informatiques telles que le conseil, l'assistance
+                technique, l'intégration et l'externalisation de services.",
+                "active": true
+                },
+                {
+                "_id": "COMP-325",
+                "name": "Vente de solutions logicielles",
+                "description": "Commercialisation de logiciels et de solutions numériques en identifiant les besoins des
+                clients et en présentant les offres adaptées.",
+                "active": true
+                },
+                {
+                "_id": "COMP-326",
+                "name": "Avant-vente technique",
+                "description": "Accompagnement technique des démarches commerciales, qualification des besoins et
+                contribution à la conception de solutions adaptées.",
+                "active": true
+                },
+                {
+                "_id": "COMP-327",
+                "name": "Présentation commerciale",
+                "description": "Préparation et animation de présentations destinées à valoriser une offre, une
+                prestation ou une solution auprès de clients et prospects.",
+                "active": true
+                },
+                {
+                "_id": "COMP-328",
+                "name": "Démonstration de solutions",
+                "description": "Présentation pratique des fonctionnalités et des bénéfices d'une solution afin
+                d'illustrer son adéquation avec les besoins d'un client.",
+                "active": true
+                },
+                {
+                "_id": "COMP-329",
+                "name": "Analyse des besoins clients",
+                "description": "Recueil, qualification et analyse des attentes, contraintes et objectifs des clients
+                afin de proposer des réponses adaptées.",
+                "active": true
+                },
+                {
+                "_id": "COMP-330",
+                "name": "Gestion du pipeline commercial",
+                "description": "Suivi et pilotage des opportunités commerciales à chaque étape du processus de vente, de
+                la qualification à la conclusion.",
+                "active": true
+                },
+                {
+                "_id": "COMP-331",
+                "name": "CRM",
+                "description": "Utilisation des outils de gestion de la relation client pour centraliser les
+                informations, suivre les interactions et piloter les activités commerciales.",
+                "active": true
+                },
+                {
+                "_id": "COMP-332",
+                "name": "Stratégie commerciale",
+                "description": "Définition des objectifs, des marchés cibles, du positionnement et des actions
+                permettant de développer durablement l'activité commerciale.",
+                "active": true
+                },
+                {
+                "_id": "COMP-333",
+                "name": "Partenariats commerciaux",
+                "description": "Identification, négociation et développement de partenariats visant à créer des
+                opportunités commerciales et des synergies entre organisations.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -19,7 +19,7 @@
     <!-- Agencies-->
     <include file="db/changelog/data/003-insert-agencies.xml"/>
 
-    <!-- Experience Levels -->
+    <!-- Experience levels -->
     <include file="db/changelog/data/004-insert-experience-levels.xml"/>
 
     <!-- Roles -->
@@ -27,6 +27,52 @@
 
     <!-- Competence domains -->
     <include file="db/changelog/data/006-insert-domains.xml"/>
+
+    <!-- Development competences -->
+    <include file="db/changelog/data/007-insert-development-competences.xml"/>
+
+    <!-- Architecture competences -->
+    <include file="db/changelog/data/008-insert-architecture-competences.xml"/>
+
+    <!-- Data Ai competences -->
+    <include file="db/changelog/data/009-insert-data-ai-competences.xml"/>
+
+    <!-- Cloud DevOps competences -->
+    <include file="db/changelog/data/010-insert-cloud-devops-competences.xml"/>
+
+    <!-- Systems Network competences -->
+    <include file="db/changelog/data/011-insert-systems-network-competences.xml"/>
+
+    <!-- Cybersecurity competences -->
+    <include file="db/changelog/data/012-insert-cybersecurity-competences.xml"/>
+
+    <!-- Quality testing competences -->
+    <include file="db/changelog/data/013-insert-quality-testing-competences.xml"/>
+
+    <!-- Project product competences -->
+    <include file="db/changelog/data/014-insert-project-product-competences.xml"/>
+
+    <!-- Digital transformation competences -->
+    <include file="db/changelog/data/015-insert-digital-transformation-competences.xml"/>
+
+    <!-- UX UI Design competences -->
+    <include file="db/changelog/data/016-insert-ux-ui-design-competences.xml"/>
+
+    <!-- Support operations competences -->
+    <include file="db/changelog/data/017-insert-support-opperations-competences.xml"/>
+
+    <!-- ERP Business Solutions competences -->
+    <include file="db/changelog/data/018-insert-erp-business-solutions-competences.xml"/>
+
+    <!-- Sales Business Development competences -->
+    <include file="db/changelog/data/019-insert-sales-business-development-competences.xml"/>
+
+    <!-- Management leadership competences -->
+    <include file="db/changelog/data/020-insert-managemenet-leadership-competences.xml"/>
+
+    <!-- Support Functions competences -->
+    <include file="db/changelog/data/021-insert-support-functions-competences.xml"/>
+
 </databaseChangeLog>
 
 

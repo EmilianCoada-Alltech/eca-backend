@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="024-insert-development-competences" author="eca">
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-001",
+                "name": "Java",
+                "description": "Développement d'applications et de services avec le langage Java.",
+                "active": true
+                },
+                {
+                "_id": "COMP-002",
+                "name": "JavaScript",
+                "description": "Développement d'applications web avec le langage JavaScript.",
+                "active": true
+                },
+                {
+                "_id": "COMP-003",
+                "name": "TypeScript",
+                "description": "Développement d'applications avec TypeScript et son système de typage statique.",
+                "active": true
+                },
+                {
+                "_id": "COMP-004",
+                "name": "Python",
+                "description": "Développement de scripts, d'applications et de services avec Python.",
+                "active": true
+                },
+                {
+                "_id": "COMP-005",
+                "name": "C",
+                "description": "Développement logiciel avec le langage de programmation C.",
+                "active": true
+                },
+                {
+                "_id": "COMP-006",
+                "name": "C++",
+                "description": "Développement logiciel avec le langage de programmation C++.",
+                "active": true
+                },
+                {
+                "_id": "COMP-007",
+                "name": "C#",
+                "description": "Développement d'applications et de services avec le langage C#.",
+                "active": true
+                },
+                {
+                "_id": "COMP-008",
+                "name": "PHP",
+                "description": "Développement d'applications web et de services avec PHP.",
+                "active": true
+                },
+                {
+                "_id": "COMP-009",
+                "name": "Ruby",
+                "description": "Développement d'applications et de services avec Ruby.",
+                "active": true
+                },
+                {
+                "_id": "COMP-010",
+                "name": "Go",
+                "description": "Développement de logiciels et de services avec le langage Go.",
+                "active": true
+                },
+                {
+                "_id": "COMP-011",
+                "name": "Kotlin",
+                "description": "Développement d'applications avec le langage Kotlin, notamment pour Android et la JVM.",
+                "active": true
+                },
+                {
+                "_id": "COMP-012",
+                "name": "Swift",
+                "description": "Développement d'applications pour les plateformes Apple avec Swift.",
+                "active": true
+                },
+                {
+                "_id": "COMP-013",
+                "name": "SQL",
+                "description": "Interrogation, manipulation et gestion de données dans des bases relationnelles avec
+                SQL.",
+                "active": true
+                },
+                {
+                "_id": "COMP-014",
+                "name": "HTML",
+                "description": "Structuration du contenu des pages et applications web avec HTML.",
+                "active": true
+                },
+                {
+                "_id": "COMP-015",
+                "name": "CSS",
+                "description": "Mise en forme, présentation et adaptation responsive des interfaces web avec CSS.",
+                "active": true
+                },
+                {
+                "_id": "COMP-016",
+                "name": "React",
+                "description": "Développement d'interfaces utilisateur avec la bibliothèque React.",
+                "active": true
+                },
+                {
+                "_id": "COMP-017",
+                "name": "Vue.js",
+                "description": "Développement d'interfaces utilisateur avec le framework Vue.js.",
+                "active": true
+                },
+                {
+                "_id": "COMP-018",
+                "name": "Angular",
+                "description": "Développement d'applications web avec le framework Angular.",
+                "active": true
+                },
+                {
+                "_id": "COMP-019",
+                "name": "Node.js",
+                "description": "Développement d'applications et de services côté serveur avec Node.js.",
+                "active": true
+                },
+                {
+                "_id": "COMP-020",
+                "name": "Spring Framework",
+                "description": "Développement d'applications Java avec l'écosystème Spring.",
+                "active": true
+                },
+                {
+                "_id": "COMP-021",
+                "name": "Spring Boot",
+                "description": "Développement et configuration d'applications Java autonomes avec Spring Boot.",
+                "active": true
+                },
+                {
+                "_id": "COMP-022",
+                "name": ".NET",
+                "description": "Développement d'applications et de services avec la plateforme .NET.",
+                "active": true
+                },
+                {
+                "_id": "COMP-023",
+                "name": "Laravel",
+                "description": "Développement d'applications web avec le framework PHP Laravel.",
+                "active": true
+                },
+                {
+                "_id": "COMP-024",
+                "name": "Symfony",
+                "description": "Développement d'applications web et de services avec le framework PHP Symfony.",
+                "active": true
+                },
+                {
+                "_id": "COMP-025",
+                "name": "Développement frontend",
+                "description": "Conception et développement de la partie visible et interactive des applications.",
+                "active": true
+                },
+                {
+                "_id": "COMP-026",
+                "name": "Développement backend",
+                "description": "Conception et développement de la logique métier, des services et des traitements côté
+                serveur.",
+                "active": true
+                },
+                {
+                "_id": "COMP-027",
+                "name": "Développement full-stack",
+                "description": "Développement couvrant les couches frontend et backend d'une application.",
+                "active": true
+                },
+                {
+                "_id": "COMP-028",
+                "name": "Développement mobile",
+                "description": "Conception et développement d'applications pour smartphones et tablettes.",
+                "active": true
+                },
+                {
+                "_id": "COMP-029",
+                "name": "Développement d'applications desktop",
+                "description": "Conception et développement d'applications destinées aux environnements de bureau.",
+                "active": true
+                },
+                {
+                "_id": "COMP-030",
+                "name": "Développement d'API REST",
+                "description": "Conception et développement d'interfaces de programmation respectant les principes
+                REST.",
+                "active": true
+                },
+                {
+                "_id": "COMP-031",
+                "name": "Développement d'API GraphQL",
+                "description": "Conception et développement d'API utilisant le langage de requête GraphQL.",
+                "active": true
+                },
+                {
+                "_id": "COMP-032",
+                "name": "Programmation orientée objet",
+                "description": "Conception et développement logiciel selon les principes de la programmation orientée
+                objet.",
+                "active": true
+                },
+                {
+                "_id": "COMP-033",
+                "name": "Programmation fonctionnelle",
+                "description": "Conception de logiciels en utilisant les principes et paradigmes de la programmation
+                fonctionnelle.",
+                "active": true
+                },
+                {
+                "_id": "COMP-034",
+                "name": "Conception de composants réutilisables",
+                "description": "Conception et développement de composants logiciels modulaires, réutilisables et
+                maintenables.",
+                "active": true
+                },
+                {
+                "_id": "COMP-035",
+                "name": "Intégration de services tiers",
+                "description": "Connexion d'applications à des services externes, API et plateformes tierces.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>
