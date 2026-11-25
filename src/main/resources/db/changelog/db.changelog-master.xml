@@ -73,6 +73,52 @@
     <!-- Support Functions competences -->
     <include file="db/changelog/data/021-insert-support-functions-competences.xml"/>
 
+    <!-- Development competences domains -->
+    <include file="db/changelog/data/022-insert-development-competence-domains.xml"/>
+
+    <!-- Architecture competences domains -->
+    <include file="db/changelog/data/023-insert-architecture-competence-domains.xml"/>
+
+    <!-- Data Ai competences domains -->
+    <include file="db/changelog/data/024-insert-data-ai-competence-domains.xml"/>
+
+    <!-- Cloud DevOps competences domains -->
+    <include file="db/changelog/data/025-insert-cloud-devops-competence-domains.xml"/>
+
+    <!-- Systems Network competences domains -->
+    <include file="db/changelog/data/026-insert-systems-network-competence-domains.xml"/>
+
+    <!-- Cybersecurity competences domains -->
+    <include file="db/changelog/data/027-insert-cybersecurity-competence-domains.xml"/>
+
+    <!-- Quality Testing competences domains -->
+    <include file="db/changelog/data/028-insert-quality-testing-competence-domains.xml"/>
+
+    <!-- Project product competences domains -->
+    <include file="db/changelog/data/029-insert-project-product-competence-domains.xml"/>
+
+    <!-- Digital Transformation competences domains -->
+    <include file="db/changelog/data/030-insert-digital-transformation-competence-domains.xml"/>
+
+    <!-- UX UI competences domains -->
+    <include file="db/changelog/data/031-insert-ux-ui-competence-domains.xml"/>
+
+    <!-- Support operations competences domains -->
+    <include file="db/changelog/data/032-insert-support-operations-competence-domains.xml"/>
+
+    <!-- ERP Business competences domains -->
+    <include file="db/changelog/data/033-insert-erp-business-solutions-competence-domains.xml"/>
+
+    <!-- Sales Business Solutions competences domains -->
+    <include file="db/changelog/data/034-insert-sales-business-development-competence-domains.xml"/>
+
+    <!-- Management Leadership competences domains -->
+    <include file="db/changelog/data/035-insert-management-leadership-competence-domains.xml"/>
+
+    <!-- Support Functions competences domains -->
+    <include file="db/changelog/data/036-insert-support-functions-competence-domains.xml"/>
+
+
 </databaseChangeLog>
 
 
