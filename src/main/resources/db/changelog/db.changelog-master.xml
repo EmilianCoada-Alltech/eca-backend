@@ -5,7 +5,11 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
+    <!-- Database structure -->
     <include file="db/changelog/changes/001-create-collections.xml"/>
+
+    <!-- Initial reference data -->
+    <include file="db/changelog/data/001-insert-profession-categories.xml"/>
 
 </databaseChangeLog>
 
