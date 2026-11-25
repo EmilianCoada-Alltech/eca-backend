@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <!-- Collaborator domain -->
+    <changeSet id="001-create-collaborators" author="eca">
+        <mongodb:createCollection collectionName="collaborators"/>
+    </changeSet>
+
+    <!-- Reference data -->
+    <changeSet id="002-create-agencies" author="eca">
+        <mongodb:createCollection collectionName="agencies"/>
+    </changeSet>
+
+    <changeSet id="003-create-competences" author="eca">
+        <mongodb:createCollection collectionName="competences"/>
+    </changeSet>
+
+    <changeSet id="004-create-professions" author="eca">
+        <mongodb:createCollection collectionName="professions"/>
+    </changeSet>
+
+    <changeSet id="005-create-profession-categories" author="eca">
+        <mongodb:createCollection collectionName="profession_categories"/>
+    </changeSet>
+
+    <changeSet id="006-create-experience-levels" author="eca">
+        <mongodb:createCollection collectionName="experience_levels"/>
+    </changeSet>
+
+    <changeSet id="007-create-domains" author="eca">
+        <mongodb:createCollection collectionName="domains"/>
+    </changeSet>
+
+    <changeSet id="008-create-competence-domains" author="eca">
+        <mongodb:createCollection collectionName="competence_domains"/>
+    </changeSet>
+
+    <changeSet id="009-create-profession-competences" author="eca">
+        <mongodb:createCollection collectionName="profession_competences"/>
+    </changeSet>
+
+    <!-- Mission domain -->
+    <changeSet id="010-create-clients" author="eca">
+        <mongodb:createCollection collectionName="clients"/>
+    </changeSet>
+
+    <changeSet id="011-create-missions" author="eca">
+        <mongodb:createCollection collectionName="missions"/>
+    </changeSet>
+
+    <changeSet id="012-create-collaborator-missions" author="eca">
+        <mongodb:createCollection collectionName="collaborator_missions"/>
+    </changeSet>
+
+    <!-- Roles -->
+    <changeSet id="013-create-roles" author="eca">
+        <mongodb:createCollection collectionName="roles"/>
+    </changeSet>
+
+    <!-- Tools -->
+    <changeSet id="014-create-tools" author="eca">
+        <mongodb:createCollection collectionName="tools"/>
+    </changeSet>
+
+    <changeSet id="015-create-tool-categories" author="eca">
+        <mongodb:createCollection collectionName="tool_categories"/>
+    </changeSet>
+
+    <!-- Audit and notifications -->
+    <changeSet id="016-create-audit-logs" author="eca">
+        <mongodb:createCollection collectionName="audit_logs"/>
+    </changeSet>
+
+    <changeSet id="017-create-notifications" author="eca">
+        <mongodb:createCollection collectionName="notifications"/>
+    </changeSet>
+
+</databaseChangeLog>
