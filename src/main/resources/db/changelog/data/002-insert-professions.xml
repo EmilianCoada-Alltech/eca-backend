@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="019-insert-professions" author="eca">
+
+        <mongodb:insertMany collectionName="professions">
+            <mongodb:documents>
+                [
+                {
+                "_id": "PROF-001",
+                "name": "Développeur Frontend",
+                "description": "Développe des interfaces utilisateur et des applications côté client.",
+                "categoryId": "CAT-01"
+                },
+                {
+                "_id": "PROF-002",
+                "name": "Développeur Backend",
+                "description": "Développe des applications côté serveur, des API et la logique métier.",
+                "categoryId": "CAT-01"
+                },
+                {
+                "_id": "PROF-003",
+                "name": "Développeur Full Stack",
+                "description": "Développe les composants frontend et backend des applications.",
+                "categoryId": "CAT-01"
+                },
+                {
+                "_id": "PROF-004",
+                "name": "Développeur Mobile",
+                "description": "Développe des applications pour les plateformes mobiles.",
+                "categoryId": "CAT-01"
+                },
+                {
+                "_id": "PROF-005",
+                "name": "Développeur logiciel",
+                "description": "Conçoit, développe et maintient des applications logicielles.",
+                "categoryId": "CAT-01"
+                },
+                {
+                "_id": "PROF-006",
+                "name": "Architecte logiciel",
+                "description": "Définit l'architecture logicielle et les choix de conception technique.",
+                "categoryId": "CAT-02"
+                },
+                {
+                "_id": "PROF-007",
+                "name": "Architecte solution",
+                "description": "Conçoit des solutions intégrant plusieurs systèmes et technologies.",
+                "categoryId": "CAT-02"
+                },
+                {
+                "_id": "PROF-008",
+                "name": "Tech Lead",
+                "description": "Assure le leadership technique et accompagne les équipes de développement.",
+                "categoryId": "CAT-02"
+                },
+                {
+                "_id": "PROF-009",
+                "name": "Expert technique",
+                "description": "Apporte une expertise spécialisée et des recommandations techniques.",
+                "categoryId": "CAT-02"
+                },
+                {
+                "_id": "PROF-010",
+                "name": "Data Analyst",
+                "description": "Analyse les données et produit des rapports et indicateurs.",
+                "categoryId": "CAT-03"
+                },
+                {
+                "_id": "PROF-011",
+                "name": "Data Engineer",
+                "description": "Conçoit et maintient les pipelines et plateformes de données.",
+                "categoryId": "CAT-03"
+                },
+                {
+                "_id": "PROF-012",
+                "name": "Data Scientist",
+                "description": "Développe des modèles statistiques et des algorithmes prédictifs.",
+                "categoryId": "CAT-03"
+                },
+                {
+                "_id": "PROF-013",
+                "name": "Ingénieur IA / Machine Learning",
+                "description": "Conçoit et implémente des solutions d'intelligence artificielle et de machine
+                learning.",
+                "categoryId": "CAT-03"
+                },
+                {
+                "_id": "PROF-014",
+                "name": "Consultant BI",
+                "description": "Conçoit et développe des solutions de business intelligence et de reporting.",
+                "categoryId": "CAT-03"
+                },
+                {
+                "_id": "PROF-015",
+                "name": "Ingénieur Cloud",
+                "description": "Conçoit et administre des infrastructures et environnements Cloud.",
+                "categoryId": "CAT-04"
+                },
+                {
+                "_id": "PROF-016",
+                "name": "Architecte Cloud",
+                "description": "Définit les architectures Cloud et les stratégies de migration.",
+                "categoryId": "CAT-04"
+                },
+                {
+                "_id": "PROF-017",
+                "name": "Ingénieur DevOps",
+                "description": "Automatise les processus de développement, de déploiement et d'infrastructure.",
+                "categoryId": "CAT-04"
+                },
+                {
+                "_id": "PROF-018",
+                "name": "Ingénieur SRE",
+                "description": "Améliore la fiabilité, la disponibilité et les performances des systèmes.",
+                "categoryId": "CAT-04"
+                },
+                {
+                "_id": "PROF-019",
+                "name": "Administrateur systèmes",
+                "description": "Installe, configure et maintient les systèmes informatiques.",
+                "categoryId": "CAT-05"
+                },
+                {
+                "_id": "PROF-020",
+                "name": "Ingénieur systèmes",
+                "description": "Conçoit et exploite des environnements systèmes complexes.",
+                "categoryId": "CAT-05"
+                },
+                {
+                "_id": "PROF-021",
+                "name": "Administrateur réseaux",
+                "description": "Administre et maintient les infrastructures réseaux.",
+                "categoryId": "CAT-05"
+                },
+                {
+                "_id": "PROF-022",
+                "name": "Ingénieur réseaux",
+                "description": "Conçoit et met en œuvre des architectures réseaux.",
+                "categoryId": "CAT-05"
+                },
+                {
+                "_id": "PROF-023",
+                "name": "Consultant cybersécurité",
+                "description": "Conseil les organisations sur la sécurité de leurs systèmes d'information.",
+                "categoryId": "CAT-06"
+                },
+                {
+                "_id": "PROF-024",
+                "name": "Ingénieur cybersécurité",
+                "description": "Met en œuvre et maintient des solutions de sécurité informatique.",
+                "categoryId": "CAT-06"
+                },
+                {
+                "_id": "PROF-025",
+                "name": "Analyste SOC",
+                "description": "Surveille les événements de sécurité et analyse les incidents.",
+                "categoryId": "CAT-06"
+                },
+                {
+                "_id": "PROF-026",
+                "name": "Auditeur sécurité",
+                "description": "Évalue les dispositifs de sécurité et identifie les vulnérabilités.",
+                "categoryId": "CAT-06"
+                },
+                {
+                "_id": "PROF-027",
+                "name": "Testeur logiciel",
+                "description": "Réalise des tests fonctionnels et des campagnes de tests manuels.",
+                "categoryId": "CAT-07"
+                },
+                {
+                "_id": "PROF-028",
+                "name": "Ingénieur QA",
+                "description": "Définit et maintient les processus d'assurance qualité logicielle.",
+                "categoryId": "CAT-07"
+                },
+                {
+                "_id": "PROF-029",
+                "name": "Ingénieur automatisation des tests",
+                "description": "Développe et maintient des solutions de tests automatisés.",
+                "categoryId": "CAT-07"
+                },
+                {
+                "_id": "PROF-030",
+                "name": "Chef de projet IT",
+                "description": "Pilote les projets informatiques, les ressources et les livraisons.",
+                "categoryId": "CAT-08"
+                },
+                {
+                "_id": "PROF-031",
+                "name": "Scrum Master",
+                "description": "Facilite les pratiques Agile et la collaboration des équipes.",
+                "categoryId": "CAT-08"
+                },
+                {
+                "_id": "PROF-032",
+                "name": "Product Owner",
+                "description": "Définit les priorités produit et gère le backlog.",
+                "categoryId": "CAT-08"
+                },
+                {
+                "_id": "PROF-033",
+                "name": "Product Manager",
+                "description": "Définit la stratégie produit et supervise son développement.",
+                "categoryId": "CAT-08"
+                },
+                {
+                "_id": "PROF-034",
+                "name": "Directeur de projet",
+                "description": "Supervise les programmes et les portefeuilles de projets complexes.",
+                "categoryId": "CAT-08"
+                },
+                {
+                "_id": "PROF-035",
+                "name": "Consultant IT",
+                "description": "Accompagne les clients dans leurs choix et leurs pratiques informatiques.",
+                "categoryId": "CAT-09"
+                },
+                {
+                "_id": "PROF-036",
+                "name": "Business Analyst",
+                "description": "Analyse les besoins métier et les traduit en exigences fonctionnelles.",
+                "categoryId": "CAT-09"
+                },
+                {
+                "_id": "PROF-037",
+                "name": "Consultant en transformation numérique",
+                "description": "Accompagne les organisations dans leurs projets de transformation numérique.",
+                "categoryId": "CAT-09"
+                },
+                {
+                "_id": "PROF-038",
+                "name": "Consultant fonctionnel",
+                "description": "Analyse les processus métier et configure les solutions fonctionnelles.",
+                "categoryId": "CAT-09"
+                },
+                {
+                "_id": "PROF-039",
+                "name": "UX Designer",
+                "description": "Conçoit les expériences utilisateur et les parcours d'interaction.",
+                "categoryId": "CAT-10"
+                },
+                {
+                "_id": "PROF-040",
+                "name": "UI Designer",
+                "description": "Conçoit les interfaces utilisateur et leurs composants visuels.",
+                "categoryId": "CAT-10"
+                },
+                {
+                "_id": "PROF-041",
+                "name": "Product Designer",
+                "description": "Associe conception UX, design UI et réflexion produit.",
+                "categoryId": "CAT-10"
+                },
+                {
+                "_id": "PROF-042",
+                "name": "Technicien support informatique",
+                "description": "Assure l'assistance technique auprès des utilisateurs.",
+                "categoryId": "CAT-11"
+                },
+                {
+                "_id": "PROF-043",
+                "name": "Technicien support applicatif",
+                "description": "Accompagne les utilisateurs et résout les incidents applicatifs.",
+                "categoryId": "CAT-11"
+                },
+                {
+                "_id": "PROF-044",
+                "name": "Ingénieur production",
+                "description": "Exploite et maintient les environnements de production.",
+                "categoryId": "CAT-11"
+                },
+                {
+                "_id": "PROF-045",
+                "name": "Responsable exploitation",
+                "description": "Pilote les opérations informatiques et la continuité de service.",
+                "categoryId": "CAT-11"
+                },
+                {
+                "_id": "PROF-046",
+                "name": "Consultant ERP",
+                "description": "Implémente et accompagne les solutions de gestion intégrée.",
+                "categoryId": "CAT-12"
+                },
+                {
+                "_id": "PROF-047",
+                "name": "Consultant SAP",
+                "description": "Implémente et maintient les solutions SAP.",
+                "categoryId": "CAT-12"
+                },
+                {
+                "_id": "PROF-048",
+                "name": "Consultant CRM",
+                "description": "Implémente et configure les solutions de gestion de la relation client.",
+                "categoryId": "CAT-12"
+                },
+                {
+                "_id": "PROF-049",
+                "name": "Consultant SIRH",
+                "description": "Implémente et maintient les systèmes d'information des ressources humaines.",
+                "categoryId": "CAT-12"
+                },
+                {
+                "_id": "PROF-050",
+                "name": "Ingénieur commercial",
+                "description": "Développe les relations clients et les opportunités commerciales.",
+                "categoryId": "CAT-13"
+                },
+                {
+                "_id": "PROF-051",
+                "name": "Business Developer",
+                "description": "Identifie de nouveaux marchés, clients et opportunités commerciales.",
+                "categoryId": "CAT-13"
+                },
+                {
+                "_id": "PROF-052",
+                "name": "Account Manager",
+                "description": "Gère et développe les comptes clients existants.",
+                "categoryId": "CAT-13"
+                },
+                {
+                "_id": "PROF-053",
+                "name": "Avant-vente / Consultant avant-vente",
+                "description": "Apporte une expertise technique et fonctionnelle aux activités commerciales.",
+                "categoryId": "CAT-13"
+                },
+                {
+                "_id": "PROF-054",
+                "name": "Responsable d'équipe",
+                "description": "Manage une équipe et coordonne ses activités.",
+                "categoryId": "CAT-14"
+                },
+                {
+                "_id": "PROF-055",
+                "name": "Responsable technique",
+                "description": "Supervise les activités techniques et la stratégie technique.",
+                "categoryId": "CAT-14"
+                },
+                {
+                "_id": "PROF-056",
+                "name": "Directeur technique / CTO",
+                "description": "Définit et supervise l'orientation technique de l'organisation.",
+                "categoryId": "CAT-14"
+                },
+                {
+                "_id": "PROF-057",
+                "name": "Directeur d'agence",
+                "description": "Pilote les activités opérationnelles et commerciales d'une agence.",
+                "categoryId": "CAT-14"
+                },
+                {
+                "_id": "PROF-058",
+                "name": "Responsable RH",
+                "description": "Pilote les activités liées aux ressources humaines.",
+                "categoryId": "CAT-15"
+                },
+                {
+                "_id": "PROF-059",
+                "name": "Chargé de recrutement",
+                "description": "Gère les processus de recrutement et la sélection des candidats.",
+                "categoryId": "CAT-15"
+                },
+                {
+                "_id": "PROF-060",
+                "name": "Gestionnaire administratif",
+                "description": "Assure les opérations et la coordination administratives.",
+                "categoryId": "CAT-15"
+                },
+                {
+                "_id": "PROF-061",
+                "name": "Contrôleur de gestion",
+                "description": "Suit les performances financières et les budgets.",
+                "categoryId": "CAT-15"
+                },
+                {
+                "_id": "PROF-062",
+                "name": "Comptable",
+                "description": "Assure les opérations comptables et le suivi des documents financiers.",
+                "categoryId": "CAT-15"
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+
+    </changeSet>
+
+</databaseChangeLog>
