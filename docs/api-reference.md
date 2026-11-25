@@ -116,6 +116,24 @@ Les professions inactives ne sont pas retournées.
 
 La récupération des données utilise la méthode Spring Data MongoDB `findByActiveTrue()`.
 
+**Tests automatisés**
+
+L'endpoint et ses différentes couches font l'objet de tests automatisés afin de vérifier le bon fonctionnement de la
+récupération des professions actives.
+
+Les tests sont répartis sur trois niveaux :
+
+| Couche     | Classe de test             | Vérifications                                                                   |
+|------------|----------------------------|---------------------------------------------------------------------------------|
+| Repository | `ProfessionRepositoryTest` | Persistance, récupération des professions actives et gestion d'un résultat vide |
+| Service    | `ProfessionServiceTest`    | Conversion des modèles en DTO et gestion d'un résultat vide                     |
+| Controller | `ProfessionControllerTest` | Réponse HTTP 200, structure JSON et gestion d'une liste vide                    |
+
+Les tests du repository utilisent une base MongoDB dédiée aux tests (`eca_test`). Les tests du service et du controller
+utilisent Mockito afin d'isoler les composants testés.
+
+**Couverture actuelle : 7 tests automatisés.**
+
 ---
 
 ## 4. Évolutions à documenter
