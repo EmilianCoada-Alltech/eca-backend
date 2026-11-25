@@ -1,7 +1,7 @@
 package fr.alltech.eca.config;
 
 
-import fr.alltech.eca.model.Collaborator;
+import fr.alltech.eca.model.collaborator.Collaborator;
 import org.jspecify.annotations.NonNull;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertCallback;
 import org.springframework.stereotype.Component;
