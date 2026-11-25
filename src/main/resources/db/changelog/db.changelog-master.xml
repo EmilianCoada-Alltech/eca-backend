@@ -24,6 +24,9 @@
 
     <!-- Roles -->
     <include file="db/changelog/data/005-insert-roles.xml"/>
+
+    <!-- Competence domains -->
+    <include file="db/changelog/data/006-insert-domains.xml"/>
 </databaseChangeLog>
 
 
