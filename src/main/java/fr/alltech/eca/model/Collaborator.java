@@ -33,6 +33,7 @@ public class Collaborator {
     private boolean searchable;
 
     private List<CompetenceDeclaration> competences = new ArrayList<>();
+    private List<String> roleIds = new ArrayList<>();
 
 
     public Collaborator() {
@@ -170,6 +171,14 @@ public class Collaborator {
 
     public void setCompetences(List<CompetenceDeclaration> competences) {
         this.competences = competences != null ? competences : new ArrayList<>();
+    }
+
+    public List<String> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<String> roleIds) {
+        this.roleIds = roleIds != null ? roleIds : new ArrayList<>();
     }
 
     public void validate() {

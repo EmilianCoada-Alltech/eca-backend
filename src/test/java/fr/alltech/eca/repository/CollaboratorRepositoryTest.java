@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest;
 import org.springframework.context.annotation.Import;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -100,6 +101,37 @@ class CollaboratorRepositoryTest {
         }).isInstanceOf(IllegalArgumentException.class);
 
         assertThat(collaboratorRepository.count()).isZero();
+    }
+
+    @Test
+    void shouldSaveAndRetrieveCollaboratorWithRoles() {
+        // Given
+        Collaborator collaborator = new Collaborator(
+                "AD123",
+                "John",
+                "Doe",
+                "john.doe@example.com",
+                "agency-123"
+        );
+
+        collaborator.setRoleIds(List.of(
+                "COLLABORATEUR",
+                "REDACTEUR"
+        ));
+
+        // When
+        Collaborator savedCollaborator =
+                collaboratorRepository.save(collaborator);
+
+        // Then
+        assertThat(collaboratorRepository.findById(savedCollaborator.getId()))
+                .isPresent()
+                .get()
+                .satisfies(found -> assertThat(found.getRoleIds())
+                        .containsExactly(
+                                "COLLABORATEUR",
+                                "REDACTEUR"
+                        ));
     }
 
     @AfterEach
