@@ -21,6 +21,9 @@
 
     <!-- Experience Levels -->
     <include file="db/changelog/data/004-insert-experience-levels.xml"/>
+
+    <!-- Roles -->
+    <include file="db/changelog/data/005-insert-roles.xml"/>
 </databaseChangeLog>
 
 
