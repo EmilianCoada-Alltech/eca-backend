@@ -118,7 +118,51 @@
     <!-- Support Functions competences domains -->
     <include file="db/changelog/data/036-insert-support-functions-competence-domains.xml"/>
 
+    <!-- Development Profession Competences -->
+    <include file="db/changelog/data/037-insert-development-profession-competences.xml"/>
 
+    <!-- Architecture Profession Competences -->
+    <include file="db/changelog/data/038-insert-architecture-profession-competences.xml"/>
+
+    <!-- Data Ai Profession Competences -->
+    <include file="db/changelog/data/039-insert-data-ai-profession-competences.xml"/>
+
+    <!-- Cloud DevOps Profession Competences -->
+    <include file="db/changelog/data/040-insert-cloud-devops-profession-competences.xml"/>
+
+    <!-- Systems Network Profession Competences -->
+    <include file="db/changelog/data/041-insert-systems-network-profession-competences.xml"/>
+
+    <!-- Cybersecurity Profession Competences -->
+    <include file="db/changelog/data/042-insert-cybersecurity-profession-competences.xml"/>
+
+    <!-- Quality Testing Profession Competences  -->
+    <include file="db/changelog/data/043-insert-quality-testing-profession-competences.xml"/>
+
+    <!-- Project Product Profession Competences -->
+    <include file="db/changelog/data/044-insert-project-product-profession-competences.xml"/>
+
+    <!-- Digital Transformation Profession Competences -->
+    <include file="db/changelog/data/045-insert-digital-transformation-profession-competences.xml"/>
+
+    <!-- UX UI Design Profession Competences -->
+    <include file="db/changelog/data/046-insert-ux-ui-design-profession-competences.xml"/>
+
+    <!-- Support Operations Profession Competences -->
+    <include file="db/changelog/data/047-insert-support-operations-profession-competences.xml"/>
+
+    <!-- ERP Business Solutions Profession Competences -->
+    <include file="db/changelog/data/048-insert-erp-business-solutions-profession-competences.xml"/>
+
+    <!-- Sales Business Development Profession Competences -->
+    <include file="db/changelog/data/049-insert-sales-business-development-profession-competences.xml"/>
+
+    <!-- Management Leadership Profession Competences  -->
+    <include file="db/changelog/data/050-insert-management-leadership-profession-competences.xml"/>
+
+    <!-- Support Functions Profession Competences -->
+    <include file="db/changelog/data/051-insert-support-functions-profession-competences.xml"/>
+    
 </databaseChangeLog>
 
 

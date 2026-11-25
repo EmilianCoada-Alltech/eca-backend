@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="054-insert-development-profession-competences" author="eca">
+
+        <mongodb:insertMany collectionName="profession_competences">
+            <mongodb:documents>
+                [
+                {"_id":"PC-001","professionId":"PROF-001","competenceId":"COMP-002"},
+                {"_id":"PC-002","professionId":"PROF-001","competenceId":"COMP-003"},
+                {"_id":"PC-003","professionId":"PROF-001","competenceId":"COMP-014"},
+                {"_id":"PC-004","professionId":"PROF-001","competenceId":"COMP-015"},
+                {"_id":"PC-005","professionId":"PROF-001","competenceId":"COMP-016"},
+                {"_id":"PC-006","professionId":"PROF-001","competenceId":"COMP-017"},
+                {"_id":"PC-007","professionId":"PROF-001","competenceId":"COMP-018"},
+                {"_id":"PC-008","professionId":"PROF-001","competenceId":"COMP-025"},
+                {"_id":"PC-009","professionId":"PROF-001","competenceId":"COMP-034"},
+
+                {"_id":"PC-010","professionId":"PROF-002","competenceId":"COMP-001"},
+                {"_id":"PC-011","professionId":"PROF-002","competenceId":"COMP-002"},
+                {"_id":"PC-012","professionId":"PROF-002","competenceId":"COMP-004"},
+                {"_id":"PC-013","professionId":"PROF-002","competenceId":"COMP-007"},
+                {"_id":"PC-014","professionId":"PROF-002","competenceId":"COMP-008"},
+                {"_id":"PC-015","professionId":"PROF-002","competenceId":"COMP-009"},
+                {"_id":"PC-016","professionId":"PROF-002","competenceId":"COMP-010"},
+                {"_id":"PC-017","professionId":"PROF-002","competenceId":"COMP-013"},
+                {"_id":"PC-018","professionId":"PROF-002","competenceId":"COMP-019"},
+                {"_id":"PC-019","professionId":"PROF-002","competenceId":"COMP-020"},
+                {"_id":"PC-020","professionId":"PROF-002","competenceId":"COMP-021"},
+                {"_id":"PC-021","professionId":"PROF-002","competenceId":"COMP-022"},
+                {"_id":"PC-022","professionId":"PROF-002","competenceId":"COMP-023"},
+                {"_id":"PC-023","professionId":"PROF-002","competenceId":"COMP-024"},
+                {"_id":"PC-024","professionId":"PROF-002","competenceId":"COMP-026"},
+                {"_id":"PC-025","professionId":"PROF-002","competenceId":"COMP-030"},
+                {"_id":"PC-026","professionId":"PROF-002","competenceId":"COMP-031"},
+                {"_id":"PC-027","professionId":"PROF-002","competenceId":"COMP-032"},
+
+                {"_id":"PC-028","professionId":"PROF-003","competenceId":"COMP-001"},
+                {"_id":"PC-029","professionId":"PROF-003","competenceId":"COMP-002"},
+                {"_id":"PC-030","professionId":"PROF-003","competenceId":"COMP-003"},
+                {"_id":"PC-031","professionId":"PROF-003","competenceId":"COMP-004"},
+                {"_id":"PC-032","professionId":"PROF-003","competenceId":"COMP-007"},
+                {"_id":"PC-033","professionId":"PROF-003","competenceId":"COMP-013"},
+                {"_id":"PC-034","professionId":"PROF-003","competenceId":"COMP-014"},
+                {"_id":"PC-035","professionId":"PROF-003","competenceId":"COMP-015"},
+                {"_id":"PC-036","professionId":"PROF-003","competenceId":"COMP-016"},
+                {"_id":"PC-037","professionId":"PROF-003","competenceId":"COMP-017"},
+                {"_id":"PC-038","professionId":"PROF-003","competenceId":"COMP-018"},
+                {"_id":"PC-039","professionId":"PROF-003","competenceId":"COMP-019"},
+                {"_id":"PC-040","professionId":"PROF-003","competenceId":"COMP-020"},
+                {"_id":"PC-041","professionId":"PROF-003","competenceId":"COMP-021"},
+                {"_id":"PC-042","professionId":"PROF-003","competenceId":"COMP-022"},
+                {"_id":"PC-043","professionId":"PROF-003","competenceId":"COMP-025"},
+                {"_id":"PC-044","professionId":"PROF-003","competenceId":"COMP-026"},
+                {"_id":"PC-045","professionId":"PROF-003","competenceId":"COMP-027"},
+                {"_id":"PC-046","professionId":"PROF-003","competenceId":"COMP-030"},
+                {"_id":"PC-047","professionId":"PROF-003","competenceId":"COMP-031"},
+                {"_id":"PC-048","professionId":"PROF-003","competenceId":"COMP-032"},
+                {"_id":"PC-049","professionId":"PROF-003","competenceId":"COMP-034"},
+                {"_id":"PC-050","professionId":"PROF-003","competenceId":"COMP-035"},
+
+                {"_id":"PC-051","professionId":"PROF-004","competenceId":"COMP-001"},
+                {"_id":"PC-052","professionId":"PROF-004","competenceId":"COMP-002"},
+                {"_id":"PC-053","professionId":"PROF-004","competenceId":"COMP-003"},
+                {"_id":"PC-054","professionId":"PROF-004","competenceId":"COMP-004"},
+                {"_id":"PC-055","professionId":"PROF-004","competenceId":"COMP-007"},
+                {"_id":"PC-056","professionId":"PROF-004","competenceId":"COMP-011"},
+                {"_id":"PC-057","professionId":"PROF-004","competenceId":"COMP-012"},
+                {"_id":"PC-058","professionId":"PROF-004","competenceId":"COMP-027"},
+                {"_id":"PC-059","professionId":"PROF-004","competenceId":"COMP-030"},
+                {"_id":"PC-060","professionId":"PROF-004","competenceId":"COMP-032"},
+                {"_id":"PC-061","professionId":"PROF-004","competenceId":"COMP-035"},
+
+                {"_id":"PC-062","professionId":"PROF-005","competenceId":"COMP-001"},
+                {"_id":"PC-063","professionId":"PROF-005","competenceId":"COMP-002"},
+                {"_id":"PC-064","professionId":"PROF-005","competenceId":"COMP-003"},
+                {"_id":"PC-065","professionId":"PROF-005","competenceId":"COMP-004"},
+                {"_id":"PC-066","professionId":"PROF-005","competenceId":"COMP-005"},
+                {"_id":"PC-067","professionId":"PROF-005","competenceId":"COMP-006"},
+                {"_id":"PC-068","professionId":"PROF-005","competenceId":"COMP-007"},
+                {"_id":"PC-069","professionId":"PROF-005","competenceId":"COMP-008"},
+                {"_id":"PC-070","professionId":"PROF-005","competenceId":"COMP-009"},
+                {"_id":"PC-071","professionId":"PROF-005","competenceId":"COMP-010"},
+                {"_id":"PC-072","professionId":"PROF-005","competenceId":"COMP-013"},
+                {"_id":"PC-073","professionId":"PROF-005","competenceId":"COMP-019"},
+                {"_id":"PC-074","professionId":"PROF-005","competenceId":"COMP-020"},
+                {"_id":"PC-075","professionId":"PROF-005","competenceId":"COMP-021"},
+                {"_id":"PC-076","professionId":"PROF-005","competenceId":"COMP-022"},
+                {"_id":"PC-077","professionId":"PROF-005","competenceId":"COMP-026"},
+                {"_id":"PC-078","professionId":"PROF-005","competenceId":"COMP-029"},
+                {"_id":"PC-079","professionId":"PROF-005","competenceId":"COMP-030"},
+                {"_id":"PC-080","professionId":"PROF-005","competenceId":"COMP-032"},
+                {"_id":"PC-081","professionId":"PROF-005","competenceId":"COMP-033"},
+                {"_id":"PC-082","professionId":"PROF-005","competenceId":"COMP-034"},
+                {"_id":"PC-083","professionId":"PROF-005","competenceId":"COMP-035"}
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+
+    </changeSet>
+
+</databaseChangeLog>
