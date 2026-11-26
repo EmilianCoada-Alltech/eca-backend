@@ -6,8 +6,10 @@ import fr.alltech.eca.service.reference.ProfessionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -87,4 +89,38 @@ class ProfessionControllerTest {
                 .andExpect(jsonPath("$[1].id").value("PROF-002"))
                 .andExpect(jsonPath("$[1].active").value(false));
     }
+
+
+    @Test
+    void shouldReturnProfessionById() throws Exception {
+        ProfessionResponse profession = new ProfessionResponse(
+                "PROF-003",
+                "Backend developer",
+                "Develops backend services.",
+                "CAT-01",
+                false
+        );
+
+        when(professionService.getProfessionById("PROF-003"))
+                .thenReturn(profession);
+
+        mockMvc.perform(get("/api/references/professions/PROF-003"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("PROF-003"))
+                .andExpect(jsonPath("$.name").value("Backend developer"))
+                .andExpect(jsonPath("$.active").value(false));
+    }
+
+    @Test
+    void shouldReturn404WhenProfessionDoesNotExist() throws Exception {
+        when(professionService.getProfessionById("PROF-999"))
+                .thenThrow(new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession not found with id: PROF-999"
+                ));
+
+        mockMvc.perform(get("/api/references/professions/PROF-999"))
+                .andExpect(status().isNotFound());
+    }
+
 }

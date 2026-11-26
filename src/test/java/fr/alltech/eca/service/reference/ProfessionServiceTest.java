@@ -9,10 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -106,6 +109,45 @@ class ProfessionServiceTest {
                 .containsExactly("Backend developer", "Legacy developer");
 
         verify(professionRepository).findAll();
+    }
+
+    @Test
+    void shouldReturnProfessionById() {
+        Profession profession = new Profession(
+                "Backend developer",
+                "Develops backend services.",
+                false,
+                "4"
+        );
+        profession.setId("PROF-003");
+
+        when(professionRepository.findById("PROF-003"))
+                .thenReturn(Optional.of(profession));
+
+        ProfessionResponse result =
+                professionService.getProfessionById("PROF-003");
+
+        assertThat(result.id()).isEqualTo("PROF-003");
+        assertThat(result.name()).isEqualTo("Backend developer");
+        assertThat(result.categoryId()).isEqualTo("4");
+        assertThat(result.active()).isFalse();
+
+        verify(professionRepository).findById("PROF-003");
+    }
+
+    @Test
+    void shouldThrowNotFoundWhenProfessionDoesNotExist() {
+        when(professionRepository.findById("PROF-999"))
+                .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> professionService.getProfessionById("PROF-999"))
+                .isInstanceOf(ResponseStatusException.class)
+                .satisfies(exception ->
+                        assertThat(((ResponseStatusException) exception).getStatusCode())
+                                .isEqualTo(org.springframework.http.HttpStatus.NOT_FOUND)
+                );
+
+        verify(professionRepository).findById("PROF-999");
     }
 
 }
