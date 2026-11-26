@@ -175,6 +175,9 @@
     <!-- Missions -->
     <include file="db/changelog/data/055-insert-missions.xml"/>
 
+    <!-- Collaborators -->
+    <include file="/db/changelog/data/056-insert-collaborators.xml"/>
+
 </databaseChangeLog>
 
 
