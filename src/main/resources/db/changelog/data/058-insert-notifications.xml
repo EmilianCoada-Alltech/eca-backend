@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="075-insert-notifications" author="eca">
+        <mongodb:insertMany collectionName="notifications">
+            <mongodb:documents>
+                [
+                {
+                "_id": "NOTIF-001",
+                "collaboratorId": "COL-016",
+                "type": "ONBOARDING_REMINDER",
+                "message": "Bienvenue sur ECA ! Pensez à compléter votre profil professionnel en renseignant votre
+                métier, votre niveau d'expérience et vos compétences afin de faciliter les échanges avec vos
+                collègues.",
+                "link": "/profile",
+                "read": false,
+                "createdAt": "2026-11-26T09:00:00"
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

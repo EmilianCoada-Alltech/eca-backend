@@ -181,6 +181,9 @@
     <!-- Collaborator Missions -->
     <include file="/db/changelog/data/057-insert-collaborator-missions.xml"/>
 
+    <!-- Notifications -->
+    <include file="/db/changelog/data/058-insert-notifications.xml"/>
+
 </databaseChangeLog>
 
 
