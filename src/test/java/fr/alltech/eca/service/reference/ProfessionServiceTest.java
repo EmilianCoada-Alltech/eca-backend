@@ -45,7 +45,7 @@ class ProfessionServiceTest {
                 .thenReturn(List.of(profession));
 
         List<ProfessionResponse> result =
-                professionService.getAllProfessions();
+                professionService.getAllActiveProfessions();
 
         assertThat(result).hasSize(1);
 
@@ -66,10 +66,46 @@ class ProfessionServiceTest {
                 .thenReturn(List.of());
 
         List<ProfessionResponse> result =
-                professionService.getAllProfessions();
+                professionService.getAllActiveProfessions();
 
         assertThat(result).isEmpty();
 
         verify(professionRepository).findByActiveTrue();
     }
+
+
+    @Test
+    void shouldReturnAllProfessionsIncludingInactiveOnes() {
+        Profession activeProfession = new Profession(
+                "Backend developer",
+                "Develops backend services.",
+                true,
+                "4"
+        );
+
+        Profession inactiveProfession = new Profession(
+                "Legacy developer",
+                "An inactive profession.",
+                false,
+                "4"
+        );
+
+        when(professionRepository.findAll())
+                .thenReturn(List.of(activeProfession, inactiveProfession));
+
+        List<ProfessionResponse> result =
+                professionService.getAllProfessions();
+
+        assertThat(result).hasSize(2);
+        assertThat(result)
+                .extracting(ProfessionResponse::active)
+                .containsExactly(true, false);
+
+        assertThat(result)
+                .extracting(ProfessionResponse::name)
+                .containsExactly("Backend developer", "Legacy developer");
+
+        verify(professionRepository).findAll();
+    }
+
 }

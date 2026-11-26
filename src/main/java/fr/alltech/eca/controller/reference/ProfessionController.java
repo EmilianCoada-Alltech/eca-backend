@@ -18,7 +18,12 @@ public class ProfessionController {
         this.professionService = professionService;
     }
 
-    @GetMapping
+    @GetMapping("/active")
+    public List<ProfessionResponse> getAllActiveProfessions() {
+        return professionService.getAllActiveProfessions();
+    }
+
+    @GetMapping("/all")
     public List<ProfessionResponse> getAllProfessions() {
         return professionService.getAllProfessions();
     }

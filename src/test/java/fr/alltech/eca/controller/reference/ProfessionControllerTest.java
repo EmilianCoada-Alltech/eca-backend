@@ -1,3 +1,4 @@
+
 package fr.alltech.eca.controller.reference;
 
 import fr.alltech.eca.dto.reference.ProfessionResponse;
@@ -33,10 +34,10 @@ class ProfessionControllerTest {
                 true
         );
 
-        when(professionService.getAllProfessions())
+        when(professionService.getAllActiveProfessions())
                 .thenReturn(List.of(profession));
 
-        mockMvc.perform(get("/api/references/professions"))
+        mockMvc.perform(get("/api/references/professions/active"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith("application/json"))
                 .andExpect(jsonPath("$.length()").value(1))
@@ -47,13 +48,43 @@ class ProfessionControllerTest {
     }
 
     @Test
-    void shouldReturnEmptyArrayWhenNoProfessionsExist() throws Exception {
-        when(professionService.getAllProfessions())
+    void shouldReturnEmptyArrayWhenNoActiveProfessionsExist() throws Exception {
+        when(professionService.getAllActiveProfessions())
                 .thenReturn(List.of());
 
-        mockMvc.perform(get("/api/references/professions"))
+        mockMvc.perform(get("/api/references/professions/active"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith("application/json"))
                 .andExpect(jsonPath("$.length()").value(0));
+    }
+
+    @Test
+    void shouldReturnAllProfessionsIncludingInactiveOnes() throws Exception {
+        ProfessionResponse activeProfession = new ProfessionResponse(
+                "PROF-001",
+                "Backend developer",
+                "Develops backend services.",
+                "CAT-01",
+                true
+        );
+
+        ProfessionResponse inactiveProfession = new ProfessionResponse(
+                "PROF-002",
+                "Legacy developer",
+                "An inactive profession.",
+                "CAT-01",
+                false
+        );
+
+        when(professionService.getAllProfessions())
+                .thenReturn(List.of(activeProfession, inactiveProfession));
+
+        mockMvc.perform(get("/api/references/professions/all"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("application/json"))
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].active").value(true))
+                .andExpect(jsonPath("$[1].id").value("PROF-002"))
+                .andExpect(jsonPath("$[1].active").value(false));
     }
 }

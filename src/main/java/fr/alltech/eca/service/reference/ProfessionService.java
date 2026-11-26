@@ -21,8 +21,15 @@ public class ProfessionService {
         this.professionMapper = professionMapper;
     }
 
-    public List<ProfessionResponse> getAllProfessions() {
+    public List<ProfessionResponse> getAllActiveProfessions() {
         return professionRepository.findByActiveTrue()
+                .stream()
+                .map(professionMapper::toResponse)
+                .toList();
+    }
+
+    public List<ProfessionResponse> getAllProfessions() {
+        return professionRepository.findAll()
                 .stream()
                 .map(professionMapper::toResponse)
                 .toList();
