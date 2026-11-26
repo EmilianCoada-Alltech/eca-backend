@@ -195,5 +195,15 @@ public class Collaborator {
                     "A collaborator cannot declare more than 3 areas of expertise."
             );
         }
+        
+        long solicitableCount = competences.stream()
+                .filter(CompetenceDeclaration::isSolicitable)
+                .count();
+
+        if (solicitableCount > 2) {
+            throw new IllegalArgumentException(
+                    "A collaborator cannot declare more than 2 solicitable competences."
+            );
+        }
     }
 }

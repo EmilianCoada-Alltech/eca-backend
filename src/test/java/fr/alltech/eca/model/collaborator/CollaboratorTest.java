@@ -9,12 +9,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CollaboratorTest {
 
+    // Rule 2: Maximum 3 expertise declarations
+
     @Test
     void shouldAcceptCollaboratorWithNoExpertise() {
         Collaborator collaborator = new Collaborator();
         collaborator.setCompetences(List.of(
-                competence(false),
-                competence(false)
+                competence(false, false),
+                competence(false, false)
         ));
 
         assertThatCode(collaborator::validate)
@@ -25,8 +27,8 @@ class CollaboratorTest {
     void shouldAcceptCollaboratorWithOneExpertise() {
         Collaborator collaborator = new Collaborator();
         collaborator.setCompetences(List.of(
-                competence(true),
-                competence(false)
+                competence(true, false),
+                competence(false, false)
         ));
 
         assertThatCode(collaborator::validate)
@@ -37,9 +39,9 @@ class CollaboratorTest {
     void shouldAcceptCollaboratorWithThreeExpertise() {
         Collaborator collaborator = new Collaborator();
         collaborator.setCompetences(List.of(
-                competence(true),
-                competence(true),
-                competence(true)
+                competence(true, false),
+                competence(true, false),
+                competence(true, false)
         ));
 
         assertThatCode(collaborator::validate)
@@ -50,10 +52,10 @@ class CollaboratorTest {
     void shouldRejectCollaboratorWithMoreThanThreeExpertise() {
         Collaborator collaborator = new Collaborator();
         collaborator.setCompetences(List.of(
-                competence(true),
-                competence(true),
-                competence(true),
-                competence(true)
+                competence(true, false),
+                competence(true, false),
+                competence(true, false),
+                competence(true, false)
         ));
 
         assertThatThrownBy(collaborator::validate)
@@ -61,12 +63,55 @@ class CollaboratorTest {
                 .hasMessage("A collaborator cannot declare more than 3 areas of expertise.");
     }
 
-    private CompetenceDeclaration competence(boolean expertise) {
+    // Rule 3: Maximum 2 solicitable declarations
+
+    @Test
+    void shouldAcceptCollaboratorWithTwoSolicitableCompetences() {
+        Collaborator collaborator = new Collaborator();
+        collaborator.setCompetences(List.of(
+                competence(false, true),
+                competence(false, true),
+                competence(false, false)
+        ));
+
+        assertThatCode(collaborator::validate)
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    void shouldAcceptCollaboratorWithNoSolicitableCompetences() {
+        Collaborator collaborator = new Collaborator();
+        collaborator.setCompetences(List.of(
+                competence(false, false),
+                competence(false, false)
+        ));
+
+        assertThatCode(collaborator::validate)
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    void shouldRejectCollaboratorWithMoreThanTwoSolicitableCompetences() {
+        Collaborator collaborator = new Collaborator();
+        collaborator.setCompetences(List.of(
+                competence(false, true),
+                competence(false, true),
+                competence(false, true)
+        ));
+
+        assertThatThrownBy(collaborator::validate)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("A collaborator cannot declare more than 2 solicitable competences.");
+    }
+
+    // Test helper
+
+    private CompetenceDeclaration competence(boolean expertise, boolean solicitable) {
         return new CompetenceDeclaration(
                 "COMP-001",
                 null,
                 expertise,
-                false,
+                solicitable,
                 "catalogue"
         );
     }
