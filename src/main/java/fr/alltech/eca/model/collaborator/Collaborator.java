@@ -185,5 +185,15 @@ public class Collaborator {
         for (CompetenceDeclaration declaration : competences) {
             declaration.validate();
         }
+
+        long expertiseCount = competences.stream()
+                .filter(CompetenceDeclaration::isExpertise)
+                .count();
+
+        if (expertiseCount > 3) {
+            throw new IllegalArgumentException(
+                    "A collaborator cannot declare more than 3 areas of expertise."
+            );
+        }
     }
 }
