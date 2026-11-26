@@ -169,6 +169,9 @@
     <!-- Tools -->
     <include file="db/changelog/data/053-insert-tools.xml"/>
 
+    <!-- Clients -->
+    <include file="db/changelog/data/054-insert-clients.xml"/>
+    
 </databaseChangeLog>
 
 
