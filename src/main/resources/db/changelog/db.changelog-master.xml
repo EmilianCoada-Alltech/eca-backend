@@ -171,7 +171,10 @@
 
     <!-- Clients -->
     <include file="db/changelog/data/054-insert-clients.xml"/>
-    
+
+    <!-- Missions -->
+    <include file="db/changelog/data/055-insert-missions.xml"/>
+
 </databaseChangeLog>
 
 
