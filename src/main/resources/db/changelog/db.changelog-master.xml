@@ -8,6 +8,9 @@
     <!-- Database structure -->
     <include file="db/changelog/changes/001-create-collections.xml"/>
 
+    <!-- Indexes -->
+    <include file="db/changelog/changes/002-create-indexes.xml"/>
+
     <!-- Initial reference data -->
 
     <!-- Profession categories -->
@@ -176,13 +179,13 @@
     <include file="db/changelog/data/055-insert-missions.xml"/>
 
     <!-- Collaborators -->
-    <include file="/db/changelog/data/056-insert-collaborators.xml"/>
+    <include file="db/changelog/data/056-insert-collaborators.xml"/>
 
     <!-- Collaborator Missions -->
-    <include file="/db/changelog/data/057-insert-collaborator-missions.xml"/>
+    <include file="db/changelog/data/057-insert-collaborator-missions.xml"/>
 
     <!-- Notifications -->
-    <include file="/db/changelog/data/058-insert-notifications.xml"/>
+    <include file="db/changelog/data/058-insert-notifications.xml"/>
 
 </databaseChangeLog>
 
