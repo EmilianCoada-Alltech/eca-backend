@@ -165,6 +165,10 @@
 
     <!-- Tool Categories -->
     <include file="db/changelog/data/052-insert-tool-categories.xml"/>
+
+    <!-- Tools -->
+    <include file="db/changelog/data/053-insert-tools.xml"/>
+
 </databaseChangeLog>
 
 
