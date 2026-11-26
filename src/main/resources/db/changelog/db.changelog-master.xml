@@ -162,7 +162,9 @@
 
     <!-- Support Functions Profession Competences -->
     <include file="db/changelog/data/051-insert-support-functions-profession-competences.xml"/>
-    
+
+    <!-- Tool Categories -->
+    <include file="db/changelog/data/052-insert-tool-categories.xml"/>
 </databaseChangeLog>
 
 
