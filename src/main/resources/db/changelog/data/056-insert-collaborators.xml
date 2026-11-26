@@ -30,8 +30,8 @@
                 avantage appréciable en réunion !",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-335",
@@ -101,8 +101,8 @@
                 réunions interminables ? Je préfère les garder dans mon viseur et les terminer à l'heure.",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-199",
@@ -172,8 +172,8 @@
                 rassurez-vous, je ne lis pas réellement dans vos pensées pendant les entretiens… enfin, pas toujours !",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-355",
@@ -244,8 +244,8 @@
                 mes griffes sur leur chemin.",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-149",
@@ -315,8 +315,8 @@
                 maintenir un climat de travail serein, avec une météo toujours favorable à la réussite collective.",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-334",
@@ -387,8 +387,8 @@
                 outil, même si mes collègues prétendent parfois que je suis un peu trop cérébral !",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-061",
@@ -459,8 +459,8 @@
                 trouverai toujours un moyen de vous téléporter vers la bonne page !",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-245",
@@ -531,8 +531,8 @@
                 inattendus, mais je sais passer à travers les abstractions pour les retrouver !",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-002",
@@ -617,8 +617,8 @@
                 plutôt que vous les emprunter définitivement !",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-226",
@@ -689,8 +689,8 @@
                 rarement sur une mauvaise main !",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-001",
@@ -761,8 +761,8 @@
                 attendre qu'elle apparaisse par magie.",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-001",
@@ -833,8 +833,8 @@
                 mais promis, je maîtrise le spectacle !",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-002",
@@ -919,8 +919,8 @@
                 métier, c'est plutôt un compliment !",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-123",
@@ -991,8 +991,8 @@
                 monte dans les environnements de production !",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-093",
@@ -1063,8 +1063,8 @@
                 projet puisse atteindre de nouveaux sommets.",
                 "photoUrl": null,
                 "profileStatus": "ACTIVE",
-                "onboardingCompleted": false,
-                "searchable": false,
+                "onboardingCompleted": true,
+                "searchable": true,
                 "competences": [
                 {
                 "competenceId": "COMP-199",
@@ -1116,6 +1116,24 @@
                 "source": "CATALOG"
                 }
                 ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-016",
+                "adIdentifier": "cassidy",
+                "firstName": "Sean",
+                "lastName": "Cassidy",
+                "email": "sean.cassidy@alltech.fr",
+                "agencyId": "AG-005",
+                "professionId": null,
+                "experienceLevelId": "EXP-01",
+                "hireDate": "2026-11-18",
+                "presentation": null,
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": false,
+                "searchable": false,
+                "competences": [],
                 "roleIds": ["ROLE-01"]
                 }
                 ]
