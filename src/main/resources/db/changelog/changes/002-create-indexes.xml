@@ -9,6 +9,11 @@
             http://www.liquibase.org/xml/ns/mongodb
             http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
 
+    <!-- ============================================================ -->
+    <!-- COLLABORATOR IDENTITY AND ORGANISATIONAL FILTERS              -->
+    <!-- ============================================================ -->
+
+    <!-- Enforces one collaborator record per Active Directory identifier. -->
     <changeSet id="018-create-collaborator-ad-identifier-index" author="eca">
         <mongodb:createIndex collectionName="collaborators">
             <mongodb:keys>
@@ -17,6 +22,296 @@
             <mongodb:options>
                 { unique: true, name: "uk_collaborators_ad_identifier" }
             </mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports filtering collaborators by their agency. -->
+    <changeSet id="020-create-collaborators-agency-index" author="eca">
+        <mongodb:createIndex collectionName="collaborators">
+            <mongodb:keys>{ agencyId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_collaborators_agency_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports filtering collaborators by their profession. -->
+    <changeSet id="021-create-collaborators-profession-index" author="eca">
+        <mongodb:createIndex collectionName="collaborators">
+            <mongodb:keys>{ professionId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_collaborators_profession_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports filtering collaborators by experience level. -->
+    <changeSet id="022-create-collaborators-experience-level-index" author="eca">
+        <mongodb:createIndex collectionName="collaborators">
+            <mongodb:keys>{ experienceLevelId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_collaborators_experience_level_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- ============================================================ -->
+    <!-- COLLABORATOR DIRECTORY SEARCH                                -->
+    <!-- ============================================================ -->
+
+    <!-- Supports lookups and filtering by collaborator first name. -->
+    <changeSet id="026-create-collaborators-first-name-index" author="eca">
+        <mongodb:createIndex collectionName="collaborators">
+            <mongodb:keys>{ firstName: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_collaborators_first_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports lookups and filtering by collaborator last name. -->
+    <changeSet id="027-create-collaborators-last-name-index" author="eca">
+        <mongodb:createIndex collectionName="collaborators">
+            <mongodb:keys>{ lastName: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_collaborators_last_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Multikey index: supports searches by competence catalogue identifier
+         inside the collaborators' embedded competence declarations. -->
+    <changeSet id="028-create-collaborators-competence-index" author="eca">
+        <mongodb:createIndex collectionName="collaborators">
+            <mongodb:keys>{ "competences.competenceId": 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_collaborators_competence_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Multikey index: supports searches by a custom competence or technology
+         declared directly by a collaborator. -->
+    <changeSet id="029-create-collaborators-custom-competence-index" author="eca">
+        <mongodb:createIndex collectionName="collaborators">
+            <mongodb:keys>{ "competences.customName": 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_collaborators_competence_custom_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Multikey index: supports filtering competence declarations by whether
+         the collaborator is willing to be contacted about that subject. -->
+    <changeSet id="030-create-collaborators-solicitable-index" author="eca">
+        <mongodb:createIndex collectionName="collaborators">
+            <mongodb:keys>{ "competences.solicitable": 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_collaborators_competence_solicitable" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- ============================================================ -->
+    <!-- MISSION ASSIGNMENTS                                          -->
+    <!-- ============================================================ -->
+
+    <!-- Supports retrieving all mission assignments belonging to a collaborator. -->
+    <changeSet id="019-create-collaborator-missions-collaborator-index" author="eca">
+        <mongodb:createIndex collectionName="collaborator_missions">
+            <mongodb:keys>
+                { collaboratorId: 1 }
+            </mongodb:keys>
+            <mongodb:options>
+                { name: "idx_collaborator_missions_collaborator_id" }
+            </mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports retrieving all collaborators assigned to a particular mission. -->
+    <changeSet id="023-create-collaborator-missions-mission-index" author="eca">
+        <mongodb:createIndex collectionName="collaborator_missions">
+            <mongodb:keys>{ missionId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_collaborator_missions_mission_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports retrieving missions associated with a particular client. -->
+    <changeSet id="024-create-missions-client-index" author="eca">
+        <mongodb:createIndex collectionName="missions">
+            <mongodb:keys>{ clientId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_missions_client_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- ============================================================ -->
+    <!-- NOTIFICATION RETRIEVAL                                       -->
+    <!-- ============================================================ -->
+
+    <!-- Compound index for a collaborator's notification feed:
+         match by collaborator, filter by read status, then sort newest first.
+         Key order is intentional and should match the API query pattern. -->
+    <changeSet id="025-create-notifications-collaborator-read-date-index" author="eca">
+        <mongodb:createIndex collectionName="notifications">
+            <mongodb:keys>
+                { collaboratorId: 1, read: 1, createdAt: -1 }
+            </mongodb:keys>
+            <mongodb:options>
+                { name: "idx_notifications_collaborator_read_created_at" }
+            </mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- ============================================================ -->
+    <!-- ADMINISTRATION: ORGANISATION AND CLIENT CATALOGUES            -->
+    <!-- ============================================================ -->
+
+    <!-- Supports finding agencies by name in administration screens. -->
+    <changeSet id="031-create-agencies-name-index" author="eca">
+        <mongodb:createIndex collectionName="agencies">
+            <mongodb:keys>{ name: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_agencies_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports finding clients by name in administration screens. -->
+    <changeSet id="032-create-clients-name-index" author="eca">
+        <mongodb:createIndex collectionName="clients">
+            <mongodb:keys>{ name: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_clients_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- ============================================================ -->
+    <!-- ADMINISTRATION: PROFESSION CATALOGUE                          -->
+    <!-- ============================================================ -->
+
+    <!-- Supports finding professions by name. -->
+    <changeSet id="033-create-professions-name-index" author="eca">
+        <mongodb:createIndex collectionName="professions">
+            <mongodb:keys>{ name: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_professions_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports listing professions belonging to a profession category. -->
+    <changeSet id="034-create-professions-category-index" author="eca">
+        <mongodb:createIndex collectionName="professions">
+            <mongodb:keys>{ categoryId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_professions_category_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports finding profession categories by name. -->
+    <changeSet id="035-create-profession-categories-name-index" author="eca">
+        <mongodb:createIndex collectionName="profession_categories">
+            <mongodb:keys>{ name: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_profession_categories_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- ============================================================ -->
+    <!-- ADMINISTRATION: COMPETENCE AND DOMAIN CATALOGUES              -->
+    <!-- ============================================================ -->
+
+    <!-- Supports finding competences by name. -->
+    <changeSet id="036-create-competences-name-index" author="eca">
+        <mongodb:createIndex collectionName="competences">
+            <mongodb:keys>{ name: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_competences_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports finding domains by name. -->
+    <changeSet id="037-create-domains-name-index" author="eca">
+        <mongodb:createIndex collectionName="domains">
+            <mongodb:keys>{ name: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_domains_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports retrieving domain associations for a given competence. -->
+    <changeSet id="038-create-competence-domains-competence-index" author="eca">
+        <mongodb:createIndex collectionName="competence_domains">
+            <mongodb:keys>{ competenceId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_competence_domains_competence_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports retrieving competence associations for a given domain. -->
+    <changeSet id="039-create-competence-domains-domain-index" author="eca">
+        <mongodb:createIndex collectionName="competence_domains">
+            <mongodb:keys>{ domainId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_competence_domains_domain_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports listing the competences associated with a profession. -->
+    <changeSet id="040-create-profession-competences-profession-index" author="eca">
+        <mongodb:createIndex collectionName="profession_competences">
+            <mongodb:keys>{ professionId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_profession_competences_profession_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports finding professions associated with a given competence. -->
+    <changeSet id="041-create-profession-competences-competence-index" author="eca">
+        <mongodb:createIndex collectionName="profession_competences">
+            <mongodb:keys>{ competenceId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_profession_competences_competence_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- ============================================================ -->
+    <!-- ADMINISTRATION: TOOL CATALOGUE                                -->
+    <!-- ============================================================ -->
+
+    <!-- Supports finding tools by name. -->
+    <changeSet id="042-create-tools-name-index" author="eca">
+        <mongodb:createIndex collectionName="tools">
+            <mongodb:keys>{ name: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_tools_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports listing tools belonging to a tool category. -->
+    <changeSet id="043-create-tools-category-index" author="eca">
+        <mongodb:createIndex collectionName="tools">
+            <mongodb:keys>{ categoryId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_tools_category_id" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports finding tool categories by name. -->
+    <changeSet id="044-create-tool-categories-name-index" author="eca">
+        <mongodb:createIndex collectionName="tool_categories">
+            <mongodb:keys>{ name: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_tool_categories_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- ============================================================ -->
+    <!-- ADMINISTRATION: ROLE CATALOGUE                                -->
+    <!-- ============================================================ -->
+
+    <!-- Supports finding roles by name in role-management operations. -->
+    <changeSet id="045-create-roles-name-index" author="eca">
+        <mongodb:createIndex collectionName="roles">
+            <mongodb:keys>{ name: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_roles_name" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- ============================================================ -->
+    <!-- ADMINISTRATION: AUDIT HISTORY                                 -->
+    <!-- ============================================================ -->
+
+    <!-- Supports browsing audit records in reverse chronological order. -->
+    <changeSet id="046-create-audit-logs-changed-at-index" author="eca">
+        <mongodb:createIndex collectionName="audit_logs">
+            <mongodb:keys>{ changedAt: -1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_audit_logs_changed_at" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Supports retrieving audit records generated by a particular user. -->
+    <changeSet id="047-create-audit-logs-changed-by-index" author="eca">
+        <mongodb:createIndex collectionName="audit_logs">
+            <mongodb:keys>{ changedBy: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_audit_logs_changed_by" }</mongodb:options>
+        </mongodb:createIndex>
+    </changeSet>
+
+    <!-- Compound index: supports retrieving the change history of one entity,
+         identified by its type and identifier. -->
+    <changeSet id="048-create-audit-logs-entity-index" author="eca">
+        <mongodb:createIndex collectionName="audit_logs">
+            <mongodb:keys>{ entityType: 1, entityId: 1 }</mongodb:keys>
+            <mongodb:options>{ name: "idx_audit_logs_entity" }</mongodb:options>
         </mongodb:createIndex>
     </changeSet>
 
