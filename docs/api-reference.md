@@ -1,7 +1,7 @@
 # Référence API — ECA Backend
 
-**Version :** 0.1  
-**Date :** 25/11/2026  
+**Version :** 0.2  
+**Date :** 26/11/2026  
 **Statut :** En cours de développement
 
 ---
@@ -89,7 +89,7 @@ Les professions inactives ne sont pas retournées.
 
 *Les descriptions ci-dessus sont illustratives. La réponse réelle dépend des données enregistrées en base.*
 
-**DTO de réponse : `ProfessionResponse`**
+**DTO de réponse :** `ProfessionResponse`
 
 | Champ         | Type    | Description                          |
 |---------------|---------|--------------------------------------|
@@ -136,19 +136,38 @@ utilisent Mockito afin d'isoler les composants testés.
 
 ---
 
-## 4. Évolutions à documenter
+### 3.2 Catégories de professions
 
-Les prochaines fonctionnalités de l'API seront documentées dans les sections correspondantes au fur et à mesure de leur
-implémentation.
+#### Récupérer les catégories de professions
 
-Les éléments suivants restent notamment à définir ou à documenter lorsqu'ils seront développés :
+| Propriété             | Valeur                                           |
+|-----------------------|--------------------------------------------------|
+| Méthode HTTP          | `GET`                                            |
+| Endpoint              | `/api/references/profession-categories`          |
+| Description           | Récupérer la liste des catégories de professions |
+| Paramètres de chemin  | Aucun                                            |
+| Paramètres de requête | Aucun                                            |
+| Corps de la requête   | Aucun                                            |
+| Réponse nominale      | `200 OK`                                         |
 
-- Consultation des catégories de professions.
-- Consultation des niveaux d'expérience.
-- Consultation des compétences.
-- Consultation des domaines.
-- Consultation des rôles.
-- Consultation des outils et de leurs catégories.
-- Règles d'authentification et d'autorisation.
-- Gestion standardisée des erreurs HTTP.
-- Pagination et filtrage, si nécessaires.
+**Fonctionnement**
+
+L'endpoint retourne l'ensemble des catégories enregistrées dans la collection MongoDB `profession_categories`.
+
+Aucun filtrage par statut n'est appliqué, le modèle `ProfessionCategory` ne possédant pas de champ `active`.
+
+Si aucune catégorie n'est enregistrée, l'endpoint retourne une liste vide.
+
+**Exemple de réponse**
+
+```json
+[
+  {
+    "id": "CAT-01",
+    "name": "Development",
+    "description": "Groups professions related to software development."
+  }
+]
+```
+
+*Les données ci-dessus sont illustratives. La réponse réelle dépend des données
