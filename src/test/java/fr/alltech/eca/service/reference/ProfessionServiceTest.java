@@ -6,7 +6,9 @@ import fr.alltech.eca.mapper.reference.ProfessionMapper;
 import fr.alltech.eca.model.audit.AuditLog;
 import fr.alltech.eca.model.reference.Profession;
 import fr.alltech.eca.model.reference.ProfessionCategory;
+import fr.alltech.eca.repository.association.ProfessionCompetenceRepository;
 import fr.alltech.eca.repository.audit.AuditLogRepository;
+import fr.alltech.eca.repository.collaborator.CollaboratorRepository;
 import fr.alltech.eca.repository.reference.ProfessionCategoryRepository;
 import fr.alltech.eca.repository.reference.ProfessionRepository;
 import fr.alltech.eca.service.common.SequenceDefinitions;
@@ -26,13 +28,15 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 /**
- * Tests unitaires du service ProfessionService.
- * Vérifie la gestion des professions : consultation, création, modification
- * et désactivation, ainsi que la validation des catégories et la génération
- * des journaux d'audit associés aux opérations.
+ * Tests unitaires complets de ProfessionService.
+ * <p>
+ * Les tests couvrent la consultation, la création, la mise à jour partielle,
+ * le changement de statut, la suppression physique, les contrôles de dépendances
+ * et la journalisation des opérations.
  */
 @ExtendWith(MockitoExtension.class)
 class ProfessionServiceTest {
@@ -49,12 +53,14 @@ class ProfessionServiceTest {
     @Mock
     private SequenceGenerator sequenceGenerator;
 
+    @Mock
+    private CollaboratorRepository collaboratorRepository;
+
+    @Mock
+    private ProfessionCompetenceRepository professionCompetenceRepository;
+
     private ProfessionService professionService;
 
-    /**
-     * Initialise le service avec les dépendances simulées
-     * et une instance réelle du mapper.
-     */
     @BeforeEach
     void setUp() {
         professionService = new ProfessionService(
@@ -62,659 +68,556 @@ class ProfessionServiceTest {
                 professionCategoryRepository,
                 auditLogRepository,
                 new ProfessionMapper(),
-                sequenceGenerator
+                sequenceGenerator,
+                collaboratorRepository,
+                professionCompetenceRepository
         );
     }
 
-    /**
-     * Vérifie que le service retourne les professions actives
-     * sous forme de DTO ProfessionResponse.
-     */
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
+
+    private Profession profession(
+            String id,
+            String name,
+            String description,
+            boolean active,
+            String categoryId
+    ) {
+        Profession profession = new Profession(name, description, active, categoryId);
+        profession.setId(id);
+        return profession;
+    }
+
+    private ProfessionCategory category(String id) {
+        ProfessionCategory category = new ProfessionCategory(
+                "Development",
+                "Development professions",
+                true
+        );
+        category.setId(id);
+        return category;
+    }
+
+    private void mockSaveProfession() {
+        when(professionRepository.save(any(Profession.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+    }
+
+    private List<AuditLog> captureAuditLogs() {
+        ArgumentCaptor<List<AuditLog>> captor = ArgumentCaptor.forClass(List.class);
+        verify(auditLogRepository).saveAll(captor.capture());
+        return captor.getValue();
+    }
+
+    private void assertStatus(ResponseStatusException exception, HttpStatus expected) {
+        assertThat(exception.getStatusCode()).isEqualTo(expected);
+    }
+
+    // -------------------------------------------------------------------------
+    // Read operations
+    // -------------------------------------------------------------------------
+
     @Test
     void shouldReturnActiveProfessionsAsResponses() {
-        // Préparation : crée une profession active.
-        Profession profession = new Profession(
-                "Backend developer",
-                "Develops backend services.",
-                true,
-                "4"
+        Profession active = profession(
+                "PROF-001", "Backend developer", "Builds backend services.", true, "CAT-001"
         );
+        when(professionRepository.findByActiveTrue()).thenReturn(List.of(active));
 
-        // Simulation : configure le repository pour retourner cette profession.
-        when(professionRepository.findByActiveTrue())
-                .thenReturn(List.of(profession));
+        List<ProfessionResponse> result = professionService.getAllActiveProfessions();
 
-        // Exécution : récupère les professions actives via le service.
-        List<ProfessionResponse> result =
-                professionService.getAllActiveProfessions();
-
-        // Vérification : contrôle le nombre de résultats et les données du DTO.
         assertThat(result).hasSize(1);
-
-        ProfessionResponse response = result.get(0);
-
-        assertThat(response.name()).isEqualTo("Backend developer");
-        assertThat(response.description())
-                .isEqualTo("Develops backend services.");
-        assertThat(response.categoryId()).isEqualTo("4");
-        assertThat(response.active()).isTrue();
-
-        // Vérification : confirme que le repository a été interrogé.
+        assertThat(result.get(0))
+                .extracting(
+                        ProfessionResponse::id,
+                        ProfessionResponse::name,
+                        ProfessionResponse::description,
+                        ProfessionResponse::categoryId,
+                        ProfessionResponse::active
+                )
+                .containsExactly(
+                        "PROF-001",
+                        "Backend developer",
+                        "Builds backend services.",
+                        "CAT-001",
+                        true
+                );
         verify(professionRepository).findByActiveTrue();
+        verifyNoMoreInteractions(professionRepository);
     }
 
-    /**
-     * Vérifie que le service retourne une liste vide
-     * lorsqu'aucune profession active n'est disponible.
-     */
     @Test
     void shouldReturnEmptyListWhenNoActiveProfessionsExist() {
-        // Simulation : configure le repository pour retourner une liste vide.
-        when(professionRepository.findByActiveTrue())
-                .thenReturn(List.of());
+        when(professionRepository.findByActiveTrue()).thenReturn(List.of());
 
-        // Exécution : récupère les professions actives via le service.
-        List<ProfessionResponse> result =
-                professionService.getAllActiveProfessions();
+        assertThat(professionService.getAllActiveProfessions()).isEmpty();
 
-        // Vérification : confirme que le résultat est vide.
-        assertThat(result).isEmpty();
-
-        // Vérification : confirme que le repository a été interrogé.
         verify(professionRepository).findByActiveTrue();
     }
 
-    /**
-     * Vérifie que le service retourne toutes les professions,
-     * y compris celles dont le statut est inactif.
-     */
     @Test
-    void shouldReturnAllProfessionsIncludingInactiveOnes() {
-        // Préparation : crée une profession active et une profession inactive.
-        Profession activeProfession = new Profession(
-                "Backend developer",
-                "Develops backend services.",
-                true,
-                "4"
+    void shouldReturnInactiveProfessionsAsResponses() {
+        Profession inactive = profession(
+                "PROF-002", "Legacy developer", "No longer used.", false, "CAT-001"
         );
+        when(professionRepository.findByActiveFalse()).thenReturn(List.of(inactive));
 
-        Profession inactiveProfession = new Profession(
-                "Legacy developer",
-                "An inactive profession.",
-                false,
-                "4"
+        List<ProfessionResponse> result = professionService.getAllInactiveProfessions();
+
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).id()).isEqualTo("PROF-002");
+        assertThat(result.get(0).active()).isFalse();
+        verify(professionRepository).findByActiveFalse();
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenNoInactiveProfessionsExist() {
+        when(professionRepository.findByActiveFalse()).thenReturn(List.of());
+
+        assertThat(professionService.getAllInactiveProfessions()).isEmpty();
+
+        verify(professionRepository).findByActiveFalse();
+    }
+
+    @Test
+    void shouldReturnAllProfessionsIncludingActiveAndInactive() {
+        Profession active = profession(
+                "PROF-001", "Backend developer", "Builds APIs.", true, "CAT-001"
         );
+        Profession inactive = profession(
+                "PROF-002", "Legacy developer", "Deprecated.", false, "CAT-001"
+        );
+        when(professionRepository.findAll()).thenReturn(List.of(active, inactive));
 
-        // Simulation : configure le repository pour retourner les deux professions.
-        when(professionRepository.findAll())
-                .thenReturn(List.of(activeProfession, inactiveProfession));
+        List<ProfessionResponse> result = professionService.getAllProfessions();
 
-        // Exécution : récupère toutes les professions via le service.
-        List<ProfessionResponse> result =
-                professionService.getAllProfessions();
-
-        // Vérification : confirme que les deux professions sont retournées
-        // et que leurs statuts respectifs sont conservés.
         assertThat(result).hasSize(2);
+        assertThat(result)
+                .extracting(ProfessionResponse::id)
+                .containsExactly("PROF-001", "PROF-002");
         assertThat(result)
                 .extracting(ProfessionResponse::active)
                 .containsExactly(true, false);
-
-        // Vérification : contrôle également l'ordre et les noms des résultats.
-        assertThat(result)
-                .extracting(ProfessionResponse::name)
-                .containsExactly("Backend developer", "Legacy developer");
-
-        // Vérification : confirme que le repository a été interrogé.
         verify(professionRepository).findAll();
     }
 
-    /**
-     * Vérifie que le service retourne une profession existante
-     * à partir de son identifiant, y compris si elle est inactive.
-     */
     @Test
-    void shouldReturnProfessionById() {
-        // Préparation : crée une profession inactive avec un identifiant défini.
-        Profession profession = new Profession(
-                "Backend developer",
-                "Develops backend services.",
-                false,
-                "4"
+    void shouldReturnEmptyListWhenNoProfessionsExist() {
+        when(professionRepository.findAll()).thenReturn(List.of());
+
+        assertThat(professionService.getAllProfessions()).isEmpty();
+
+        verify(professionRepository).findAll();
+    }
+
+    @Test
+    void shouldReturnProfessionByIdEvenWhenInactive() {
+        Profession inactive = profession(
+                "PROF-003", "Legacy developer", "Inactive profession.", false, "CAT-004"
         );
-        profession.setId("PROF-003");
+        when(professionRepository.findById("PROF-003")).thenReturn(Optional.of(inactive));
 
-        // Simulation : configure le repository pour retrouver cette profession.
-        when(professionRepository.findById("PROF-003"))
-                .thenReturn(Optional.of(profession));
+        ProfessionResponse result = professionService.getProfessionById("PROF-003");
 
-        // Exécution : récupère la profession à partir de son identifiant.
-        ProfessionResponse result =
-                professionService.getProfessionById("PROF-003");
-
-        // Vérification : contrôle les informations retournées par le service.
         assertThat(result.id()).isEqualTo("PROF-003");
-        assertThat(result.name()).isEqualTo("Backend developer");
-        assertThat(result.categoryId()).isEqualTo("4");
+        assertThat(result.name()).isEqualTo("Legacy developer");
+        assertThat(result.categoryId()).isEqualTo("CAT-004");
         assertThat(result.active()).isFalse();
-
-        // Vérification : confirme que la recherche a été effectuée avec le bon identifiant.
         verify(professionRepository).findById("PROF-003");
     }
 
-    /**
-     * Vérifie que le service retourne une erreur HTTP 404
-     * lorsqu'une profession demandée n'existe pas.
-     */
     @Test
-    void shouldThrowNotFoundWhenProfessionDoesNotExist() {
-        // Simulation : configure le repository pour ne trouver aucune profession.
-        when(professionRepository.findById("PROF-999"))
-                .thenReturn(Optional.empty());
+    void shouldThrowNotFoundWhenGettingUnknownProfession() {
+        when(professionRepository.findById("PROF-404")).thenReturn(Optional.empty());
 
-        // Exécution et vérification : confirme que le service lève une erreur 404.
-        assertThatThrownBy(() -> professionService.getProfessionById("PROF-999"))
-                .isInstanceOf(ResponseStatusException.class)
-                .satisfies(exception ->
-                        assertThat(((ResponseStatusException) exception).getStatusCode())
-                                .isEqualTo(HttpStatus.NOT_FOUND)
-                );
+        assertThatThrownBy(() -> professionService.getProfessionById("PROF-404"))
+                .isInstanceOfSatisfying(ResponseStatusException.class,
+                        exception -> assertStatus(exception, HttpStatus.NOT_FOUND));
 
-        // Vérification : confirme que la recherche a été effectuée avec le bon identifiant.
-        verify(professionRepository).findById("PROF-999");
+        verify(professionRepository).findById("PROF-404");
     }
 
-    /**
-     * Vérifie la création d'une profession avec génération automatique
-     * de son identifiant et création des entrées correspondantes dans le journal d'audit.
-     */
+    // -------------------------------------------------------------------------
+    // Create
+    // -------------------------------------------------------------------------
+
     @Test
-    void shouldCreateProfessionAndRecordAuditEntries() {
-        // Préparation : définit les données de la nouvelle profession.
+    void shouldCreateProfessionWithGeneratedIdAndFourAuditEntries() {
         ProfessionRequest request = new ProfessionRequest(
                 "Backend developer",
-                "Develops backend services.",
+                "Builds backend services.",
                 "CAT-001"
         );
-
-        // Préparation : crée la catégorie à laquelle la profession sera associée.
-        ProfessionCategory category = new ProfessionCategory(
-                "IT",
-                "Information technology"
-        );
-
-        category.setId("CAT-001");
-
-        // Simulation : configure la recherche de la catégorie.
         when(professionCategoryRepository.findById("CAT-001"))
-                .thenReturn(Optional.of(category));
-
-        // Simulation : configure le générateur pour retourner un identifiant déterminé.
+                .thenReturn(Optional.of(category("CAT-001")));
         when(sequenceGenerator.generate(
                 SequenceDefinitions.PROFESSION_SEQUENCE,
                 SequenceDefinitions.PROFESSION_PREFIX,
                 SequenceDefinitions.PROFESSION_INITIAL_VALUE
         )).thenReturn("PROF-063");
+        mockSaveProfession();
 
-        // Simulation : retourne directement l'objet transmis au repository lors de l'enregistrement.
-        when(professionRepository.save(any(Profession.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
-
-        // Exécution : crée la profession via le service.
         ProfessionResponse result = professionService.createProfession(request);
 
-        // Vérification : contrôle les données de la profession créée.
         assertThat(result.id()).isEqualTo("PROF-063");
         assertThat(result.name()).isEqualTo("Backend developer");
-        assertThat(result.description()).isEqualTo("Develops backend services.");
+        assertThat(result.description()).isEqualTo("Builds backend services.");
         assertThat(result.categoryId()).isEqualTo("CAT-001");
         assertThat(result.active()).isTrue();
 
-        // Vérification : confirme que la catégorie a été recherchée.
         verify(professionCategoryRepository).findById("CAT-001");
-
-        // Vérification : confirme que le générateur de séquence a été appelé
-        // avec la configuration prévue pour les professions.
         verify(sequenceGenerator).generate(
                 SequenceDefinitions.PROFESSION_SEQUENCE,
                 SequenceDefinitions.PROFESSION_PREFIX,
                 SequenceDefinitions.PROFESSION_INITIAL_VALUE
         );
+        verify(professionRepository).save(argThat(saved ->
+                "PROF-063".equals(saved.getId())
+                        && "Backend developer".equals(saved.getName())
+                        && saved.isActive()
+        ));
 
-        // Vérification : confirme que la profession a été enregistrée.
-        verify(professionRepository).save(any(Profession.class));
-
-        // Capture : récupère les entrées d'audit transmises au repository.
-        ArgumentCaptor<List<AuditLog>> auditCaptor =
-                ArgumentCaptor.forClass(List.class);
-
-        verify(auditLogRepository).saveAll(auditCaptor.capture());
-
-        List<AuditLog> auditLogs = auditCaptor.getValue();
-
-        // Vérification : contrôle le nombre d'entrées d'audit,
-        // leur type d'action, leur identifiant métier et leur auteur.
-        assertThat(auditLogs).hasSize(4);
-        assertThat(auditLogs)
-                .extracting(AuditLog::getAction)
-                .containsOnly("CREATE");
-
-        assertThat(auditLogs)
-                .extracting(AuditLog::getEntityId)
-                .containsOnly("PROF-063");
-
-        assertThat(auditLogs)
-                .extracting(AuditLog::getChangedBy)
-                .containsOnly("ADMIN");
+        List<AuditLog> logs = captureAuditLogs();
+        assertThat(logs).hasSize(4);
+        assertThat(logs).extracting(AuditLog::getAction).containsOnly("CREATE");
+        assertThat(logs).extracting(AuditLog::getEntityId).containsOnly("PROF-063");
+        assertThat(logs).extracting(AuditLog::getChangedBy).containsOnly("ADMIN");
+        assertThat(logs).extracting(AuditLog::getFieldName)
+                .containsExactlyInAnyOrder("name", "description", "categoryId", "active");
+        assertThat(logs).extracting(AuditLog::getNewValue)
+                .containsExactlyInAnyOrder(
+                        "Backend developer",
+                        "Builds backend services.",
+                        "CAT-001",
+                        "true"
+                );
     }
 
-    /**
-     * Vérifie que la création d'une profession échoue avec une erreur HTTP 404
-     * lorsque la catégorie demandée n'existe pas.
-     */
     @Test
-    void shouldThrowNotFoundWhenProfessionCategoryDoesNotExist() {
-        // Préparation : définit une profession associée à une catégorie inexistante.
+    void shouldThrowNotFoundAndStopCreationWhenCategoryDoesNotExist() {
         ProfessionRequest request = new ProfessionRequest(
-                "Backend developer",
-                "Develops backend services.",
-                "CAT-999"
+                "Backend developer", "Builds APIs.", "CAT-404"
         );
-
-        // Simulation : configure le repository pour ne trouver aucune catégorie.
-        when(professionCategoryRepository.findById("CAT-999"))
+        when(professionCategoryRepository.findById("CAT-404"))
                 .thenReturn(Optional.empty());
 
-        // Exécution et vérification : confirme que le service lève une erreur 404.
         assertThatThrownBy(() -> professionService.createProfession(request))
-                .isInstanceOf(ResponseStatusException.class)
-                .satisfies(exception ->
-                        assertThat(((ResponseStatusException) exception).getStatusCode())
-                                .isEqualTo(HttpStatus.NOT_FOUND)
-                );
+                .isInstanceOfSatisfying(ResponseStatusException.class,
+                        exception -> assertStatus(exception, HttpStatus.NOT_FOUND));
 
-        // Vérification : confirme que la catégorie a été recherchée.
-        verify(professionCategoryRepository).findById("CAT-999");
-
-        // Vérification : confirme qu'aucune génération d'identifiant,
-        // persistance de profession ou création d'audit n'a été effectuée.
+        verify(professionCategoryRepository).findById("CAT-404");
         verifyNoInteractions(sequenceGenerator, professionRepository, auditLogRepository);
     }
 
-    /**
-     * Vérifie la modification d'une profession existante et la création
-     * des entrées d'audit correspondant aux champs modifiés.
-     */
+    // -------------------------------------------------------------------------
+    // Update — partial update semantics
+    // -------------------------------------------------------------------------
+
     @Test
-    void shouldUpdateProfessionAndRecordChangedFields() {
-        // Préparation : crée une profession existante avec ses anciennes valeurs.
-        Profession profession = new Profession(
-                "Backend developer",
-                "Old description.",
-                true,
-                "CAT-001"
+    void shouldUpdateAllChangedFieldsAndAuditEachChange() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Old description.", true, "CAT-001"
         );
-        profession.setId("PROF-001");
-
-        // Préparation : définit les nouvelles valeurs à appliquer.
         ProfessionRequest request = new ProfessionRequest(
-                "Senior backend developer",
-                "New description.",
-                "CAT-002"
+                "Senior backend developer", "New description.", "CAT-002"
         );
-
-        // Préparation : crée la nouvelle catégorie associée à la profession.
-        ProfessionCategory category = new ProfessionCategory(
-                "Development",
-                "Development professions"
-        );
-        category.setId("CAT-002");
-
-        // Simulation : configure la récupération de la profession existante.
-        when(professionRepository.findById("PROF-001"))
-                .thenReturn(Optional.of(profession));
-
-        // Simulation : configure la récupération de la nouvelle catégorie.
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
         when(professionCategoryRepository.findById("CAT-002"))
-                .thenReturn(Optional.of(category));
+                .thenReturn(Optional.of(category("CAT-002")));
+        mockSaveProfession();
 
-        // Simulation : retourne l'objet transmis au repository lors de l'enregistrement.
-        when(professionRepository.save(any(Profession.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
+        ProfessionResponse result = professionService.updateProfession("PROF-001", request);
 
-        // Exécution : met à jour la profession via le service.
-        ProfessionResponse result =
-                professionService.updateProfession("PROF-001", request);
-
-        // Vérification : contrôle les nouvelles valeurs de la profession.
-        assertThat(result.id()).isEqualTo("PROF-001");
         assertThat(result.name()).isEqualTo("Senior backend developer");
         assertThat(result.description()).isEqualTo("New description.");
         assertThat(result.categoryId()).isEqualTo("CAT-002");
         assertThat(result.active()).isTrue();
 
-        // Capture : récupère les entrées d'audit générées par la modification.
-        ArgumentCaptor<List<AuditLog>> auditCaptor =
-                ArgumentCaptor.forClass(List.class);
-
-        verify(auditLogRepository).saveAll(auditCaptor.capture());
-
-        List<AuditLog> auditLogs = auditCaptor.getValue();
-
-        // Vérification : confirme que trois entrées d'audit ont été créées
-        // pour cette profession et qu'elles correspondent à des mises à jour.
-        assertThat(auditLogs).hasSize(3);
-        assertThat(auditLogs)
-                .extracting(AuditLog::getAction)
-                .containsOnly("UPDATE");
-
-        assertThat(auditLogs)
-                .extracting(AuditLog::getEntityId)
-                .containsOnly("PROF-001");
-
-        // Vérification : confirme que la profession existante a été enregistrée.
-        verify(professionRepository).save(profession);
+        List<AuditLog> logs = captureAuditLogs();
+        assertThat(logs).hasSize(3);
+        assertThat(logs).extracting(AuditLog::getAction).containsOnly("UPDATE");
+        assertThat(logs).extracting(AuditLog::getFieldName)
+                .containsExactlyInAnyOrder("name", "description", "categoryId");
+        assertThat(logs).extracting(AuditLog::getEntityId).containsOnly("PROF-001");
+        verify(professionRepository).save(existing);
     }
 
-    /**
-     * Vérifie que seules les propriétés réellement modifiées
-     * génèrent des entrées dans le journal d'audit.
-     */
     @Test
-    void shouldOnlyAuditFieldsThatChanged() {
-        // Préparation : crée une profession avec ses valeurs initiales.
-        Profession profession = new Profession(
-                "Backend developer",
-                "Old description.",
-                true,
-                "CAT-001"
+    void shouldUpdateOnlyNameAndPreserveDescriptionAndCategoryWhenTheyAreNull() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Keep this description.", true, "CAT-001"
         );
-        profession.setId("PROF-001");
+        ProfessionRequest request = new ProfessionRequest("Senior developer", null, null);
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
+        mockSaveProfession();
 
-        // Préparation : conserve le nom et la catégorie,
-        // mais définit une nouvelle description.
-        ProfessionRequest request = new ProfessionRequest(
-                "Backend developer",
-                "New description.",
-                "CAT-001"
-        );
+        ProfessionResponse result = professionService.updateProfession("PROF-001", request);
 
-        // Préparation : crée la catégorie associée à la profession.
-        ProfessionCategory category = new ProfessionCategory(
-                "IT",
-                "Information technology"
-        );
+        assertThat(result.name()).isEqualTo("Senior developer");
+        assertThat(result.description()).isEqualTo("Keep this description.");
+        assertThat(result.categoryId()).isEqualTo("CAT-001");
 
-        // Simulation : configure la récupération de la profession et de sa catégorie.
-        when(professionRepository.findById("PROF-001"))
-                .thenReturn(Optional.of(profession));
-
-        when(professionCategoryRepository.findById("CAT-001"))
-                .thenReturn(Optional.of(category));
-
-        // Simulation : retourne l'objet transmis au repository lors de l'enregistrement.
-        when(professionRepository.save(any(Profession.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
-
-        // Exécution : met à jour la profession via le service.
-        ProfessionResponse result =
-                professionService.updateProfession("PROF-001", request);
-
-        // Vérification : confirme que la nouvelle description est appliquée.
-        assertThat(result.description()).isEqualTo("New description.");
-
-        // Capture : récupère les entrées d'audit générées par la modification.
-        ArgumentCaptor<List<AuditLog>> auditCaptor =
-                ArgumentCaptor.forClass(List.class);
-
-        verify(auditLogRepository).saveAll(auditCaptor.capture());
-
-        List<AuditLog> auditLogs = auditCaptor.getValue();
-
-        // Vérification : confirme qu'une seule entrée d'audit a été créée
-        // puisque seule la description a changé.
-        assertThat(auditLogs).hasSize(1);
-        assertThat(auditLogs)
-                .extracting(AuditLog::getAction)
-                .containsOnly("UPDATE");
+        List<AuditLog> logs = captureAuditLogs();
+        assertThat(logs).hasSize(1);
+        assertThat(logs.get(0).getFieldName()).isEqualTo("name");
+        verifyNoInteractions(professionCategoryRepository);
     }
 
-    /**
-     * Vérifie qu'aucune entrée d'audit n'est créée
-     * lorsqu'une profession est mise à jour sans changement de valeur.
-     */
     @Test
-    void shouldNotCreateAuditEntriesWhenNothingChanged() {
-        // Préparation : crée une profession avec ses valeurs actuelles.
-        Profession profession = new Profession(
-                "Backend developer",
-                "Develops backend services.",
-                true,
-                "CAT-001"
+    void shouldUpdateOnlyDescriptionAndPreserveOtherFieldsWhenTheyAreNull() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Old description.", true, "CAT-001"
         );
-        profession.setId("PROF-001");
+        ProfessionRequest request = new ProfessionRequest(null, "Updated description.", null);
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
+        mockSaveProfession();
 
-        // Préparation : définit une requête contenant exactement les mêmes valeurs.
+        ProfessionResponse result = professionService.updateProfession("PROF-001", request);
+
+        assertThat(result.name()).isEqualTo("Backend developer");
+        assertThat(result.description()).isEqualTo("Updated description.");
+        assertThat(result.categoryId()).isEqualTo("CAT-001");
+
+        List<AuditLog> logs = captureAuditLogs();
+        assertThat(logs).hasSize(1);
+        assertThat(logs.get(0).getFieldName()).isEqualTo("description");
+        verifyNoInteractions(professionCategoryRepository);
+    }
+
+    @Test
+    void shouldUpdateOnlyCategoryAndPreserveOtherFieldsWhenTheyAreNull() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Existing description.", true, "CAT-001"
+        );
+        ProfessionRequest request = new ProfessionRequest(null, null, "CAT-002");
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
+        when(professionCategoryRepository.findById("CAT-002"))
+                .thenReturn(Optional.of(category("CAT-002")));
+        mockSaveProfession();
+
+        ProfessionResponse result = professionService.updateProfession("PROF-001", request);
+
+        assertThat(result.name()).isEqualTo("Backend developer");
+        assertThat(result.description()).isEqualTo("Existing description.");
+        assertThat(result.categoryId()).isEqualTo("CAT-002");
+
+        List<AuditLog> logs = captureAuditLogs();
+        assertThat(logs).hasSize(1);
+        assertThat(logs.get(0).getFieldName()).isEqualTo("categoryId");
+    }
+
+    @Test
+    void shouldNotAuditOrLookupCategoryWhenSubmittedValuesAreUnchanged() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Same description.", true, "CAT-001"
+        );
         ProfessionRequest request = new ProfessionRequest(
-                "Backend developer",
-                "Develops backend services.",
-                "CAT-001"
+                "Backend developer", "Same description.", "CAT-001"
         );
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
+        mockSaveProfession();
 
-        // Préparation : crée la catégorie associée à la profession.
-        ProfessionCategory category = new ProfessionCategory(
-                "IT",
-                "Information technology"
-        );
+        ProfessionResponse result = professionService.updateProfession("PROF-001", request);
 
-        // Simulation : configure la récupération de la profession et de sa catégorie.
-        when(professionRepository.findById("PROF-001"))
-                .thenReturn(Optional.of(profession));
-
-        when(professionCategoryRepository.findById("CAT-001"))
-                .thenReturn(Optional.of(category));
-
-        // Simulation : retourne l'objet transmis au repository lors de l'enregistrement.
-        when(professionRepository.save(any(Profession.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
-
-        // Exécution : soumet la mise à jour sans changement de valeur.
-        ProfessionResponse result =
-                professionService.updateProfession("PROF-001", request);
-
-        // Vérification : confirme que la profession retournée conserve son identifiant.
-        assertThat(result.id()).isEqualTo("PROF-001");
-
-        // Vérification : confirme que la profession est enregistrée.
-        verify(professionRepository).save(profession);
-
-        // Vérification : confirme qu'aucune entrée d'audit n'a été créée.
+        assertThat(result.name()).isEqualTo("Backend developer");
+        assertThat(result.description()).isEqualTo("Same description.");
+        assertThat(result.categoryId()).isEqualTo("CAT-001");
+        verify(professionRepository).save(existing);
+        verifyNoInteractions(professionCategoryRepository);
         verify(auditLogRepository, never()).saveAll(anyList());
     }
 
-    /**
-     * Vérifie que la modification d'une profession inexistante
-     * échoue avec une erreur HTTP 404.
-     */
     @Test
-    void shouldThrowNotFoundWhenUpdatingNonexistentProfession() {
-        // Préparation : définit les nouvelles données de la profession.
-        ProfessionRequest request = new ProfessionRequest(
-                "Backend developer",
-                "New description.",
-                "CAT-001"
+    void shouldSaveWithoutAuditWhenAllUpdateFieldsAreNull() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Existing description.", true, "CAT-001"
         );
+        ProfessionRequest request = new ProfessionRequest(null, null, null);
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
+        mockSaveProfession();
 
-        // Simulation : configure le repository pour ne trouver aucune profession.
-        when(professionRepository.findById("PROF-999"))
-                .thenReturn(Optional.empty());
+        ProfessionResponse result = professionService.updateProfession("PROF-001", request);
 
-        // Exécution et vérification : confirme que le service lève une erreur 404.
-        assertThatThrownBy(() ->
-                professionService.updateProfession("PROF-999", request))
-                .isInstanceOf(ResponseStatusException.class)
-                .satisfies(exception ->
-                        assertThat(((ResponseStatusException) exception).getStatusCode())
-                                .isEqualTo(HttpStatus.NOT_FOUND)
-                );
-
-        // Vérification : confirme que la profession a été recherchée.
-        verify(professionRepository).findById("PROF-999");
-
-        // Vérification : confirme qu'aucune recherche de catégorie
-        // ni création d'entrée d'audit n'a été effectuée.
+        assertThat(result.name()).isEqualTo("Backend developer");
+        assertThat(result.description()).isEqualTo("Existing description.");
+        assertThat(result.categoryId()).isEqualTo("CAT-001");
+        verify(professionRepository).save(existing);
         verifyNoInteractions(professionCategoryRepository);
-        verifyNoInteractions(auditLogRepository);
+        verify(auditLogRepository, never()).saveAll(anyList());
     }
 
-    /**
-     * Vérifie que la modification d'une profession échoue avec une erreur HTTP 404
-     * lorsque la nouvelle catégorie demandée n'existe pas.
-     */
     @Test
-    void shouldThrowNotFoundWhenUpdatingWithNonexistentCategory() {
-        // Préparation : crée une profession existante.
-        Profession profession = new Profession(
-                "Backend developer",
-                "Develops backend services.",
-                true,
-                "CAT-001"
+    void shouldThrowNotFoundWhenUpdatingUnknownProfession() {
+        when(professionRepository.findById("PROF-404")).thenReturn(Optional.empty());
+        ProfessionRequest request = new ProfessionRequest("New name", null, null);
+
+        assertThatThrownBy(() -> professionService.updateProfession("PROF-404", request))
+                .isInstanceOfSatisfying(ResponseStatusException.class,
+                        exception -> assertStatus(exception, HttpStatus.NOT_FOUND));
+
+        verifyNoInteractions(
+                professionCategoryRepository,
+                auditLogRepository
         );
-        profession.setId("PROF-001");
+        verify(professionRepository, never()).save(any(Profession.class));
+    }
 
-        // Préparation : définit une requête associant la profession
-        // à une catégorie inexistante.
-        ProfessionRequest request = new ProfessionRequest(
-                "Backend developer",
-                "New description.",
-                "CAT-999"
+    @Test
+    void shouldThrowNotFoundWhenUpdatingToUnknownCategoryWithoutSavingOrAuditing() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Description.", true, "CAT-001"
         );
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
+        when(professionCategoryRepository.findById("CAT-404")).thenReturn(Optional.empty());
+        ProfessionRequest request = new ProfessionRequest(null, null, "CAT-404");
 
-        // Simulation : configure la récupération de la profession existante.
-        when(professionRepository.findById("PROF-001"))
-                .thenReturn(Optional.of(profession));
+        assertThatThrownBy(() -> professionService.updateProfession("PROF-001", request))
+                .isInstanceOfSatisfying(ResponseStatusException.class,
+                        exception -> assertStatus(exception, HttpStatus.NOT_FOUND));
 
-        // Simulation : configure le repository pour ne trouver aucune catégorie.
-        when(professionCategoryRepository.findById("CAT-999"))
-                .thenReturn(Optional.empty());
+        verify(professionRepository, never()).save(any(Profession.class));
+        verify(auditLogRepository, never()).saveAll(anyList());
+    }
 
-        // Exécution et vérification : confirme que le service lève une erreur 404.
-        assertThatThrownBy(() ->
-                professionService.updateProfession("PROF-001", request))
-                .isInstanceOf(ResponseStatusException.class)
-                .satisfies(exception ->
-                        assertThat(((ResponseStatusException) exception).getStatusCode())
-                                .isEqualTo(HttpStatus.NOT_FOUND)
-                );
+    // -------------------------------------------------------------------------
+    // Status toggle
+    // -------------------------------------------------------------------------
 
-        // Vérification : confirme que la profession et la catégorie ont été recherchées.
-        verify(professionRepository).findById("PROF-001");
-        verify(professionCategoryRepository).findById("CAT-999");
+    @Test
+    void shouldActivateInactiveProfessionAndRecordStatusChange() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Description.", false, "CAT-001"
+        );
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
+        mockSaveProfession();
 
-        // Vérification : confirme qu'aucune sauvegarde de profession
-        // ni création d'entrée d'audit n'a été effectuée.
+        ProfessionResponse result = professionService.toggleProfessionStatus("PROF-001");
+
+        assertThat(result.active()).isTrue();
+        assertThat(existing.isActive()).isTrue();
+        verify(professionRepository).save(existing);
+
+        ArgumentCaptor<AuditLog> captor = ArgumentCaptor.forClass(AuditLog.class);
+        verify(auditLogRepository).save(captor.capture());
+        AuditLog log = captor.getValue();
+        assertThat(log.getEntityId()).isEqualTo("PROF-001");
+        assertThat(log.getFieldName()).isEqualTo("active");
+        assertThat(log.getOldValue()).isEqualTo("false");
+        assertThat(log.getNewValue()).isEqualTo("true");
+        assertThat(log.getAction()).isEqualTo("UPDATE");
+        assertThat(log.getChangedBy()).isEqualTo("ADMIN");
+    }
+
+    @Test
+    void shouldDeactivateActiveProfessionAndRecordStatusChange() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Description.", true, "CAT-001"
+        );
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
+        mockSaveProfession();
+
+        ProfessionResponse result = professionService.toggleProfessionStatus("PROF-001");
+
+        assertThat(result.active()).isFalse();
+        assertThat(existing.isActive()).isFalse();
+
+        ArgumentCaptor<AuditLog> captor = ArgumentCaptor.forClass(AuditLog.class);
+        verify(auditLogRepository).save(captor.capture());
+        assertThat(captor.getValue().getOldValue()).isEqualTo("true");
+        assertThat(captor.getValue().getNewValue()).isEqualTo("false");
+        assertThat(captor.getValue().getAction()).isEqualTo("UPDATE");
+    }
+
+    @Test
+    void shouldThrowNotFoundWhenTogglingUnknownProfession() {
+        when(professionRepository.findById("PROF-404")).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> professionService.toggleProfessionStatus("PROF-404"))
+                .isInstanceOfSatisfying(ResponseStatusException.class,
+                        exception -> assertStatus(exception, HttpStatus.NOT_FOUND));
+
         verify(professionRepository, never()).save(any(Profession.class));
         verifyNoInteractions(auditLogRepository);
     }
 
-    /**
-     * Vérifie la désactivation d'une profession existante
-     * et la création d'une entrée d'audit retraçant le changement de statut.
-     */
+    // -------------------------------------------------------------------------
+    // Physical delete and dependency protection
+    // -------------------------------------------------------------------------
+
     @Test
-    void shouldDeactivateProfessionAndRecordAuditEntry() {
-        // Préparation : crée une profession initialement active.
-        Profession profession = new Profession(
-                "Backend developer",
-                "Develops backend services.",
-                true,
-                "CAT-001"
+    void shouldPhysicallyDeleteUnreferencedProfessionAndRecordAudit() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Description.", true, "CAT-001"
         );
-        profession.setId("PROF-001");
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
+        when(collaboratorRepository.existsByProfessionId("PROF-001")).thenReturn(false);
+        when(professionCompetenceRepository.existsByProfessionId("PROF-001")).thenReturn(false);
 
-        // Simulation : configure la récupération de la profession existante.
-        when(professionRepository.findById("PROF-001"))
-                .thenReturn(Optional.of(profession));
+        professionService.deleteProfession("PROF-001");
 
-        // Simulation : retourne l'objet transmis au repository lors de l'enregistrement.
-        when(professionRepository.save(any(Profession.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
+        verify(collaboratorRepository).existsByProfessionId("PROF-001");
+        verify(professionCompetenceRepository).existsByProfessionId("PROF-001");
+        verify(professionRepository).delete(existing);
 
-        // Exécution : désactive la profession via le service.
-        professionService.deactivateProfession("PROF-001");
-
-        // Vérification : confirme que le statut de la profession est désormais inactif.
-        assertThat(profession.isActive()).isFalse();
-
-        // Vérification : confirme que la profession a été enregistrée.
-        verify(professionRepository).save(profession);
-
-        // Capture : récupère l'entrée d'audit créée lors de la désactivation.
-        ArgumentCaptor<AuditLog> auditCaptor =
-                ArgumentCaptor.forClass(AuditLog.class);
-
-        verify(auditLogRepository).save(auditCaptor.capture());
-
-        AuditLog auditLog = auditCaptor.getValue();
-
-        // Vérification : contrôle les informations retraçant le changement de statut.
-        assertThat(auditLog.getEntityId()).isEqualTo("PROF-001");
-        assertThat(auditLog.getFieldName()).isEqualTo("active");
-        assertThat(auditLog.getOldValue()).isEqualTo("true");
-        assertThat(auditLog.getNewValue()).isEqualTo("false");
-        assertThat(auditLog.getAction()).isEqualTo("DELETE");
+        ArgumentCaptor<AuditLog> captor = ArgumentCaptor.forClass(AuditLog.class);
+        verify(auditLogRepository).save(captor.capture());
+        AuditLog log = captor.getValue();
+        assertThat(log.getEntityId()).isEqualTo("PROF-001");
+        assertThat(log.getFieldName()).isEqualTo("profession");
+        assertThat(log.getOldValue()).isEqualTo("Backend developer");
+        assertThat(log.getNewValue()).isNull();
+        assertThat(log.getAction()).isEqualTo("DELETE");
+        assertThat(log.getChangedBy()).isEqualTo("ADMIN");
     }
 
-    /**
-     * Vérifie qu'aucune sauvegarde ni entrée d'audit n'est créée
-     * lorsqu'une profession est déjà inactive.
-     */
     @Test
-    void shouldNotCreateAuditEntryWhenProfessionIsAlreadyInactive() {
-        // Préparation : crée une profession dont le statut est déjà inactif.
-        Profession profession = new Profession(
-                "Backend developer",
-                "Develops backend services.",
-                false,
-                "CAT-001"
+    void shouldThrowNotFoundWhenDeletingUnknownProfession() {
+        when(professionRepository.findById("PROF-404")).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> professionService.deleteProfession("PROF-404"))
+                .isInstanceOfSatisfying(ResponseStatusException.class,
+                        exception -> assertStatus(exception, HttpStatus.NOT_FOUND));
+
+        verifyNoInteractions(collaboratorRepository, professionCompetenceRepository, auditLogRepository);
+        verify(professionRepository, never()).delete(any(Profession.class));
+    }
+
+    @Test
+    void shouldPreventDeletionWhenProfessionIsAssignedToCollaborators() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Description.", true, "CAT-001"
         );
-        profession.setId("PROF-001");
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
+        when(collaboratorRepository.existsByProfessionId("PROF-001")).thenReturn(true);
 
-        // Simulation : configure la récupération de la profession existante.
-        when(professionRepository.findById("PROF-001"))
-                .thenReturn(Optional.of(profession));
+        assertThatThrownBy(() -> professionService.deleteProfession("PROF-001"))
+                .isInstanceOfSatisfying(ResponseStatusException.class,
+                        exception -> assertStatus(exception, HttpStatus.CONFLICT));
 
-        // Exécution : demande la désactivation de la profession.
-        professionService.deactivateProfession("PROF-001");
-
-        // Vérification : confirme qu'aucune nouvelle sauvegarde
-        // ni entrée d'audit n'est effectuée.
-        verify(professionRepository, never()).save(any(Profession.class));
+        verify(collaboratorRepository).existsByProfessionId("PROF-001");
+        verify(professionCompetenceRepository, never()).existsByProfessionId("PROF-001");
+        verify(professionRepository, never()).delete(any(Profession.class));
         verifyNoInteractions(auditLogRepository);
     }
 
-    /**
-     * Vérifie que la désactivation d'une profession inexistante
-     * échoue avec une erreur HTTP 404.
-     */
     @Test
-    void shouldThrowNotFoundWhenDeactivatingNonexistentProfession() {
-        // Simulation : configure le repository pour ne trouver aucune profession.
-        when(professionRepository.findById("PROF-999"))
-                .thenReturn(Optional.empty());
+    void shouldPreventDeletionWhenProfessionHasCompetenceAssociations() {
+        Profession existing = profession(
+                "PROF-001", "Backend developer", "Description.", true, "CAT-001"
+        );
+        when(professionRepository.findById("PROF-001")).thenReturn(Optional.of(existing));
+        when(collaboratorRepository.existsByProfessionId("PROF-001")).thenReturn(false);
+        when(professionCompetenceRepository.existsByProfessionId("PROF-001")).thenReturn(true);
 
-        // Exécution et vérification : confirme que le service lève une erreur 404.
-        assertThatThrownBy(() ->
-                professionService.deactivateProfession("PROF-999"))
-                .isInstanceOf(ResponseStatusException.class)
-                .satisfies(exception ->
-                        assertThat(((ResponseStatusException) exception).getStatusCode())
-                                .isEqualTo(HttpStatus.NOT_FOUND)
-                );
+        assertThatThrownBy(() -> professionService.deleteProfession("PROF-001"))
+                .isInstanceOfSatisfying(ResponseStatusException.class,
+                        exception -> assertStatus(exception, HttpStatus.CONFLICT));
 
-        // Vérification : confirme que la recherche a été effectuée
-        // et qu'aucune entrée d'audit n'a été créée.
-        verify(professionRepository).findById("PROF-999");
+        verify(collaboratorRepository).existsByProfessionId("PROF-001");
+        verify(professionCompetenceRepository).existsByProfessionId("PROF-001");
+        verify(professionRepository, never()).delete(any(Profession.class));
         verifyNoInteractions(auditLogRepository);
     }
 }

@@ -13,7 +13,6 @@ public class ProfessionCompetence {
     private String id;
 
     private String professionId;
-
     private String competenceId;
 
     public ProfessionCompetence() {

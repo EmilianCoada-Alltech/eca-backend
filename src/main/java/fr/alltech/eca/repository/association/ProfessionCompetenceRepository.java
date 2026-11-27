@@ -8,4 +8,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * entre métiers et compétences.
  */
 public interface ProfessionCompetenceRepository extends MongoRepository<ProfessionCompetence, String> {
+
+    boolean existsByProfessionId(String professionId);
 }

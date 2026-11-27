@@ -13,7 +13,6 @@ public class CompetenceDomain {
     private String id;
 
     private String competenceId;
-
     private String domainId;
 
     public CompetenceDomain() {

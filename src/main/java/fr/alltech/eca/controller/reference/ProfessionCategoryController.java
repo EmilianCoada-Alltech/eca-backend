@@ -1,10 +1,10 @@
 package fr.alltech.eca.controller.reference;
 
-import fr.alltech.eca.dto.reference.ProfessionCategoryResponse;
+import fr.alltech.eca.dto.reference.profession_category.ProfessionCategoryRequest;
+import fr.alltech.eca.dto.reference.profession_category.ProfessionCategoryResponse;
 import fr.alltech.eca.service.reference.ProfessionCategoryService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,8 +30,45 @@ public class ProfessionCategoryController {
      *
      * @return la liste des catégories de métiers
      */
-    @GetMapping
+    @GetMapping("/all")
     public List<ProfessionCategoryResponse> getAllProfessionCategories() {
         return professionCategoryService.getAllProfessionCategories();
+    }
+
+    @GetMapping("/active")
+    public List<ProfessionCategoryResponse> getAllActiveProfessionCategories() {
+        return professionCategoryService.getAllActiveProfessionCategories();
+    }
+
+    @GetMapping("/inactive")
+    public List<ProfessionCategoryResponse> getAllInactiveProfessionCategories() {
+        return professionCategoryService.getAllInactiveProfessionCategories();
+    }
+
+    @GetMapping("/{id}")
+    public ProfessionCategoryResponse getProfessionCategoryById(@PathVariable String id) {
+        return professionCategoryService.getProfessionCategoryById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProfessionCategoryResponse createProfessionCategory(@RequestBody ProfessionCategoryRequest request) {
+        return professionCategoryService.createProfessionCategory(request);
+    }
+
+    @PutMapping("/{id}")
+    public ProfessionCategoryResponse updateProfessionCategory(@PathVariable String id, @RequestBody ProfessionCategoryRequest request) {
+        return professionCategoryService.updateProfessionCategory(id, request);
+    }
+
+    @PatchMapping("/{id}/toggle-status")
+    public ProfessionCategoryResponse toggleProfessionCategoryStatus(@PathVariable String id) {
+        return professionCategoryService.toggleProfessionCategoryStatus(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProfessionCategory(@PathVariable String id) {
+        professionCategoryService.deleteProfessionCategory(id);
     }
 }

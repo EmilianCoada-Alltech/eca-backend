@@ -39,7 +39,8 @@ public class ProfessionCategoryRepositoryTest {
         // Préparation : crée une catégorie de profession avec sa description métier.
         ProfessionCategory professionCategory = new ProfessionCategory(
                 "Development",
-                "Groups professions related to software development, including frontend and backend development, full-stack engineering, application design, software architecture, and maintenance. Covers the creation, evolution, and improvement of software solutions.");
+                "Groups professions related to software development, including frontend and backend development, full-stack engineering, application design, software architecture, and maintenance. Covers the creation, evolution, and improvement of software solutions.",
+                true);
 
         // Exécution : enregistre la catégorie dans MongoDB.
         ProfessionCategory savedCategory = professionCategoryRepository.save(professionCategory);

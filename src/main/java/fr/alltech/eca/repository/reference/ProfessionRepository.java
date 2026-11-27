@@ -16,4 +16,13 @@ public interface ProfessionRepository extends MongoRepository<Profession, String
      * @return la liste des métiers actifs
      */
     List<Profession> findByActiveTrue();
+
+    /**
+     * Récupère uniquement les métiers inactifs
+     *
+     * @return la liste des métiers inactifs
+     */
+    List<Profession> findByActiveFalse();
+
+    boolean existsByCategoryId(String categoryId);
 }

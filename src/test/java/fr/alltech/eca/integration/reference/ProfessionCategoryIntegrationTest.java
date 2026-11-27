@@ -36,7 +36,8 @@ public class ProfessionCategoryIntegrationTest {
         // Préparation : crée et enregistre une catégorie de métiers.
         ProfessionCategory category = new ProfessionCategory(
                 "Development",
-                "Groups professions related to software development, including frontend and backend development, full-stack engineering, application design, software architecture, and maintenance. Covers the creation, evolution, and improvement of software solutions.");
+                "Groups professions related to software development, including frontend and backend development, full-stack engineering, application design, software architecture, and maintenance. Covers the creation, evolution, and improvement of software solutions.",
+                true);
 
         ProfessionCategory savedCategory = professionCategoryRepository.save(category);
 

@@ -6,7 +6,9 @@ import fr.alltech.eca.dto.reference.profession.ProfessionResponse;
 import fr.alltech.eca.mapper.reference.ProfessionMapper;
 import fr.alltech.eca.model.audit.AuditLog;
 import fr.alltech.eca.model.reference.Profession;
+import fr.alltech.eca.repository.association.ProfessionCompetenceRepository;
 import fr.alltech.eca.repository.audit.AuditLogRepository;
+import fr.alltech.eca.repository.collaborator.CollaboratorRepository;
 import fr.alltech.eca.repository.reference.ProfessionCategoryRepository;
 import fr.alltech.eca.repository.reference.ProfessionRepository;
 import fr.alltech.eca.service.common.SequenceDefinitions;
@@ -33,19 +35,25 @@ public class ProfessionService {
     private final AuditLogRepository auditLogRepository;
     private final ProfessionMapper professionMapper;
     private final SequenceGenerator sequenceGenerator;
+    private final CollaboratorRepository collaboratorRepository;
+    private final ProfessionCompetenceRepository professionCompetenceRepository;
 
     public ProfessionService(
             ProfessionRepository professionRepository,
             ProfessionCategoryRepository professionCategoryRepository,
             AuditLogRepository auditLogRepository,
             ProfessionMapper professionMapper,
-            SequenceGenerator sequenceGenerator
+            SequenceGenerator sequenceGenerator,
+            CollaboratorRepository collaboratorRepository,
+            ProfessionCompetenceRepository professionCompetenceRepository
     ) {
         this.professionRepository = professionRepository;
         this.professionCategoryRepository = professionCategoryRepository;
         this.auditLogRepository = auditLogRepository;
         this.professionMapper = professionMapper;
         this.sequenceGenerator = sequenceGenerator;
+        this.collaboratorRepository = collaboratorRepository;
+        this.professionCompetenceRepository = professionCompetenceRepository;
     }
 
     /**
@@ -67,6 +75,13 @@ public class ProfessionService {
      */
     public List<ProfessionResponse> getAllProfessions() {
         return professionRepository.findAll()
+                .stream()
+                .map(professionMapper::toResponse)
+                .toList();
+    }
+
+    public List<ProfessionResponse> getAllInactiveProfessions() {
+        return professionRepository.findByActiveFalse()
                 .stream()
                 .map(professionMapper::toResponse)
                 .toList();
@@ -161,6 +176,7 @@ public class ProfessionService {
      * @return le métier mis à jour
      * @throws ResponseStatusException si le métier ou sa catégorie n'existe pas
      */
+
     public ProfessionResponse updateProfession(String id, ProfessionRequest request) {
 
         // Vérifie que le métier à modifier existe.
@@ -170,19 +186,13 @@ public class ProfessionService {
                         "Profession not found with id: " + id
                 ));
 
-        // Vérifie que la nouvelle catégorie existe avant d'appliquer les modifications.
-        professionCategoryRepository.findById(request.categoryId())
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Profession category not found with id: " + request.categoryId()
-                ));
-
-        // Prépare la liste des modifications à enregistrer dans le journal d'audit.
         List<AuditLog> auditLogs = new ArrayList<>();
         LocalDateTime changedAt = LocalDateTime.now();
 
         // Vérifie et met à jour le nom si nécessaire.
-        if (!Objects.equals(profession.getName(), request.name())) {
+        if (request.name() != null
+                && !Objects.equals(profession.getName(), request.name())) {
+
             auditLogs.add(new AuditLog(
                     null, "PROFESSION", id, "name",
                     profession.getName(), request.name(),
@@ -193,7 +203,9 @@ public class ProfessionService {
         }
 
         // Vérifie et met à jour la description si nécessaire.
-        if (!Objects.equals(profession.getDescription(), request.description())) {
+        if (request.description() != null
+                && !Objects.equals(profession.getDescription(), request.description())) {
+
             auditLogs.add(new AuditLog(
                     null, "PROFESSION", id, "description",
                     profession.getDescription(), request.description(),
@@ -204,7 +216,16 @@ public class ProfessionService {
         }
 
         // Vérifie et met à jour la catégorie si nécessaire.
-        if (!Objects.equals(profession.getCategoryId(), request.categoryId())) {
+        if (request.categoryId() != null
+                && !Objects.equals(profession.getCategoryId(), request.categoryId())) {
+
+            // Vérifie que la nouvelle catégorie existe.
+            professionCategoryRepository.findById(request.categoryId())
+                    .orElseThrow(() -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND,
+                            "Profession category not found with id: " + request.categoryId()
+                    ));
+
             auditLogs.add(new AuditLog(
                     null, "PROFESSION", id, "categoryId",
                     profession.getCategoryId(), request.categoryId(),
@@ -225,27 +246,19 @@ public class ProfessionService {
         return professionMapper.toResponse(updatedProfession);
     }
 
-    /**
-     * Désactive un métier sans le supprimer de la base de données.
-     * Enregistre la modification dans le journal d'audit.
-     * Une opération sur un métier déjà inactif reste sans effet.
-     *
-     * @param id identifiant du métier à désactiver
-     * @throws ResponseStatusException si le métier n'existe pas
-     */
-    public void deactivateProfession(String id) {
 
-        // Vérifie que le métier à désactiver existe.
+    public ProfessionResponse toggleProfessionStatus(String id) {
+
+        // Vérifie que le métier existe.
         Profession profession = professionRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "Profession not found with id: " + id
                 ));
 
-        // Ne fait rien si le métier est déjà inactif.
-        if (!profession.isActive()) {
-            return;
-        }
+        // Détermine le nouveau statut.
+        boolean previousStatus = profession.isActive();
+        boolean newStatus = !previousStatus;
 
         LocalDateTime changedAt = LocalDateTime.now();
 
@@ -255,19 +268,68 @@ public class ProfessionService {
                 "PROFESSION",
                 id,
                 "active",
-                "true",
-                "false",
+                String.valueOf(previousStatus),
+                String.valueOf(newStatus),
+                "ADMIN",
+                changedAt,
+                "UPDATE"
+        );
+
+        // Inverse le statut sans supprimer le document MongoDB.
+        profession.setActive(newStatus);
+
+        Profession updatedProfession = professionRepository.save(profession);
+
+        // Enregistre le changement dans le journal d'audit.
+        auditLogRepository.save(auditLog);
+
+        return professionMapper.toResponse(updatedProfession);
+    }
+
+    public void deleteProfession(String id) {
+
+        // Vérifie que le métier existe.
+        Profession profession = professionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession not found with id: " + id
+                ));
+
+        // Empêche la suppression si des collaborateurs utilisent ce métier.
+        if (collaboratorRepository.existsByProfessionId(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Cannot delete a profession assigned to collaborators"
+            );
+        }
+
+        // Empêche la suppression si des compétences sont associées à ce métier.
+        if (professionCompetenceRepository.existsByProfessionId(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Cannot delete a profession linked to competences"
+            );
+        }
+
+        LocalDateTime changedAt = LocalDateTime.now();
+
+        // Prépare l'entrée d'audit avant la suppression.
+        AuditLog auditLog = new AuditLog(
+                null,
+                "PROFESSION",
+                id,
+                "profession",
+                profession.getName(),
+                null,
                 "ADMIN",
                 changedAt,
                 "DELETE"
         );
 
-        // Désactive le métier sans supprimer son document MongoDB.
-        profession.setActive(false);
+        // Supprime définitivement le métier.
+        professionRepository.delete(profession);
 
-        professionRepository.save(profession);
-
-        // Enregistre la désactivation dans le journal d'audit.
+        // Conserve une trace de la suppression.
         auditLogRepository.save(auditLog);
     }
 }

@@ -14,14 +14,16 @@ public class ProfessionCategory {
 
     private String name;
     private String description;
+    private boolean active;
 
     public ProfessionCategory() {
 
     }
 
-    public ProfessionCategory(String name, String description) {
+    public ProfessionCategory(String name, String description, boolean active) {
         this.name = name;
         this.description = description;
+        this.active = active;
     }
 
     public String getId() {
@@ -46,5 +48,13 @@ public class ProfessionCategory {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

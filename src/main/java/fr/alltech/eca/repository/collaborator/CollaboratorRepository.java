@@ -16,4 +16,6 @@ public interface CollaboratorRepository extends MongoRepository<Collaborator, St
      * @return la liste des collaborateurs recherchables
      */
     List<Collaborator> findBySearchableTrue();
+
+    boolean existsByProfessionId(String professionId);
 }
