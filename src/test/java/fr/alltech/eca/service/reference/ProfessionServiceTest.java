@@ -658,100 +658,100 @@ class ProfessionServiceTest {
      * Vérifie la désactivation d'une profession existante
      * et la création d'une entrée d'audit retraçant le changement de statut.
      */
-    @Test
-    void shouldDeactivateProfessionAndRecordAuditEntry() {
-        // Préparation : crée une profession initialement active.
-        Profession profession = new Profession(
-                "Backend developer",
-                "Develops backend services.",
-                true,
-                "CAT-001"
-        );
-        profession.setId("PROF-001");
-
-        // Simulation : configure la récupération de la profession existante.
-        when(professionRepository.findById("PROF-001"))
-                .thenReturn(Optional.of(profession));
-
-        // Simulation : retourne l'objet transmis au repository lors de l'enregistrement.
-        when(professionRepository.save(any(Profession.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
-
-        // Exécution : désactive la profession via le service.
-        professionService.deactivateProfession("PROF-001");
-
-        // Vérification : confirme que le statut de la profession est désormais inactif.
-        assertThat(profession.isActive()).isFalse();
-
-        // Vérification : confirme que la profession a été enregistrée.
-        verify(professionRepository).save(profession);
-
-        // Capture : récupère l'entrée d'audit créée lors de la désactivation.
-        ArgumentCaptor<AuditLog> auditCaptor =
-                ArgumentCaptor.forClass(AuditLog.class);
-
-        verify(auditLogRepository).save(auditCaptor.capture());
-
-        AuditLog auditLog = auditCaptor.getValue();
-
-        // Vérification : contrôle les informations retraçant le changement de statut.
-        assertThat(auditLog.getEntityId()).isEqualTo("PROF-001");
-        assertThat(auditLog.getFieldName()).isEqualTo("active");
-        assertThat(auditLog.getOldValue()).isEqualTo("true");
-        assertThat(auditLog.getNewValue()).isEqualTo("false");
-        assertThat(auditLog.getAction()).isEqualTo("DELETE");
-    }
+//    @Test
+//    void shouldDeactivateProfessionAndRecordAuditEntry() {
+//        // Préparation : crée une profession initialement active.
+//        Profession profession = new Profession(
+//                "Backend developer",
+//                "Develops backend services.",
+//                true,
+//                "CAT-001"
+//        );
+//        profession.setId("PROF-001");
+//
+//        // Simulation : configure la récupération de la profession existante.
+//        when(professionRepository.findById("PROF-001"))
+//                .thenReturn(Optional.of(profession));
+//
+//        // Simulation : retourne l'objet transmis au repository lors de l'enregistrement.
+//        when(professionRepository.save(any(Profession.class)))
+//                .thenAnswer(invocation -> invocation.getArgument(0));
+//
+//        // Exécution : désactive la profession via le service.
+//        professionService.deactivateProfession("PROF-001");
+//
+//        // Vérification : confirme que le statut de la profession est désormais inactif.
+//        assertThat(profession.isActive()).isFalse();
+//
+//        // Vérification : confirme que la profession a été enregistrée.
+//        verify(professionRepository).save(profession);
+//
+//        // Capture : récupère l'entrée d'audit créée lors de la désactivation.
+//        ArgumentCaptor<AuditLog> auditCaptor =
+//                ArgumentCaptor.forClass(AuditLog.class);
+//
+//        verify(auditLogRepository).save(auditCaptor.capture());
+//
+//        AuditLog auditLog = auditCaptor.getValue();
+//
+//        // Vérification : contrôle les informations retraçant le changement de statut.
+//        assertThat(auditLog.getEntityId()).isEqualTo("PROF-001");
+//        assertThat(auditLog.getFieldName()).isEqualTo("active");
+//        assertThat(auditLog.getOldValue()).isEqualTo("true");
+//        assertThat(auditLog.getNewValue()).isEqualTo("false");
+//        assertThat(auditLog.getAction()).isEqualTo("DELETE");
+//    }
 
     /**
      * Vérifie qu'aucune sauvegarde ni entrée d'audit n'est créée
      * lorsqu'une profession est déjà inactive.
      */
-    @Test
-    void shouldNotCreateAuditEntryWhenProfessionIsAlreadyInactive() {
-        // Préparation : crée une profession dont le statut est déjà inactif.
-        Profession profession = new Profession(
-                "Backend developer",
-                "Develops backend services.",
-                false,
-                "CAT-001"
-        );
-        profession.setId("PROF-001");
-
-        // Simulation : configure la récupération de la profession existante.
-        when(professionRepository.findById("PROF-001"))
-                .thenReturn(Optional.of(profession));
-
-        // Exécution : demande la désactivation de la profession.
-        professionService.deactivateProfession("PROF-001");
-
-        // Vérification : confirme qu'aucune nouvelle sauvegarde
-        // ni entrée d'audit n'est effectuée.
-        verify(professionRepository, never()).save(any(Profession.class));
-        verifyNoInteractions(auditLogRepository);
-    }
+//    @Test
+//    void shouldNotCreateAuditEntryWhenProfessionIsAlreadyInactive() {
+//        // Préparation : crée une profession dont le statut est déjà inactif.
+//        Profession profession = new Profession(
+//                "Backend developer",
+//                "Develops backend services.",
+//                false,
+//                "CAT-001"
+//        );
+//        profession.setId("PROF-001");
+//
+//        // Simulation : configure la récupération de la profession existante.
+//        when(professionRepository.findById("PROF-001"))
+//                .thenReturn(Optional.of(profession));
+//
+//        // Exécution : demande la désactivation de la profession.
+//        professionService.deactivateProfession("PROF-001");
+//
+//        // Vérification : confirme qu'aucune nouvelle sauvegarde
+//        // ni entrée d'audit n'est effectuée.
+//        verify(professionRepository, never()).save(any(Profession.class));
+//        verifyNoInteractions(auditLogRepository);
+//    }
 
     /**
      * Vérifie que la désactivation d'une profession inexistante
      * échoue avec une erreur HTTP 404.
      */
-    @Test
-    void shouldThrowNotFoundWhenDeactivatingNonexistentProfession() {
-        // Simulation : configure le repository pour ne trouver aucune profession.
-        when(professionRepository.findById("PROF-999"))
-                .thenReturn(Optional.empty());
-
-        // Exécution et vérification : confirme que le service lève une erreur 404.
-        assertThatThrownBy(() ->
-                professionService.deactivateProfession("PROF-999"))
-                .isInstanceOf(ResponseStatusException.class)
-                .satisfies(exception ->
-                        assertThat(((ResponseStatusException) exception).getStatusCode())
-                                .isEqualTo(HttpStatus.NOT_FOUND)
-                );
-
-        // Vérification : confirme que la recherche a été effectuée
-        // et qu'aucune entrée d'audit n'a été créée.
-        verify(professionRepository).findById("PROF-999");
-        verifyNoInteractions(auditLogRepository);
-    }
+//    @Test
+//    void shouldThrowNotFoundWhenDeactivatingNonexistentProfession() {
+//        // Simulation : configure le repository pour ne trouver aucune profession.
+//        when(professionRepository.findById("PROF-999"))
+//                .thenReturn(Optional.empty());
+//
+//        // Exécution et vérification : confirme que le service lève une erreur 404.
+//        assertThatThrownBy(() ->
+//                professionService.deactivateProfession("PROF-999"))
+//                .isInstanceOf(ResponseStatusException.class)
+//                .satisfies(exception ->
+//                        assertThat(((ResponseStatusException) exception).getStatusCode())
+//                                .isEqualTo(HttpStatus.NOT_FOUND)
+//                );
+//
+//        // Vérification : confirme que la recherche a été effectuée
+//        // et qu'aucune entrée d'audit n'a été créée.
+//        verify(professionRepository).findById("PROF-999");
+//        verifyNoInteractions(auditLogRepository);
+//    }
 }

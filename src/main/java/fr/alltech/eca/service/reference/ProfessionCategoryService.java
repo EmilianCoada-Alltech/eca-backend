@@ -153,4 +153,21 @@ public class ProfessionCategoryService {
 
         return professionCategoryMapper.toResponse(updatedCategory);
     }
+
+//    public void deactivateProfessionCategory(String id) {
+//
+//        ProfessionCategory category = professionCategoryRepository.findById(id)
+//                .orElseThrow(() -> new ResponseStatusException(
+//                        HttpStatus.NOT_FOUND,
+//                        "Profession category not found with id: " + id
+//                ));
+//
+//        if (!category.isActive()) {
+//            return;
+//        }
+//
+//        LocalDateTime changedAt = LocalDateTime.now();
+//
+//
+//    }
 }

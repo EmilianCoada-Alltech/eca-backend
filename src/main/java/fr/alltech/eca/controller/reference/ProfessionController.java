@@ -97,16 +97,11 @@ public class ProfessionController {
         return professionService.updateProfession(id, request);
     }
 
-    /**
-     * DELETE /api/references/professions/{id}
-     * <p>
-     * Désactive un métier sans le supprimer de la base de données.
-     *
-     * @param id identifiant du métier à désactiver
-     */
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deactivateProfession(@PathVariable String id) {
-        professionService.deactivateProfession(id);
+
+    @PatchMapping("/{id}/toggle-status")
+    public ProfessionResponse deactivateProfession(@PathVariable String id) {
+        return professionService.toggleProfessionStatus(id);
     }
+
+
 }

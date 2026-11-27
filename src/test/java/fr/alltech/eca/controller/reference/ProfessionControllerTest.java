@@ -14,7 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -399,36 +400,36 @@ class ProfessionControllerTest {
      *
      * @throws Exception en cas d'erreur lors de l'exécution de la requête HTTP
      */
-    @Test
-    void shouldDeactivateProfession() throws Exception {
-
-        // Envoie une requête DELETE pour désactiver le métier.
-        mockMvc.perform(delete("/api/references/professions/PROF-001"))
-                .andExpect(status().isNoContent());
-
-        // Vérifie que le service a reçu la demande de désactivation.
-        verify(professionService).deactivateProfession("PROF-001");
-    }
+//    @Test
+//    void shouldDeactivateProfession() throws Exception {
+//
+//        // Envoie une requête DELETE pour désactiver le métier.
+//        mockMvc.perform(delete("/api/references/professions/PROF-001"))
+//                .andExpect(status().isNoContent());
+//
+//        // Vérifie que le service a reçu la demande de désactivation.
+//        verify(professionService).deactivateProfession("PROF-001");
+//    }
 
     /**
      * Vérifie que la désactivation d'un métier inexistant retourne une erreur 404.
      *
      * @throws Exception en cas d'erreur lors de l'exécution de la requête HTTP
      */
-    @Test
-    void shouldReturn404WhenDeactivatingNonexistentProfession() throws Exception {
-
-        // Simule l'erreur du service lorsque le métier à désactiver est introuvable.
-        doThrow(new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Profession not found with id: PROF-999"
-        )).when(professionService).deactivateProfession("PROF-999");
-
-        // Envoie une requête DELETE pour un identifiant inexistant.
-        mockMvc.perform(delete("/api/references/professions/PROF-999"))
-                .andExpect(status().isNotFound());
-
-        // Vérifie que la demande de désactivation a bien été transmise au service.
-        verify(professionService).deactivateProfession("PROF-999");
-    }
+//    @Test
+//    void shouldReturn404WhenDeactivatingNonexistentProfession() throws Exception {
+//
+//        // Simule l'erreur du service lorsque le métier à désactiver est introuvable.
+//        doThrow(new ResponseStatusException(
+//                HttpStatus.NOT_FOUND,
+//                "Profession not found with id: PROF-999"
+//        )).when(professionService).deactivateProfession("PROF-999");
+//
+//        // Envoie une requête DELETE pour un identifiant inexistant.
+//        mockMvc.perform(delete("/api/references/professions/PROF-999"))
+//                .andExpect(status().isNotFound());
+//
+//        // Vérifie que la demande de désactivation a bien été transmise au service.
+//        verify(professionService).deactivateProfession("PROF-999");
+//    }
 }

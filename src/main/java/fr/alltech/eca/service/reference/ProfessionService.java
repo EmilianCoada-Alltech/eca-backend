@@ -239,27 +239,18 @@ public class ProfessionService {
     }
 
 
-    /**
-     * Désactive un métier sans le supprimer de la base de données.
-     * Enregistre la modification dans le journal d'audit.
-     * Une opération sur un métier déjà inactif reste sans effet.
-     *
-     * @param id identifiant du métier à désactiver
-     * @throws ResponseStatusException si le métier n'existe pas
-     */
-    public void deactivateProfession(String id) {
+    public ProfessionResponse toggleProfessionStatus(String id) {
 
-        // Vérifie que le métier à désactiver existe.
+        // Vérifie que le métier existe.
         Profession profession = professionRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "Profession not found with id: " + id
                 ));
 
-        // Ne fait rien si le métier est déjà inactif.
-        if (!profession.isActive()) {
-            return;
-        }
+        // Détermine le nouveau statut.
+        boolean previousStatus = profession.isActive();
+        boolean newStatus = !previousStatus;
 
         LocalDateTime changedAt = LocalDateTime.now();
 
@@ -269,19 +260,21 @@ public class ProfessionService {
                 "PROFESSION",
                 id,
                 "active",
-                "true",
-                "false",
+                String.valueOf(previousStatus),
+                String.valueOf(newStatus),
                 "ADMIN",
                 changedAt,
-                "DELETE"
+                "UPDATE"
         );
 
-        // Désactive le métier sans supprimer son document MongoDB.
-        profession.setActive(false);
+        // Inverse le statut sans supprimer le document MongoDB.
+        profession.setActive(newStatus);
 
-        professionRepository.save(profession);
+        Profession updatedProfession = professionRepository.save(profession);
 
-        // Enregistre la désactivation dans le journal d'audit.
+        // Enregistre le changement dans le journal d'audit.
         auditLogRepository.save(auditLog);
+
+        return professionMapper.toResponse(updatedProfession);
     }
 }
