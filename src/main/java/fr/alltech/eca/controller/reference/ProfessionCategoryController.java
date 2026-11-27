@@ -3,6 +3,7 @@ package fr.alltech.eca.controller.reference;
 import fr.alltech.eca.dto.reference.ProfessionCategoryResponse;
 import fr.alltech.eca.service.reference.ProfessionCategoryService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,5 +44,10 @@ public class ProfessionCategoryController {
     @GetMapping("/inactive")
     public List<ProfessionCategoryResponse> getAllInactiveProfessionCategories() {
         return professionCategoryService.getAllInactiveProfessionCategories();
+    }
+
+    @GetMapping("/{id}")
+    public ProfessionCategoryResponse getProfessionCategoryById(@PathVariable String id) {
+        return professionCategoryService.getProfessionCategoryById(id);
     }
 }

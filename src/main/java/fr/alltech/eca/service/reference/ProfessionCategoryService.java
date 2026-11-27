@@ -2,8 +2,11 @@ package fr.alltech.eca.service.reference;
 
 import fr.alltech.eca.dto.reference.ProfessionCategoryResponse;
 import fr.alltech.eca.mapper.reference.ProfessionCategoryMapper;
+import fr.alltech.eca.model.reference.ProfessionCategory;
 import fr.alltech.eca.repository.reference.ProfessionCategoryRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -48,5 +51,14 @@ public class ProfessionCategoryService {
                 .stream()
                 .map(professionCategoryMapper::toResponse)
                 .toList();
+    }
+
+    public ProfessionCategoryResponse getProfessionCategoryById(String id) {
+        ProfessionCategory professionCategory = professionCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Profession Category not found with id: " + id
+                ));
+
+        return professionCategoryMapper.toResponse(professionCategory);
     }
 }
