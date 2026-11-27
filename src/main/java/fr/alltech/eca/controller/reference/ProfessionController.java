@@ -40,4 +40,12 @@ public class ProfessionController {
     ) {
         return professionService.createProfession(request);
     }
+
+    @PutMapping("/{id}")
+    public ProfessionResponse updateProfession(
+            @PathVariable String id,
+            @RequestBody ProfessionRequest request
+    ) {
+        return professionService.updateProfession(id, request);
+    }
 }

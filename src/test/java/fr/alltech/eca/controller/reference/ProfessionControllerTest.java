@@ -17,8 +17,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProfessionController.class)
@@ -191,5 +190,100 @@ class ProfessionControllerTest {
                 .andExpect(status().isNotFound());
 
         verify(professionService).createProfession(request);
+    }
+
+    @Test
+    void shouldUpdateProfession() throws Exception {
+        ProfessionRequest request = new ProfessionRequest(
+                "Senior backend developer",
+                "Develops complex backend services.",
+                "CAT-002"
+        );
+
+        ProfessionResponse response = new ProfessionResponse(
+                "PROF-001",
+                "Senior backend developer",
+                "Develops complex backend services.",
+                "CAT-002",
+                true
+        );
+
+        when(professionService.updateProfession("PROF-001", request))
+                .thenReturn(response);
+
+        mockMvc.perform(put("/api/references/professions/PROF-001")
+                        .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                        .content("""
+                                {
+                                    "name": "Senior backend developer",
+                                    "description": "Develops complex backend services.",
+                                    "categoryId": "CAT-002"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(String.valueOf(MediaType.APPLICATION_JSON)))
+                .andExpect(jsonPath("$.id").value("PROF-001"))
+                .andExpect(jsonPath("$.name").value("Senior backend developer"))
+                .andExpect(jsonPath("$.description").value("Develops complex backend services."))
+                .andExpect(jsonPath("$.categoryId").value("CAT-002"))
+                .andExpect(jsonPath("$.active").value(true));
+
+        verify(professionService).updateProfession("PROF-001", request);
+    }
+
+    @Test
+    void shouldReturn404WhenUpdatingNonexistentProfession() throws Exception {
+        ProfessionRequest request = new ProfessionRequest(
+                "Backend developer",
+                "New description.",
+                "CAT-001"
+        );
+
+        when(professionService.updateProfession("PROF-999", request))
+                .thenThrow(new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession not found with id: PROF-999"
+                ));
+
+        mockMvc.perform(put("/api/references/professions/PROF-999")
+                        .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                        .content("""
+                                {
+                                    "name": "Backend developer",
+                                    "description": "New description.",
+                                    "categoryId": "CAT-001"
+                                }
+                                """))
+                .andExpect(status().isNotFound());
+
+        verify(professionService).updateProfession("PROF-999", request);
+    }
+
+    @Test
+    void shouldReturn404WhenUpdatingWithNonexistentCategory() throws Exception {
+        ProfessionRequest request = new ProfessionRequest(
+                "Backend developer",
+                "New description.",
+                "CAT-999"
+        );
+
+        when(professionService.updateProfession("PROF-001", request))
+                .thenThrow(new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession category not found with id: CAT-999"
+                ));
+
+        mockMvc.perform(put("/api/references/professions/PROF-001")
+                        .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                        .content("""
+                                {
+                                    "name": "Backend developer",
+                                    "description": "New description.",
+                                    "categoryId": "CAT-999"
+                                }
+                                """))
+                .andExpect(status().isNotFound());
+
+        verify(professionService).updateProfession("PROF-001", request);
     }
 }
