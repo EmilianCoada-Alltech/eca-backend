@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ProfessionService {
@@ -112,5 +114,64 @@ public class ProfessionService {
         ));
 
         return professionMapper.toResponse(savedProfession);
+    }
+
+    public ProfessionResponse updateProfession(String id, ProfessionRequest request) {
+
+        Profession profession = professionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession not found with id: " + id
+                ));
+
+        professionCategoryRepository.findById(request.categoryId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession category not found with id: " + request.categoryId()
+                ));
+
+        List<AuditLog> auditLogs = new ArrayList<>();
+        LocalDateTime changedAt = LocalDateTime.now();
+
+        // Check and update the name
+        if (!Objects.equals(profession.getName(), request.name())) {
+            auditLogs.add(new AuditLog(
+                    null, "PROFESSION", id, "name",
+                    profession.getName(), request.name(),
+                    "ADMIN", changedAt, "UPDATE"
+            ));
+
+            profession.setName(request.name());
+        }
+
+        // Check and update the description
+        if (!Objects.equals(profession.getDescription(), request.description())) {
+            auditLogs.add(new AuditLog(
+                    null, "PROFESSION", id, "description",
+                    profession.getDescription(), request.description(),
+                    "ADMIN", changedAt, "UPDATE"
+            ));
+
+            profession.setDescription(request.description());
+        }
+
+        // Check and update the category
+        if (!Objects.equals(profession.getCategoryId(), request.categoryId())) {
+            auditLogs.add(new AuditLog(
+                    null, "PROFESSION", id, "categoryId",
+                    profession.getCategoryId(), request.categoryId(),
+                    "ADMIN", changedAt, "UPDATE"
+            ));
+
+            profession.setCategoryId(request.categoryId());
+        }
+
+        Profession updatedProfession = professionRepository.save(profession);
+
+        if (!auditLogs.isEmpty()) {
+            auditLogRepository.saveAll(auditLogs);
+        }
+
+        return professionMapper.toResponse(updatedProfession);
     }
 }
