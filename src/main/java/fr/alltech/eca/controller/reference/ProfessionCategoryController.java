@@ -60,4 +60,9 @@ public class ProfessionCategoryController {
     public ProfessionCategoryResponse updateProfessionCategory(@PathVariable String id, @RequestBody ProfessionCategoryRequest request) {
         return professionCategoryService.updateProfessionCategory(id, request);
     }
+
+    @PatchMapping("/{id}/toggle-status")
+    public ProfessionCategoryResponse toggleProfessionCategoryStatus(@PathVariable String id) {
+        return professionCategoryService.toggleProfessionCategoryStatus(id);
+    }
 }

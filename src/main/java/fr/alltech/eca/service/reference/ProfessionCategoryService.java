@@ -154,20 +154,37 @@ public class ProfessionCategoryService {
         return professionCategoryMapper.toResponse(updatedCategory);
     }
 
-//    public void deactivateProfessionCategory(String id) {
-//
-//        ProfessionCategory category = professionCategoryRepository.findById(id)
-//                .orElseThrow(() -> new ResponseStatusException(
-//                        HttpStatus.NOT_FOUND,
-//                        "Profession category not found with id: " + id
-//                ));
-//
-//        if (!category.isActive()) {
-//            return;
-//        }
-//
-//        LocalDateTime changedAt = LocalDateTime.now();
-//
-//
-//    }
+    public ProfessionCategoryResponse toggleProfessionCategoryStatus(String id) {
+
+        ProfessionCategory category = professionCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession category not found with id: " + id
+                ));
+
+        boolean previousStatus = category.isActive();
+        boolean newStatus = !previousStatus;
+
+        LocalDateTime changedAt = LocalDateTime.now();
+
+        AuditLog auditLog = new AuditLog(
+                null,
+                "PROFESSION-CATEGORY",
+                id,
+                "active",
+                String.valueOf(previousStatus),
+                String.valueOf(newStatus),
+                "ADMIN",
+                changedAt,
+                "UPDATE"
+        );
+
+        category.setActive(newStatus);
+
+        ProfessionCategory savedCategory = professionCategoryRepository.save(category);
+
+        auditLogRepository.save(new AuditLog());
+
+        return professionCategoryMapper.toResponse(savedCategory);
+    }
 }
