@@ -15,8 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -285,5 +284,28 @@ class ProfessionControllerTest {
                 .andExpect(status().isNotFound());
 
         verify(professionService).updateProfession("PROF-001", request);
+    }
+
+    @Test
+    void shouldDeactivateProfession() throws Exception {
+
+        mockMvc.perform(delete("/api/references/professions/PROF-001"))
+                .andExpect(status().isNoContent());
+
+        verify(professionService).deactivateProfession("PROF-001");
+    }
+
+    @Test
+    void shouldReturn404WhenDeactivatingNonexistentProfession() throws Exception {
+
+        doThrow(new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Profession not found with id: PROF-999"
+        )).when(professionService).deactivateProfession("PROF-999");
+
+        mockMvc.perform(delete("/api/references/professions/PROF-999"))
+                .andExpect(status().isNotFound());
+
+        verify(professionService).deactivateProfession("PROF-999");
     }
 }
