@@ -259,4 +259,63 @@ class ProfessionServiceTest {
 
         verifyNoInteractions(sequenceGenerator, professionRepository, auditLogRepository);
     }
+
+    @Test
+    void shouldUpdateProfessionAndRecordChangedFields() {
+        Profession profession = new Profession(
+                "Backend developer",
+                "Old description.",
+                true,
+                "CAT-001"
+        );
+        profession.setId("PROF-001");
+
+        ProfessionRequest request = new ProfessionRequest(
+                "Senior backend developer",
+                "New description.",
+                "CAT-002"
+        );
+
+        ProfessionCategory category = new ProfessionCategory(
+                "Development",
+                "Development professions"
+        );
+        category.setId("CAT-002");
+
+        when(professionRepository.findById("PROF-001"))
+                .thenReturn(Optional.of(profession));
+
+        when(professionCategoryRepository.findById("CAT-002"))
+                .thenReturn(Optional.of(category));
+
+        when(professionRepository.save(any(Profession.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        ProfessionResponse result =
+                professionService.updateProfession("PROF-001", request);
+
+        assertThat(result.id()).isEqualTo("PROF-001");
+        assertThat(result.name()).isEqualTo("Senior backend developer");
+        assertThat(result.description()).isEqualTo("New description.");
+        assertThat(result.categoryId()).isEqualTo("CAT-002");
+        assertThat(result.active()).isTrue();
+
+        ArgumentCaptor<List<AuditLog>> auditCaptor =
+                ArgumentCaptor.forClass(List.class);
+
+        verify(auditLogRepository).saveAll(auditCaptor.capture());
+
+        List<AuditLog> auditLogs = auditCaptor.getValue();
+
+        assertThat(auditLogs).hasSize(3);
+        assertThat(auditLogs)
+                .extracting(AuditLog::getAction)
+                .containsOnly("UPDATE");
+
+        assertThat(auditLogs)
+                .extracting(AuditLog::getEntityId)
+                .containsOnly("PROF-001");
+
+        verify(professionRepository).save(profession);
+    }
 }
