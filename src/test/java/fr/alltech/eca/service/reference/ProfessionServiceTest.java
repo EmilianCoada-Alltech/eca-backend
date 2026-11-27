@@ -468,4 +468,76 @@ class ProfessionServiceTest {
         verify(professionRepository, never()).save(any(Profession.class));
         verifyNoInteractions(auditLogRepository);
     }
+
+    @Test
+    void shouldDeactivateProfessionAndRecordAuditEntry() {
+        Profession profession = new Profession(
+                "Backend developer",
+                "Develops backend services.",
+                true,
+                "CAT-001"
+        );
+        profession.setId("PROF-001");
+
+        when(professionRepository.findById("PROF-001"))
+                .thenReturn(Optional.of(profession));
+
+        when(professionRepository.save(any(Profession.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        professionService.deactivateProfession("PROF-001");
+
+        assertThat(profession.isActive()).isFalse();
+
+        verify(professionRepository).save(profession);
+
+        ArgumentCaptor<AuditLog> auditCaptor =
+                ArgumentCaptor.forClass(AuditLog.class);
+
+        verify(auditLogRepository).save(auditCaptor.capture());
+
+        AuditLog auditLog = auditCaptor.getValue();
+
+        assertThat(auditLog.getEntityId()).isEqualTo("PROF-001");
+        assertThat(auditLog.getFieldName()).isEqualTo("active");
+        assertThat(auditLog.getOldValue()).isEqualTo("true");
+        assertThat(auditLog.getNewValue()).isEqualTo("false");
+        assertThat(auditLog.getAction()).isEqualTo("DELETE");
+    }
+
+    @Test
+    void shouldNotCreateAuditEntryWhenProfessionIsAlreadyInactive() {
+        Profession profession = new Profession(
+                "Backend developer",
+                "Develops backend services.",
+                false,
+                "CAT-001"
+        );
+        profession.setId("PROF-001");
+
+        when(professionRepository.findById("PROF-001"))
+                .thenReturn(Optional.of(profession));
+
+        professionService.deactivateProfession("PROF-001");
+
+        verify(professionRepository, never()).save(any(Profession.class));
+        verifyNoInteractions(auditLogRepository);
+    }
+
+    @Test
+    void shouldThrowNotFoundWhenDeactivatingNonexistentProfession() {
+        when(professionRepository.findById("PROF-999"))
+                .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() ->
+                professionService.deactivateProfession("PROF-999"))
+                .isInstanceOf(ResponseStatusException.class)
+                .satisfies(exception ->
+                        assertThat(((ResponseStatusException) exception).getStatusCode())
+                                .isEqualTo(HttpStatus.NOT_FOUND)
+                );
+
+        verify(professionRepository).findById("PROF-999");
+        verifyNoInteractions(auditLogRepository);
+    }
 }
