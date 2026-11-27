@@ -7,6 +7,7 @@ import fr.alltech.eca.mapper.reference.ProfessionMapper;
 import fr.alltech.eca.model.audit.AuditLog;
 import fr.alltech.eca.model.reference.Profession;
 import fr.alltech.eca.repository.audit.AuditLogRepository;
+import fr.alltech.eca.repository.collaborator.CollaboratorRepository;
 import fr.alltech.eca.repository.reference.ProfessionCategoryRepository;
 import fr.alltech.eca.repository.reference.ProfessionRepository;
 import fr.alltech.eca.service.common.SequenceDefinitions;
@@ -33,19 +34,22 @@ public class ProfessionService {
     private final AuditLogRepository auditLogRepository;
     private final ProfessionMapper professionMapper;
     private final SequenceGenerator sequenceGenerator;
+    private final CollaboratorRepository collaboratorRepository;
 
     public ProfessionService(
             ProfessionRepository professionRepository,
             ProfessionCategoryRepository professionCategoryRepository,
             AuditLogRepository auditLogRepository,
             ProfessionMapper professionMapper,
-            SequenceGenerator sequenceGenerator
+            SequenceGenerator sequenceGenerator,
+            CollaboratorRepository collaboratorRepository
     ) {
         this.professionRepository = professionRepository;
         this.professionCategoryRepository = professionCategoryRepository;
         this.auditLogRepository = auditLogRepository;
         this.professionMapper = professionMapper;
         this.sequenceGenerator = sequenceGenerator;
+        this.collaboratorRepository = collaboratorRepository;
     }
 
     /**
@@ -276,5 +280,44 @@ public class ProfessionService {
         auditLogRepository.save(auditLog);
 
         return professionMapper.toResponse(updatedProfession);
+    }
+
+    public void deleteProfession(String id) {
+
+        // Vérifie que le métier existe.
+        Profession profession = professionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession not found with id: " + id
+                ));
+
+        // Empêche la suppression si des collaborateurs utilisent ce métier.
+        if (collaboratorRepository.existsByProfessionId(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Cannot delete a profession assigned to collaborators"
+            );
+        }
+
+        LocalDateTime changedAt = LocalDateTime.now();
+
+        // Prépare l'entrée d'audit avant la suppression.
+        AuditLog auditLog = new AuditLog(
+                null,
+                "PROFESSION",
+                id,
+                "profession",
+                profession.getName(),
+                null,
+                "ADMIN",
+                changedAt,
+                "DELETE"
+        );
+
+        // Supprime définitivement le métier.
+        professionRepository.delete(profession);
+
+        // Conserve une trace de la suppression.
+        auditLogRepository.save(auditLog);
     }
 }

@@ -103,5 +103,8 @@ public class ProfessionController {
         return professionService.toggleProfessionStatus(id);
     }
 
-
+    @DeleteMapping("/{id}")
+    public void deleteProfession(@PathVariable String id) {
+        professionService.deleteProfession(id);
+    }
 }

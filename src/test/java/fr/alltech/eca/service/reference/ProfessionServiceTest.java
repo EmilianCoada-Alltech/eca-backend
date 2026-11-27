@@ -7,6 +7,7 @@ import fr.alltech.eca.model.audit.AuditLog;
 import fr.alltech.eca.model.reference.Profession;
 import fr.alltech.eca.model.reference.ProfessionCategory;
 import fr.alltech.eca.repository.audit.AuditLogRepository;
+import fr.alltech.eca.repository.collaborator.CollaboratorRepository;
 import fr.alltech.eca.repository.reference.ProfessionCategoryRepository;
 import fr.alltech.eca.repository.reference.ProfessionRepository;
 import fr.alltech.eca.service.common.SequenceDefinitions;
@@ -49,6 +50,9 @@ class ProfessionServiceTest {
     @Mock
     private SequenceGenerator sequenceGenerator;
 
+    @Mock
+    private CollaboratorRepository collaboratorRepository;
+
     private ProfessionService professionService;
 
     /**
@@ -62,7 +66,8 @@ class ProfessionServiceTest {
                 professionCategoryRepository,
                 auditLogRepository,
                 new ProfessionMapper(),
-                sequenceGenerator
+                sequenceGenerator,
+                collaboratorRepository
         );
     }
 
