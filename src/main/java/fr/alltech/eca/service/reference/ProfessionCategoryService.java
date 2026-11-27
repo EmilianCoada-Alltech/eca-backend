@@ -188,7 +188,8 @@ public class ProfessionCategoryService {
 
         ProfessionCategory savedCategory = professionCategoryRepository.save(category);
 
-        auditLogRepository.save(new AuditLog());
+        // Save the audit entry constructed above.
+        auditLogRepository.save(auditLog);
 
         return professionCategoryMapper.toResponse(savedCategory);
     }

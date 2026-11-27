@@ -6,6 +6,7 @@ import fr.alltech.eca.dto.reference.profession.ProfessionResponse;
 import fr.alltech.eca.mapper.reference.ProfessionMapper;
 import fr.alltech.eca.model.audit.AuditLog;
 import fr.alltech.eca.model.reference.Profession;
+import fr.alltech.eca.repository.association.ProfessionCompetenceRepository;
 import fr.alltech.eca.repository.audit.AuditLogRepository;
 import fr.alltech.eca.repository.collaborator.CollaboratorRepository;
 import fr.alltech.eca.repository.reference.ProfessionCategoryRepository;
@@ -35,6 +36,7 @@ public class ProfessionService {
     private final ProfessionMapper professionMapper;
     private final SequenceGenerator sequenceGenerator;
     private final CollaboratorRepository collaboratorRepository;
+    private final ProfessionCompetenceRepository professionCompetenceRepository;
 
     public ProfessionService(
             ProfessionRepository professionRepository,
@@ -42,7 +44,8 @@ public class ProfessionService {
             AuditLogRepository auditLogRepository,
             ProfessionMapper professionMapper,
             SequenceGenerator sequenceGenerator,
-            CollaboratorRepository collaboratorRepository
+            CollaboratorRepository collaboratorRepository,
+            ProfessionCompetenceRepository professionCompetenceRepository
     ) {
         this.professionRepository = professionRepository;
         this.professionCategoryRepository = professionCategoryRepository;
@@ -50,6 +53,7 @@ public class ProfessionService {
         this.professionMapper = professionMapper;
         this.sequenceGenerator = sequenceGenerator;
         this.collaboratorRepository = collaboratorRepository;
+        this.professionCompetenceRepository = professionCompetenceRepository;
     }
 
     /**
@@ -296,6 +300,14 @@ public class ProfessionService {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
                     "Cannot delete a profession assigned to collaborators"
+            );
+        }
+
+        // Empêche la suppression si des compétences sont associées à ce métier.
+        if (professionCompetenceRepository.existsByProfessionId(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Cannot delete a profession linked to competences"
             );
         }
 
