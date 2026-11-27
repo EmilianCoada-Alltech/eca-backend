@@ -47,7 +47,7 @@ class ProfessionCategoryControllerTest {
                 .thenReturn(List.of(category));
 
         // Vérifie le statut HTTP, le type de contenu et les données retournées.
-        mockMvc.perform(get("/api/references/profession-categories"))
+        mockMvc.perform(get("/api/references/profession-categories/all"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith("application/json"))
                 .andExpect(jsonPath("$.length()").value(1))
@@ -70,9 +70,55 @@ class ProfessionCategoryControllerTest {
                 .thenReturn(List.of());
 
         // Vérifie que l'API répond avec un statut 200 et un tableau vide.
-        mockMvc.perform(get("/api/references/profession-categories"))
+        mockMvc.perform(get("/api/references/profession-categories/all"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith("application/json"))
                 .andExpect(jsonPath("$.length()").value(0));
     }
+
+    @Test
+    void shouldReturnActiveProfessionCategories() throws Exception {
+        ProfessionCategoryResponse category = new ProfessionCategoryResponse(
+                "CAT-001",
+                "Développement logiciel",
+                "Conception, développement et maintenance de logiciels et applications.",
+                true
+        );
+
+        when(professionCategoryService.getAllActiveProfessionCategories())
+                .thenReturn(List.of(category));
+
+        mockMvc.perform(get("/api/references/profession-categories/active"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("application/json"))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value("CAT-001"))
+                .andExpect(jsonPath("$[0].name").value("Développement logiciel"))
+                .andExpect(jsonPath("$[0].description").value("Conception, développement et maintenance de logiciels et applications."))
+                .andExpect(jsonPath("$[0].active").value(true));
+    }
+
+    @Test
+    void shouldReturnInactiveActiveProfessionCategories() throws Exception {
+        ProfessionCategoryResponse category = new ProfessionCategoryResponse(
+                "CAT-001",
+                "Développement logiciel",
+                "Conception, développement et maintenance de logiciels et applications.",
+                false
+        );
+
+        when(professionCategoryService.getAllInactiveProfessionCategories())
+                .thenReturn(List.of(category));
+
+        mockMvc.perform(get("/api/references/profession-categories/inactive"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("application/json"))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value("CAT-001"))
+                .andExpect(jsonPath("$[0].name").value("Développement logiciel"))
+                .andExpect(jsonPath("$[0].description").value("Conception, développement et maintenance de logiciels et applications."))
+                .andExpect(jsonPath("$[0].active").value(false));
+    }
+
+
 }

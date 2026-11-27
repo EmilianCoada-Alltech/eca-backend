@@ -103,6 +103,39 @@ class ProfessionServiceTest {
         verify(professionRepository).findByActiveTrue();
     }
 
+    @Test
+    void shouldReturnInactiveProfessionsAsResponses() {
+        // Préparation : crée une profession active.
+        Profession profession = new Profession(
+                "Backend developer",
+                "Develops backend services.",
+                false,
+                "4"
+        );
+
+        // Simulation : configure le repository pour retourner cette profession.
+        when(professionRepository.findByActiveFalse())
+                .thenReturn(List.of(profession));
+
+        // Exécution : récupère les professions actives via le service.
+        List<ProfessionResponse> result =
+                professionService.getAllInactiveProfessions();
+
+        // Vérification : contrôle le nombre de résultats et les données du DTO.
+        assertThat(result).hasSize(1);
+
+        ProfessionResponse response = result.get(0);
+
+        assertThat(response.name()).isEqualTo("Backend developer");
+        assertThat(response.description())
+                .isEqualTo("Develops backend services.");
+        assertThat(response.categoryId()).isEqualTo("4");
+        assertThat(response.active()).isFalse();
+
+        // Vérification : confirme que le repository a été interrogé.
+        verify(professionRepository).findByActiveFalse();
+    }
+
     /**
      * Vérifie que le service retourne une liste vide
      * lorsqu'aucune profession active n'est disponible.

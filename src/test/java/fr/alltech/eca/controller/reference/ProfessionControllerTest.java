@@ -62,6 +62,29 @@ class ProfessionControllerTest {
                 .andExpect(jsonPath("$[0].active").value(true));
     }
 
+    @Test
+    void shouldReturnInactiveProfessions() throws Exception {
+        ProfessionResponse profession = new ProfessionResponse(
+                "PROF-001",
+                "Backend developer",
+                "Develops backend services.",
+                "CAT-01",
+                false
+        );
+
+        when(professionService.getAllInactiveProfessions())
+                .thenReturn(List.of(profession));
+
+        mockMvc.perform(get("/api/references/professions/inactive"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("application/json"))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value("PROF-001"))
+                .andExpect(jsonPath("$[0].name").value("Backend developer"))
+                .andExpect(jsonPath("$[0].categoryId").value("CAT-01"))
+                .andExpect(jsonPath("$[0].active").value(false));
+    }
+
     /**
      * Vérifie que l'API retourne un tableau vide lorsqu'aucun métier actif
      * n'est disponible.
