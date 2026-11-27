@@ -14,19 +14,19 @@
             <mongodb:documents>
                 [
                 {
-                "_id": "EXP-01",
+                "_id": "EXP-001",
                 "name": "Junior"
                 },
                 {
-                "_id": "EXP-02",
+                "_id": "EXP-002",
                 "name": "Confirmé"
                 },
                 {
-                "_id": "EXP-03",
+                "_id": "EXP-003",
                 "name": "Senior"
                 },
                 {
-                "_id": "EXP-04",
+                "_id": "EXP-004",
                 "name": "Expert"
                 }
                 ]

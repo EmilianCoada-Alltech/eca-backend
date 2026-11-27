@@ -15,78 +15,78 @@
             <mongodb:documents>
                 [
                 {
-                _id: "CAT-01",
+                _id: "CAT-001",
                 name: "Développement logiciel",
                 description: "Conception, développement et maintenance de logiciels et applications."
                 },
                 {
-                _id: "CAT-02",
+                _id: "CAT-002",
                 name: "Architecture et expertise technique",
                 description: "Architecture logicielle, conception technique et expertise spécialisée."
                 },
                 {
-                _id: "CAT-03",
+                _id: "CAT-003",
                 name: "Data et intelligence artificielle",
                 description: "Ingénierie des données, analyse, science des données et intelligence artificielle."
                 },
                 {
-                _id: "CAT-04",
+                _id: "CAT-004",
                 name: "Infrastructure et Cloud",
                 description: "Conception, déploiement et exploitation des infrastructures et plateformes Cloud."
                 },
                 {
-                _id: "CAT-05",
+                _id: "CAT-005",
                 name: "Systèmes et réseaux",
                 description: "Administration et ingénierie des systèmes informatiques et réseaux."
                 },
                 {
-                _id: "CAT-06",
+                _id: "CAT-006",
                 name: "Cybersécurité",
                 description: "Protection des systèmes d'information, sécurité informatique et gestion des risques."
                 },
                 {
-                _id: "CAT-07",
+                _id: "CAT-007",
                 name: "Qualité et tests",
                 description: "Assurance qualité, validation logicielle et automatisation des tests."
                 },
                 {
-                _id: "CAT-08",
+                _id: "CAT-008",
                 name: "Gestion de projet et produit",
                 description: "Pilotage de projets informatiques et gestion de produits numériques."
                 },
                 {
-                _id: "CAT-09",
+                _id: "CAT-009",
                 name: "Conseil et transformation numérique",
                 description: "Conseil informatique, analyse métier et accompagnement de la transformation numérique."
                 },
                 {
-                _id: "CAT-10",
+                _id: "CAT-010",
                 name: "UX, UI et design",
                 description: "Conception de l'expérience utilisateur et des interfaces numériques."
                 },
                 {
-                _id: "CAT-11",
+                _id: "CAT-011",
                 name: "Support et exploitation",
                 description: "Support informatique, assistance applicative et exploitation des environnements de
                 production."
                 },
                 {
-                _id: "CAT-12",
+                _id: "CAT-012",
                 name: "ERP et solutions métiers",
                 description: "Intégration, configuration et accompagnement des solutions de gestion d'entreprise."
                 },
                 {
-                _id: "CAT-13",
+                _id: "CAT-013",
                 name: "Commerce et développement commercial",
                 description: "Développement commercial, gestion des clients et activités de vente."
                 },
                 {
-                _id: "CAT-14",
+                _id: "CAT-014",
                 name: "Management et direction",
                 description: "Management des équipes, direction technique et pilotage des activités."
                 },
                 {
-                _id: "CAT-15",
+                _id: "CAT-015",
                 name: "Fonctions support",
                 description: "Gestion des ressources humaines, administration, finance et fonctions internes."
                 }

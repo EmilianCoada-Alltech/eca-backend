@@ -1,4 +1,4 @@
-package fr.alltech.eca.dto.reference;
+package fr.alltech.eca.dto.reference.profession;
 
 public record ProfessionResponse(
         String id,

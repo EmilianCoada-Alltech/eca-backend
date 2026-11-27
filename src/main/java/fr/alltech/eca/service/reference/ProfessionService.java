@@ -1,27 +1,44 @@
+
 package fr.alltech.eca.service.reference;
 
-import fr.alltech.eca.dto.reference.ProfessionResponse;
+import fr.alltech.eca.dto.reference.profession.ProfessionRequest;
+import fr.alltech.eca.dto.reference.profession.ProfessionResponse;
 import fr.alltech.eca.mapper.reference.ProfessionMapper;
+import fr.alltech.eca.model.audit.AuditLog;
 import fr.alltech.eca.model.reference.Profession;
+import fr.alltech.eca.repository.audit.AuditLogRepository;
+import fr.alltech.eca.repository.reference.ProfessionCategoryRepository;
 import fr.alltech.eca.repository.reference.ProfessionRepository;
+import fr.alltech.eca.service.common.SequenceDefinitions;
+import fr.alltech.eca.service.common.SequenceGenerator;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class ProfessionService {
 
     private final ProfessionRepository professionRepository;
+    private final ProfessionCategoryRepository professionCategoryRepository;
+    private final AuditLogRepository auditLogRepository;
     private final ProfessionMapper professionMapper;
+    private final SequenceGenerator sequenceGenerator;
 
     public ProfessionService(
             ProfessionRepository professionRepository,
-            ProfessionMapper professionMapper
+            ProfessionCategoryRepository professionCategoryRepository,
+            AuditLogRepository auditLogRepository,
+            ProfessionMapper professionMapper,
+            SequenceGenerator sequenceGenerator
     ) {
         this.professionRepository = professionRepository;
+        this.professionCategoryRepository = professionCategoryRepository;
+        this.auditLogRepository = auditLogRepository;
         this.professionMapper = professionMapper;
+        this.sequenceGenerator = sequenceGenerator;
     }
 
     public List<ProfessionResponse> getAllActiveProfessions() {
@@ -46,5 +63,54 @@ public class ProfessionService {
                 ));
 
         return professionMapper.toResponse(profession);
+    }
+
+    public ProfessionResponse createProfession(ProfessionRequest request) {
+
+        professionCategoryRepository.findById(request.categoryId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession category not found with id: " + request.categoryId()
+                ));
+
+        String id = sequenceGenerator.generate(
+                SequenceDefinitions.PROFESSION_SEQUENCE,
+                SequenceDefinitions.PROFESSION_PREFIX,
+                SequenceDefinitions.PROFESSION_INITIAL_VALUE
+        );
+
+        Profession profession = new Profession(
+                request.name(),
+                request.description(),
+                true,
+                request.categoryId()
+        );
+
+        profession.setId(id);
+
+        Profession savedProfession = professionRepository.save(profession);
+
+        LocalDateTime changedAt = LocalDateTime.now();
+
+        auditLogRepository.saveAll(List.of(
+                new AuditLog(
+                        null, "PROFESSION", id, "name",
+                        null, request.name(), "ADMIN", changedAt, "CREATE"
+                ),
+                new AuditLog(
+                        null, "PROFESSION", id, "description",
+                        null, request.description(), "ADMIN", changedAt, "CREATE"
+                ),
+                new AuditLog(
+                        null, "PROFESSION", id, "categoryId",
+                        null, request.categoryId(), "ADMIN", changedAt, "CREATE"
+                ),
+                new AuditLog(
+                        null, "PROFESSION", id, "active",
+                        null, "true", "ADMIN", changedAt, "CREATE"
+                )
+        ));
+
+        return professionMapper.toResponse(savedProfession);
     }
 }

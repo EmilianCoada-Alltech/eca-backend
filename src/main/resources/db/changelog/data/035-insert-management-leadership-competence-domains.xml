@@ -14,26 +14,26 @@
         <mongodb:insertMany collectionName="competence_domains">
             <mongodb:documents>
                 [
-                {"_id": "CD-334", "competenceId": "COMP-334", "domainId": "DOM-14"},
-                {"_id": "CD-335", "competenceId": "COMP-335", "domainId": "DOM-14"},
-                {"_id": "CD-336", "competenceId": "COMP-336", "domainId": "DOM-14"},
-                {"_id": "CD-337", "competenceId": "COMP-337", "domainId": "DOM-14"},
-                {"_id": "CD-338", "competenceId": "COMP-338", "domainId": "DOM-14"},
-                {"_id": "CD-339", "competenceId": "COMP-339", "domainId": "DOM-14"},
-                {"_id": "CD-340", "competenceId": "COMP-340", "domainId": "DOM-14"},
-                {"_id": "CD-341", "competenceId": "COMP-341", "domainId": "DOM-14"},
-                {"_id": "CD-342", "competenceId": "COMP-342", "domainId": "DOM-14"},
-                {"_id": "CD-343", "competenceId": "COMP-343", "domainId": "DOM-14"},
-                {"_id": "CD-344", "competenceId": "COMP-344", "domainId": "DOM-14"},
-                {"_id": "CD-345", "competenceId": "COMP-345", "domainId": "DOM-14"},
-                {"_id": "CD-346", "competenceId": "COMP-346", "domainId": "DOM-14"},
-                {"_id": "CD-347", "competenceId": "COMP-347", "domainId": "DOM-14"},
-                {"_id": "CD-348", "competenceId": "COMP-348", "domainId": "DOM-14"},
-                {"_id": "CD-349", "competenceId": "COMP-349", "domainId": "DOM-14"},
-                {"_id": "CD-350", "competenceId": "COMP-350", "domainId": "DOM-14"},
-                {"_id": "CD-351", "competenceId": "COMP-351", "domainId": "DOM-14"},
-                {"_id": "CD-352", "competenceId": "COMP-352", "domainId": "DOM-14"},
-                {"_id": "CD-353", "competenceId": "COMP-353", "domainId": "DOM-14"}
+                {"_id": "CD-334", "competenceId": "COMP-334", "domainId": "DOM-014"},
+                {"_id": "CD-335", "competenceId": "COMP-335", "domainId": "DOM-014"},
+                {"_id": "CD-336", "competenceId": "COMP-336", "domainId": "DOM-014"},
+                {"_id": "CD-337", "competenceId": "COMP-337", "domainId": "DOM-014"},
+                {"_id": "CD-338", "competenceId": "COMP-338", "domainId": "DOM-014"},
+                {"_id": "CD-339", "competenceId": "COMP-339", "domainId": "DOM-014"},
+                {"_id": "CD-340", "competenceId": "COMP-340", "domainId": "DOM-014"},
+                {"_id": "CD-341", "competenceId": "COMP-341", "domainId": "DOM-014"},
+                {"_id": "CD-342", "competenceId": "COMP-342", "domainId": "DOM-014"},
+                {"_id": "CD-343", "competenceId": "COMP-343", "domainId": "DOM-014"},
+                {"_id": "CD-344", "competenceId": "COMP-344", "domainId": "DOM-014"},
+                {"_id": "CD-345", "competenceId": "COMP-345", "domainId": "DOM-014"},
+                {"_id": "CD-346", "competenceId": "COMP-346", "domainId": "DOM-014"},
+                {"_id": "CD-347", "competenceId": "COMP-347", "domainId": "DOM-014"},
+                {"_id": "CD-348", "competenceId": "COMP-348", "domainId": "DOM-014"},
+                {"_id": "CD-349", "competenceId": "COMP-349", "domainId": "DOM-014"},
+                {"_id": "CD-350", "competenceId": "COMP-350", "domainId": "DOM-014"},
+                {"_id": "CD-351", "competenceId": "COMP-351", "domainId": "DOM-014"},
+                {"_id": "CD-352", "competenceId": "COMP-352", "domainId": "DOM-014"},
+                {"_id": "CD-353", "competenceId": "COMP-353", "domainId": "DOM-014"}
                 ]
             </mongodb:documents>
         </mongodb:insertMany>

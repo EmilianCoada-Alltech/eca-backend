@@ -1,11 +1,10 @@
 package fr.alltech.eca.controller.reference;
 
-import fr.alltech.eca.dto.reference.ProfessionResponse;
+import fr.alltech.eca.dto.reference.profession.ProfessionRequest;
+import fr.alltech.eca.dto.reference.profession.ProfessionResponse;
 import fr.alltech.eca.service.reference.ProfessionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +31,13 @@ public class ProfessionController {
     @GetMapping("/{id}")
     public ProfessionResponse getProfessionById(@PathVariable String id) {
         return professionService.getProfessionById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProfessionResponse createProfession(
+            @RequestBody ProfessionRequest request
+    ) {
+        return professionService.createProfession(request);
     }
 }

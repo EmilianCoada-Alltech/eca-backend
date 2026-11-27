@@ -1,6 +1,6 @@
 package fr.alltech.eca.mapper.reference;
 
-import fr.alltech.eca.dto.reference.ProfessionResponse;
+import fr.alltech.eca.dto.reference.profession.ProfessionResponse;
 import fr.alltech.eca.model.reference.Profession;
 import org.springframework.stereotype.Component;
 

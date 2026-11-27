@@ -14,7 +14,7 @@
             <mongodb:documents>
                 [
                 {
-                "id": "CLI-001",
+                "_id": "CLI-001",
                 "name": "Altima Assurances",
                 "streetAddress": "275 rue du Stade",
                 "postalCode": "79180",
@@ -25,7 +25,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "CLI-002",
+                "_id": "CLI-002",
                 "name": "Cdiscount",
                 "streetAddress": "120-126 quai de Bacalan",
                 "postalCode": "33000",
@@ -36,7 +36,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "CLI-003",
+                "_id": "CLI-003",
                 "name": "Groupe IMA",
                 "streetAddress": "118 avenue de Paris",
                 "postalCode": "79000",
@@ -47,7 +47,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "CLI-004",
+                "_id": "CLI-004",
                 "name": "MAIF",
                 "streetAddress": "200 avenue Salvador Allende",
                 "postalCode": "79000",
@@ -58,7 +58,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "CLI-005",
+                "_id": "CLI-005",
                 "name": "MACIF",
                 "streetAddress": "1 rue Jacques Vandier",
                 "postalCode": "79000",
@@ -69,7 +69,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "CLI-006",
+                "_id": "CLI-006",
                 "name": "Kereis",
                 "streetAddress": "112 avenue Kléber",
                 "postalCode": "75116",
@@ -80,7 +80,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "CLI-007",
+                "_id": "CLI-007",
                 "name": "Covéa",
                 "streetAddress": "86-90 rue Saint-Lazare",
                 "postalCode": "75009",
@@ -91,7 +91,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "CLI-008",
+                "_id": "CLI-008",
                 "name": "Michelin",
                 "streetAddress": "23 place des Carmes-Déchaux",
                 "postalCode": "63000",
@@ -102,7 +102,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "CLI-009",
+                "_id": "CLI-009",
                 "name": "Alliance Automotive Group",
                 "streetAddress": "155-159 rue Anatole France",
                 "postalCode": "92300",

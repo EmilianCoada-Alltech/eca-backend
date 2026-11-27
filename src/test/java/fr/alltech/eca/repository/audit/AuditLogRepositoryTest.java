@@ -36,7 +36,8 @@ class AuditLogRepositoryTest {
                 "Previous presentation",
                 "Updated presentation",
                 "admin-123",
-                changedAt
+                changedAt,
+                "CREATE"
         );
 
         // When

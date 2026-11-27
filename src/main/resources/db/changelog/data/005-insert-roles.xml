@@ -10,32 +10,32 @@
             http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
 
     <changeSet id="022-insert-roles" author="eca">
-        
+
         <mongodb:insertMany collectionName="roles">
             <mongodb:documents>
                 [
                 {
-                "_id": "ROLE-01",
+                "_id": "ROLE-001",
                 "name": "COLLABORATOR",
                 "description": "Accès standard à l'espace collaborateur."
                 },
                 {
-                "_id": "ROLE-02",
+                "_id": "ROLE-002",
                 "name": "REDACTEUR",
                 "description": "Gestion des contenus et publications."
                 },
                 {
-                "_id": "ROLE-03",
+                "_id": "ROLE-003",
                 "name": "ADMINISTRATEUR",
                 "description": "Administration de l'application."
                 },
                 {
-                "_id": "ROLE-04",
+                "_id": "ROLE-004",
                 "name": "RH",
                 "description": "Accès aux fonctionnalités dédiées aux ressources humaines."
                 },
                 {
-                "_id": "ROLE-05",
+                "_id": "ROLE-005",
                 "name": "MANAGER",
                 "description": "Accès aux fonctionnalités de gestion d'équipe."
                 }

@@ -22,6 +22,8 @@ public class AuditLog {
     private String changedBy;
     private LocalDateTime changedAt;
 
+    private String action;
+
     public AuditLog() {
     }
 
@@ -33,7 +35,8 @@ public class AuditLog {
             String oldValue,
             String newValue,
             String changedBy,
-            LocalDateTime changedAt
+            LocalDateTime changedAt,
+            String action
     ) {
         this.id = id;
         this.entityType = entityType;
@@ -43,6 +46,7 @@ public class AuditLog {
         this.newValue = newValue;
         this.changedBy = changedBy;
         this.changedAt = changedAt;
+        this.action = action;
     }
 
     public String getId() {
@@ -107,5 +111,13 @@ public class AuditLog {
 
     public void setChangedAt(LocalDateTime changedAt) {
         this.changedAt = changedAt;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 }

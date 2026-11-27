@@ -14,91 +14,91 @@
             <mongodb:documents>
                 [
                 {
-                "_id": "DOM-01",
+                "_id": "DOM-001",
                 "name": "Développement logiciel",
                 "description": "Conception, développement et maintenance d'applications logicielles.",
                 "active": true
                 },
                 {
-                "_id": "DOM-02",
+                "_id": "DOM-002",
                 "name": "Architecture et expertise technique",
                 "description": "Architecture logicielle, conception technique et expertise des systèmes.",
                 "active": true
                 },
                 {
-                "_id": "DOM-03",
+                "_id": "DOM-003",
                 "name": "Data et intelligence artificielle",
                 "description": "Gestion, analyse, traitement et valorisation des données, intelligence artificielle.",
                 "active": true
                 },
                 {
-                "_id": "DOM-04",
+                "_id": "DOM-004",
                 "name": "Cloud et DevOps",
                 "description": "Infrastructures cloud, automatisation, intégration et déploiement continus.",
                 "active": true
                 },
                 {
-                "_id": "DOM-05",
+                "_id": "DOM-005",
                 "name": "Systèmes et réseaux",
                 "description": "Administration des systèmes informatiques et des infrastructures réseau.",
                 "active": true
                 },
                 {
-                "_id": "DOM-06",
+                "_id": "DOM-006",
                 "name": "Cybersécurité",
                 "description": "Sécurité des systèmes d'information, protection des données et gestion des risques.",
                 "active": true
                 },
                 {
-                "_id": "DOM-07",
+                "_id": "DOM-007",
                 "name": "Qualité et tests",
                 "description": "Assurance qualité, stratégie de tests et automatisation des tests logiciels.",
                 "active": true
                 },
                 {
-                "_id": "DOM-08",
+                "_id": "DOM-008",
                 "name": "Gestion de projet et produit",
                 "description": "Pilotage de projets, gestion de produit et coordination des équipes.",
                 "active": true
                 },
                 {
-                "_id": "DOM-09",
+                "_id": "DOM-009",
                 "name": "Conseil et transformation numérique",
                 "description": "Conseil métier, accompagnement du changement et transformation des organisations.",
                 "active": true
                 },
                 {
-                "_id": "DOM-10",
+                "_id": "DOM-010",
                 "name": "UX, UI et design",
                 "description": "Expérience utilisateur, conception d'interfaces et design numérique.",
                 "active": true
                 },
                 {
-                "_id": "DOM-11",
+                "_id": "DOM-011",
                 "name": "Support et exploitation",
                 "description": "Support informatique, maintenance et exploitation des services numériques.",
                 "active": true
                 },
                 {
-                "_id": "DOM-12",
+                "_id": "DOM-012",
                 "name": "ERP et solutions métiers",
                 "description": "Intégration, configuration et maintenance des progiciels et solutions métiers.",
                 "active": true
                 },
                 {
-                "_id": "DOM-13",
+                "_id": "DOM-013",
                 "name": "Commerce et développement commercial",
                 "description": "Développement commercial, relation client et gestion des comptes.",
                 "active": true
                 },
                 {
-                "_id": "DOM-14",
+                "_id": "DOM-014",
                 "name": "Management et direction",
                 "description": "Management des équipes, encadrement et pilotage des activités.",
                 "active": true
                 },
                 {
-                "_id": "DOM-15",
+                "_id": "DOM-015",
                 "name": "Fonctions support",
                 "description": "Ressources humaines, recrutement, administration et gestion financière.",
                 "active": true

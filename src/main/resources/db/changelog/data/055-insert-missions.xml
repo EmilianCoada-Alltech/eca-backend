@@ -14,7 +14,7 @@
             <mongodb:documents>
                 [
                 {
-                "id": "MIS-001",
+                "_id": "MIS-001",
                 "name": "Modernisation du système de gestion des contrats",
                 "clientId": "CLI-001",
                 "startDate": "2024-02-01",
@@ -24,7 +24,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-002",
+                "_id": "MIS-002",
                 "name": "Développement d'un portail client",
                 "clientId": "CLI-001",
                 "startDate": "2025-01-15",
@@ -34,7 +34,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-003",
+                "_id": "MIS-003",
                 "name": "Automatisation des processus de gestion",
                 "clientId": "CLI-001",
                 "startDate": "2026-03-01",
@@ -44,7 +44,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-004",
+                "_id": "MIS-004",
                 "name": "Évolution de la plateforme e-commerce",
                 "clientId": "CLI-002",
                 "startDate": "2024-03-01",
@@ -54,7 +54,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-005",
+                "_id": "MIS-005",
                 "name": "Optimisation du moteur de recherche produits",
                 "clientId": "CLI-002",
                 "startDate": "2025-04-01",
@@ -64,7 +64,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-006",
+                "_id": "MIS-006",
                 "name": "Refonte des outils de suivi logistique",
                 "clientId": "CLI-002",
                 "startDate": "2026-01-15",
@@ -73,7 +73,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-007",
+                "_id": "MIS-007",
                 "name": "Modernisation du système d'information",
                 "clientId": "CLI-003",
                 "startDate": "2024-01-15",
@@ -83,7 +83,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-008",
+                "_id": "MIS-008",
                 "name": "Développement d'une plateforme de gestion des interventions",
                 "clientId": "CLI-003",
                 "startDate": "2025-02-01",
@@ -93,7 +93,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-009",
+                "_id": "MIS-009",
                 "name": "Migration et sécurisation des données",
                 "clientId": "CLI-003",
                 "startDate": "2026-04-01",
@@ -103,7 +103,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-010",
+                "_id": "MIS-010",
                 "name": "Refonte de l'espace adhérent",
                 "clientId": "CLI-004",
                 "startDate": "2024-04-01",
@@ -113,7 +113,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-011",
+                "_id": "MIS-011",
                 "name": "Développement d'API de gestion des contrats",
                 "clientId": "CLI-004",
                 "startDate": "2025-01-01",
@@ -123,7 +123,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-012",
+                "_id": "MIS-012",
                 "name": "Amélioration de l'expérience utilisateur mobile",
                 "clientId": "CLI-004",
                 "startDate": "2026-02-01",
@@ -133,7 +133,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-013",
+                "_id": "MIS-013",
                 "name": "Évolution des applications de gestion des sinistres",
                 "clientId": "CLI-005",
                 "startDate": "2024-02-01",
@@ -143,7 +143,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-014",
+                "_id": "MIS-014",
                 "name": "Mise en place d'une architecture microservices",
                 "clientId": "CLI-005",
                 "startDate": "2025-03-01",
@@ -153,7 +153,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-015",
+                "_id": "MIS-015",
                 "name": "Développement d'un référentiel de données",
                 "clientId": "CLI-005",
                 "startDate": "2026-03-01",
@@ -163,7 +163,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-016",
+                "_id": "MIS-016",
                 "name": "Modernisation des outils de gestion des adhésions",
                 "clientId": "CLI-006",
                 "startDate": "2024-05-01",
@@ -173,7 +173,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-017",
+                "_id": "MIS-017",
                 "name": "Développement d'une plateforme de reporting",
                 "clientId": "CLI-006",
                 "startDate": "2025-04-01",
@@ -183,7 +183,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-018",
+                "_id": "MIS-018",
                 "name": "Intégration de services partenaires",
                 "clientId": "CLI-006",
                 "startDate": "2026-01-01",
@@ -192,7 +192,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-019",
+                "_id": "MIS-019",
                 "name": "Harmonisation des systèmes de gestion",
                 "clientId": "CLI-007",
                 "startDate": "2024-06-01",
@@ -202,7 +202,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-020",
+                "_id": "MIS-020",
                 "name": "Déploiement d'une solution de gestion documentaire",
                 "clientId": "CLI-007",
                 "startDate": "2025-09-01",
@@ -211,7 +211,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-021",
+                "_id": "MIS-021",
                 "name": "Modernisation des outils industriels",
                 "clientId": "CLI-008",
                 "startDate": "2025-01-01",
@@ -221,7 +221,7 @@
                 "isVisible": false
                 },
                 {
-                "id": "MIS-022",
+                "_id": "MIS-022",
                 "name": "Développement d'une plateforme de suivi des pièces automobiles",
                 "clientId": "CLI-009",
                 "startDate": "2025-05-01",

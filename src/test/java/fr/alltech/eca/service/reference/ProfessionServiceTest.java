@@ -1,14 +1,24 @@
+
 package fr.alltech.eca.service.reference;
 
-import fr.alltech.eca.dto.reference.ProfessionResponse;
+import fr.alltech.eca.dto.reference.profession.ProfessionRequest;
+import fr.alltech.eca.dto.reference.profession.ProfessionResponse;
 import fr.alltech.eca.mapper.reference.ProfessionMapper;
+import fr.alltech.eca.model.audit.AuditLog;
 import fr.alltech.eca.model.reference.Profession;
+import fr.alltech.eca.model.reference.ProfessionCategory;
+import fr.alltech.eca.repository.audit.AuditLogRepository;
+import fr.alltech.eca.repository.reference.ProfessionCategoryRepository;
 import fr.alltech.eca.repository.reference.ProfessionRepository;
+import fr.alltech.eca.service.common.SequenceDefinitions;
+import fr.alltech.eca.service.common.SequenceGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -16,8 +26,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProfessionServiceTest {
@@ -25,13 +35,25 @@ class ProfessionServiceTest {
     @Mock
     private ProfessionRepository professionRepository;
 
+    @Mock
+    private ProfessionCategoryRepository professionCategoryRepository;
+
+    @Mock
+    private AuditLogRepository auditLogRepository;
+
+    @Mock
+    private SequenceGenerator sequenceGenerator;
+
     private ProfessionService professionService;
 
     @BeforeEach
     void setUp() {
         professionService = new ProfessionService(
                 professionRepository,
-                new ProfessionMapper()
+                professionCategoryRepository,
+                auditLogRepository,
+                new ProfessionMapper(),
+                sequenceGenerator
         );
     }
 
@@ -75,7 +97,6 @@ class ProfessionServiceTest {
 
         verify(professionRepository).findByActiveTrue();
     }
-
 
     @Test
     void shouldReturnAllProfessionsIncludingInactiveOnes() {
@@ -144,10 +165,98 @@ class ProfessionServiceTest {
                 .isInstanceOf(ResponseStatusException.class)
                 .satisfies(exception ->
                         assertThat(((ResponseStatusException) exception).getStatusCode())
-                                .isEqualTo(org.springframework.http.HttpStatus.NOT_FOUND)
+                                .isEqualTo(HttpStatus.NOT_FOUND)
                 );
 
         verify(professionRepository).findById("PROF-999");
     }
 
+    @Test
+    void shouldCreateProfessionAndRecordAuditEntries() {
+        ProfessionRequest request = new ProfessionRequest(
+                "Backend developer",
+                "Develops backend services.",
+                "CAT-001"
+        );
+
+        ProfessionCategory category = new ProfessionCategory(
+                "IT",
+                "Information technology"
+        );
+
+        category.setId("CAT-001");
+
+        when(professionCategoryRepository.findById("CAT-001"))
+                .thenReturn(Optional.of(category));
+
+        when(sequenceGenerator.generate(
+                SequenceDefinitions.PROFESSION_SEQUENCE,
+                SequenceDefinitions.PROFESSION_PREFIX,
+                SequenceDefinitions.PROFESSION_INITIAL_VALUE
+        )).thenReturn("PROF-063");
+
+        when(professionRepository.save(any(Profession.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        ProfessionResponse result = professionService.createProfession(request);
+
+        assertThat(result.id()).isEqualTo("PROF-063");
+        assertThat(result.name()).isEqualTo("Backend developer");
+        assertThat(result.description()).isEqualTo("Develops backend services.");
+        assertThat(result.categoryId()).isEqualTo("CAT-001");
+        assertThat(result.active()).isTrue();
+
+        verify(professionCategoryRepository).findById("CAT-001");
+
+        verify(sequenceGenerator).generate(
+                SequenceDefinitions.PROFESSION_SEQUENCE,
+                SequenceDefinitions.PROFESSION_PREFIX,
+                SequenceDefinitions.PROFESSION_INITIAL_VALUE
+        );
+
+        verify(professionRepository).save(any(Profession.class));
+
+        ArgumentCaptor<List<AuditLog>> auditCaptor =
+                ArgumentCaptor.forClass(List.class);
+
+        verify(auditLogRepository).saveAll(auditCaptor.capture());
+
+        List<AuditLog> auditLogs = auditCaptor.getValue();
+
+        assertThat(auditLogs).hasSize(4);
+        assertThat(auditLogs)
+                .extracting(AuditLog::getAction)
+                .containsOnly("CREATE");
+
+        assertThat(auditLogs)
+                .extracting(AuditLog::getEntityId)
+                .containsOnly("PROF-063");
+
+        assertThat(auditLogs)
+                .extracting(AuditLog::getChangedBy)
+                .containsOnly("ADMIN");
+    }
+
+    @Test
+    void shouldThrowNotFoundWhenProfessionCategoryDoesNotExist() {
+        ProfessionRequest request = new ProfessionRequest(
+                "Backend developer",
+                "Develops backend services.",
+                "CAT-999"
+        );
+
+        when(professionCategoryRepository.findById("CAT-999"))
+                .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> professionService.createProfession(request))
+                .isInstanceOf(ResponseStatusException.class)
+                .satisfies(exception ->
+                        assertThat(((ResponseStatusException) exception).getStatusCode())
+                                .isEqualTo(HttpStatus.NOT_FOUND)
+                );
+
+        verify(professionCategoryRepository).findById("CAT-999");
+
+        verifyNoInteractions(sequenceGenerator, professionRepository, auditLogRepository);
+    }
 }

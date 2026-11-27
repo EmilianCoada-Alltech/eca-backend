@@ -14,7 +14,7 @@
             <mongodb:documents>
                 [
                 {
-                "id": "TOOL-001",
+                "_id": "TOOL-001",
                 "name": "MOOCit",
                 "description": "Plateforme de formation en ligne et d'apprentissage.",
                 "url": "https://just.moocit.fr/",
@@ -22,7 +22,7 @@
                 "active": true
                 },
                 {
-                "id": "TOOL-002",
+                "_id": "TOOL-002",
                 "name": "Elevo",
                 "description": "Plateforme de gestion des ressources humaines, des compétences et du développement
                 professionnel.",
@@ -31,7 +31,7 @@
                 "active": true
                 },
                 {
-                "id": "TOOL-003",
+                "_id": "TOOL-003",
                 "name": "VSA",
                 "description": "Outil de gestion d'activité.",
                 "url": null,
@@ -39,7 +39,7 @@
                 "active": true
                 },
                 {
-                "id": "TOOL-004",
+                "_id": "TOOL-004",
                 "name": "Microsoft Teams",
                 "description": "Plateforme de communication et de collaboration permettant notamment les échanges et les
                 réunions.",
