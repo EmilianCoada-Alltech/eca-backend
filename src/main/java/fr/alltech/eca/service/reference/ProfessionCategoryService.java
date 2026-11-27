@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Gère la consultation des catégories de métiers du référentiel ECA.
@@ -110,5 +112,45 @@ public class ProfessionCategoryService {
         return professionCategoryMapper.toResponse(savedCategory);
     }
 
+    public ProfessionCategoryResponse updateProfessionCategory(String id, ProfessionCategoryRequest request) {
 
+        ProfessionCategory category = professionCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession Category not found with id: " + id
+                ));
+
+        List<AuditLog> auditLogs = new ArrayList<>();
+        LocalDateTime changedAt = LocalDateTime.now();
+
+        if (request.name() != null
+                && !Objects.equals(category.getName(), request.name())) {
+            auditLogs.add(new AuditLog(
+                    null, "PROFESSION-CATEGORY", id, "name",
+                    category.getName(), request.name(),
+                    "ADMIN", changedAt, "UPDATE"
+            ));
+
+            category.setName(request.name());
+        }
+
+        if (request.description() != null
+                && !Objects.equals(category.getDescription(), request.description())) {
+            auditLogs.add(new AuditLog(
+                    null, "PROFESSION-CATEGORY", id, "description",
+                    category.getDescription(), request.description(),
+                    "ADMIN", changedAt, "UPDATE"
+            ));
+
+            category.setDescription(request.description());
+        }
+
+        ProfessionCategory updatedCategory = professionCategoryRepository.save(category);
+
+        if (!auditLogs.isEmpty()) {
+            auditLogRepository.saveAll(auditLogs);
+        }
+
+        return professionCategoryMapper.toResponse(updatedCategory);
+    }
 }

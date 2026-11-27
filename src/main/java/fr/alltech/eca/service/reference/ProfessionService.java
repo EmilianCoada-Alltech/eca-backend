@@ -168,6 +168,7 @@ public class ProfessionService {
      * @return le métier mis à jour
      * @throws ResponseStatusException si le métier ou sa catégorie n'existe pas
      */
+
     public ProfessionResponse updateProfession(String id, ProfessionRequest request) {
 
         // Vérifie que le métier à modifier existe.
@@ -177,19 +178,13 @@ public class ProfessionService {
                         "Profession not found with id: " + id
                 ));
 
-        // Vérifie que la nouvelle catégorie existe avant d'appliquer les modifications.
-        professionCategoryRepository.findById(request.categoryId())
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Profession category not found with id: " + request.categoryId()
-                ));
-
-        // Prépare la liste des modifications à enregistrer dans le journal d'audit.
         List<AuditLog> auditLogs = new ArrayList<>();
         LocalDateTime changedAt = LocalDateTime.now();
 
         // Vérifie et met à jour le nom si nécessaire.
-        if (!Objects.equals(profession.getName(), request.name())) {
+        if (request.name() != null
+                && !Objects.equals(profession.getName(), request.name())) {
+
             auditLogs.add(new AuditLog(
                     null, "PROFESSION", id, "name",
                     profession.getName(), request.name(),
@@ -200,7 +195,9 @@ public class ProfessionService {
         }
 
         // Vérifie et met à jour la description si nécessaire.
-        if (!Objects.equals(profession.getDescription(), request.description())) {
+        if (request.description() != null
+                && !Objects.equals(profession.getDescription(), request.description())) {
+
             auditLogs.add(new AuditLog(
                     null, "PROFESSION", id, "description",
                     profession.getDescription(), request.description(),
@@ -211,7 +208,16 @@ public class ProfessionService {
         }
 
         // Vérifie et met à jour la catégorie si nécessaire.
-        if (!Objects.equals(profession.getCategoryId(), request.categoryId())) {
+        if (request.categoryId() != null
+                && !Objects.equals(profession.getCategoryId(), request.categoryId())) {
+
+            // Vérifie que la nouvelle catégorie existe.
+            professionCategoryRepository.findById(request.categoryId())
+                    .orElseThrow(() -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND,
+                            "Profession category not found with id: " + request.categoryId()
+                    ));
+
             auditLogs.add(new AuditLog(
                     null, "PROFESSION", id, "categoryId",
                     profession.getCategoryId(), request.categoryId(),
@@ -231,6 +237,7 @@ public class ProfessionService {
 
         return professionMapper.toResponse(updatedProfession);
     }
+
 
     /**
      * Désactive un métier sans le supprimer de la base de données.

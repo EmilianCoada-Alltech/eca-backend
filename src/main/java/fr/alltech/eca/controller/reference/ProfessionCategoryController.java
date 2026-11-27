@@ -55,4 +55,9 @@ public class ProfessionCategoryController {
     public ProfessionCategoryResponse createProfessionCategory(@RequestBody ProfessionCategoryRequest request) {
         return professionCategoryService.createProfessionCategory(request);
     }
+
+    @PutMapping("/{id}")
+    public ProfessionCategoryResponse updateProfessionCategory(@PathVariable String id, @RequestBody ProfessionCategoryRequest request) {
+        return professionCategoryService.updateProfessionCategory(id, request);
+    }
 }
