@@ -1,8 +1,10 @@
 
 package fr.alltech.eca.controller.reference;
 
+import fr.alltech.eca.dto.reference.profession.ProfessionRequest;
 import fr.alltech.eca.dto.reference.profession.ProfessionResponse;
 import fr.alltech.eca.service.reference.ProfessionService;
+import org.junit.jupiter.api.MediaType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -13,8 +15,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProfessionController.class)
@@ -123,4 +127,69 @@ class ProfessionControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    void shouldCreateProfession() throws Exception {
+        ProfessionRequest request = new ProfessionRequest(
+                "Backend developer",
+                "Develops backend services.",
+                "CAT-001"
+        );
+
+        ProfessionResponse response = new ProfessionResponse(
+                "PROF-063",
+                "Backend developer",
+                "Develops backend services.",
+                "CAT-001",
+                true
+        );
+
+        when(professionService.createProfession(request))
+                .thenReturn(response);
+
+        mockMvc.perform(post("/api/references/professions")
+                        .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                        .content("""
+                                {
+                                    "name": "Backend developer",
+                                    "description": "Develops backend services.",
+                                    "categoryId": "CAT-001"
+                                }
+                                """))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(String.valueOf(MediaType.APPLICATION_JSON)))
+                .andExpect(jsonPath("$.id").value("PROF-063"))
+                .andExpect(jsonPath("$.name").value("Backend developer"))
+                .andExpect(jsonPath("$.categoryId").value("CAT-001"))
+                .andExpect(jsonPath("$.active").value(true));
+
+        verify(professionService).createProfession(request);
+    }
+
+    @Test
+    void shouldReturn404WhenCreatingProfessionWithNonexistentCategory() throws Exception {
+        ProfessionRequest request = new ProfessionRequest(
+                "Backend developer",
+                "Develops backend services.",
+                "CAT-999"
+        );
+
+        when(professionService.createProfession(request))
+                .thenThrow(new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession category not found with id: CAT-999"
+                ));
+
+        mockMvc.perform(post("/api/references/professions")
+                        .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                        .content("""
+                                {
+                                    "name": "Backend developer",
+                                    "description": "Develops backend services.",
+                                    "categoryId": "CAT-999"
+                                }
+                                """))
+                .andExpect(status().isNotFound());
+
+        verify(professionService).createProfession(request);
+    }
 }
