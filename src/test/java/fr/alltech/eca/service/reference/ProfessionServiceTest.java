@@ -431,4 +431,41 @@ class ProfessionServiceTest {
         verifyNoInteractions(professionCategoryRepository);
         verifyNoInteractions(auditLogRepository);
     }
+
+    @Test
+    void shouldThrowNotFoundWhenUpdatingWithNonexistentCategory() {
+        Profession profession = new Profession(
+                "Backend developer",
+                "Develops backend services.",
+                true,
+                "CAT-001"
+        );
+        profession.setId("PROF-001");
+
+        ProfessionRequest request = new ProfessionRequest(
+                "Backend developer",
+                "New description.",
+                "CAT-999"
+        );
+
+        when(professionRepository.findById("PROF-001"))
+                .thenReturn(Optional.of(profession));
+
+        when(professionCategoryRepository.findById("CAT-999"))
+                .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() ->
+                professionService.updateProfession("PROF-001", request))
+                .isInstanceOf(ResponseStatusException.class)
+                .satisfies(exception ->
+                        assertThat(((ResponseStatusException) exception).getStatusCode())
+                                .isEqualTo(HttpStatus.NOT_FOUND)
+                );
+
+        verify(professionRepository).findById("PROF-001");
+        verify(professionCategoryRepository).findById("CAT-999");
+
+        verify(professionRepository, never()).save(any(Profession.class));
+        verifyNoInteractions(auditLogRepository);
+    }
 }
