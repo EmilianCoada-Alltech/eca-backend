@@ -318,4 +318,52 @@ class ProfessionServiceTest {
 
         verify(professionRepository).save(profession);
     }
+
+    @Test
+    void shouldOnlyAuditFieldsThatChanged() {
+        Profession profession = new Profession(
+                "Backend developer",
+                "Old description.",
+                true,
+                "CAT-001"
+        );
+        profession.setId("PROF-001");
+
+        ProfessionRequest request = new ProfessionRequest(
+                "Backend developer",
+                "New description.",
+                "CAT-001"
+        );
+
+        ProfessionCategory category = new ProfessionCategory(
+                "IT",
+                "Information technology"
+        );
+
+        when(professionRepository.findById("PROF-001"))
+                .thenReturn(Optional.of(profession));
+
+        when(professionCategoryRepository.findById("CAT-001"))
+                .thenReturn(Optional.of(category));
+
+        when(professionRepository.save(any(Profession.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        ProfessionResponse result =
+                professionService.updateProfession("PROF-001", request);
+
+        assertThat(result.description()).isEqualTo("New description.");
+
+        ArgumentCaptor<List<AuditLog>> auditCaptor =
+                ArgumentCaptor.forClass(List.class);
+
+        verify(auditLogRepository).saveAll(auditCaptor.capture());
+
+        List<AuditLog> auditLogs = auditCaptor.getValue();
+
+        assertThat(auditLogs).hasSize(1);
+        assertThat(auditLogs)
+                .extracting(AuditLog::getAction)
+                .containsOnly("UPDATE");
+    }
 }
