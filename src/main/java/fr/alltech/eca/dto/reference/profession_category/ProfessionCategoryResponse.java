@@ -1,4 +1,4 @@
-package fr.alltech.eca.dto.reference;
+package fr.alltech.eca.dto.reference.profession_category;
 
 /**
  * Représente les données d'une catégorie de métier retournées par l'API.

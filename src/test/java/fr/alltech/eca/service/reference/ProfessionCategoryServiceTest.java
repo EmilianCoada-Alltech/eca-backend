@@ -1,9 +1,11 @@
 package fr.alltech.eca.service.reference;
 
-import fr.alltech.eca.dto.reference.ProfessionCategoryResponse;
+import fr.alltech.eca.dto.reference.profession_category.ProfessionCategoryResponse;
 import fr.alltech.eca.mapper.reference.ProfessionCategoryMapper;
 import fr.alltech.eca.model.reference.ProfessionCategory;
+import fr.alltech.eca.repository.audit.AuditLogRepository;
 import fr.alltech.eca.repository.reference.ProfessionCategoryRepository;
+import fr.alltech.eca.service.common.SequenceGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +30,12 @@ class ProfessionCategoryServiceTest {
     @Mock
     private ProfessionCategoryRepository professionCategoryRepository;
 
+    @Mock
+    private AuditLogRepository auditLogRepository;
+
+    @Mock
+    private SequenceGenerator sequenceGenerator;
+
     private ProfessionCategoryService professionCategoryService;
 
     /**
@@ -38,7 +46,9 @@ class ProfessionCategoryServiceTest {
     void setUp() {
         professionCategoryService = new ProfessionCategoryService(
                 professionCategoryRepository,
-                new ProfessionCategoryMapper()
+                new ProfessionCategoryMapper(),
+                sequenceGenerator,
+                auditLogRepository
         );
     }
 

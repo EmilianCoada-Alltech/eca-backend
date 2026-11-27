@@ -1,6 +1,6 @@
 package fr.alltech.eca.controller.reference;
 
-import fr.alltech.eca.dto.reference.ProfessionCategoryResponse;
+import fr.alltech.eca.dto.reference.profession_category.ProfessionCategoryResponse;
 import fr.alltech.eca.service.reference.ProfessionCategoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
