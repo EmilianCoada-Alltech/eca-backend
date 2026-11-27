@@ -104,6 +104,7 @@ public class ProfessionController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProfession(@PathVariable String id) {
         professionService.deleteProfession(id);
     }

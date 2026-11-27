@@ -65,4 +65,10 @@ public class ProfessionCategoryController {
     public ProfessionCategoryResponse toggleProfessionCategoryStatus(@PathVariable String id) {
         return professionCategoryService.toggleProfessionCategoryStatus(id);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProfessionCategory(@PathVariable String id) {
+        professionCategoryService.deleteProfessionCategory(id);
+    }
 }

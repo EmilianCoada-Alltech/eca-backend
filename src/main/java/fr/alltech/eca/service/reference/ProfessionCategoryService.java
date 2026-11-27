@@ -7,6 +7,7 @@ import fr.alltech.eca.model.audit.AuditLog;
 import fr.alltech.eca.model.reference.ProfessionCategory;
 import fr.alltech.eca.repository.audit.AuditLogRepository;
 import fr.alltech.eca.repository.reference.ProfessionCategoryRepository;
+import fr.alltech.eca.repository.reference.ProfessionRepository;
 import fr.alltech.eca.service.common.SequenceDefinitions;
 import fr.alltech.eca.service.common.SequenceGenerator;
 import org.springframework.http.HttpStatus;
@@ -28,15 +29,19 @@ public class ProfessionCategoryService {
     private final ProfessionCategoryMapper professionCategoryMapper;
     private final SequenceGenerator sequenceGenerator;
     private final AuditLogRepository auditLogRepository;
+    private final ProfessionRepository professionRepository;
 
     public ProfessionCategoryService(
             ProfessionCategoryRepository professionCategoryRepository,
             ProfessionCategoryMapper professionCategoryMapper,
-            SequenceGenerator sequenceGenerator, AuditLogRepository auditLogRepository) {
+            SequenceGenerator sequenceGenerator,
+            AuditLogRepository auditLogRepository,
+            ProfessionRepository professionRepository) {
         this.professionCategoryRepository = professionCategoryRepository;
         this.professionCategoryMapper = professionCategoryMapper;
         this.sequenceGenerator = sequenceGenerator;
         this.auditLogRepository = auditLogRepository;
+        this.professionRepository = professionRepository;
     }
 
     /**
@@ -186,5 +191,44 @@ public class ProfessionCategoryService {
         auditLogRepository.save(new AuditLog());
 
         return professionCategoryMapper.toResponse(savedCategory);
+    }
+
+    public void deleteProfessionCategory(String id) {
+
+        // Vérifie que la catégorie existe.
+        ProfessionCategory category = professionCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession category not found with id: " + id
+                ));
+
+        // Empêche la suppression si des métiers utilisent cette catégorie.
+        if (professionRepository.existsByCategoryId(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Cannot delete a profession category that is assigned to professions"
+            );
+        }
+
+        LocalDateTime changedAt = LocalDateTime.now();
+
+        // Prépare l'entrée d'audit avant la suppression.
+        AuditLog auditLog = new AuditLog(
+                null,
+                "PROFESSION_CATEGORY",
+                id,
+                "professionCategory",
+                category.getName(),
+                null,
+                "ADMIN",
+                changedAt,
+                "DELETE"
+        );
+
+        // Supprime définitivement la catégorie.
+        professionCategoryRepository.delete(category);
+
+        // Conserve une trace de la suppression.
+        auditLogRepository.save(auditLog);
     }
 }

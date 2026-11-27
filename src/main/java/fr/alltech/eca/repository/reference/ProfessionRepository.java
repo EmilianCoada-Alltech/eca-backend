@@ -24,5 +24,5 @@ public interface ProfessionRepository extends MongoRepository<Profession, String
      */
     List<Profession> findByActiveFalse();
 
-    List<Profession> findByActiveFalse(boolean active);
+    boolean existsByCategoryId(String categoryId);
 }

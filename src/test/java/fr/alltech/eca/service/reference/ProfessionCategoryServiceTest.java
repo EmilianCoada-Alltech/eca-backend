@@ -5,6 +5,7 @@ import fr.alltech.eca.mapper.reference.ProfessionCategoryMapper;
 import fr.alltech.eca.model.reference.ProfessionCategory;
 import fr.alltech.eca.repository.audit.AuditLogRepository;
 import fr.alltech.eca.repository.reference.ProfessionCategoryRepository;
+import fr.alltech.eca.repository.reference.ProfessionRepository;
 import fr.alltech.eca.service.common.SequenceGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,9 @@ class ProfessionCategoryServiceTest {
     @Mock
     private SequenceGenerator sequenceGenerator;
 
+    @Mock
+    private ProfessionRepository professionRepository;
+
     private ProfessionCategoryService professionCategoryService;
 
     /**
@@ -48,7 +52,8 @@ class ProfessionCategoryServiceTest {
                 professionCategoryRepository,
                 new ProfessionCategoryMapper(),
                 sequenceGenerator,
-                auditLogRepository
+                auditLogRepository,
+                professionRepository
         );
     }
 
