@@ -1,6 +1,6 @@
-
 package fr.alltech.eca.integration.collaborator;
 
+import fr.alltech.eca.common.enums.CompetenceSource;
 import fr.alltech.eca.model.collaborator.Collaborator;
 import fr.alltech.eca.model.collaborator.CompetenceDeclaration;
 import fr.alltech.eca.model.reference.Competence;
@@ -14,6 +14,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Test d'intégration des déclarations de compétences d'un collaborateur.
+ * Vérifie la persistance d'une compétence intégrée au document du collaborateur
+ * ainsi que la référence vers la compétence du catalogue.
+ */
 @DataMongoTest
 class CollaboratorCompetenceIntegrationTest {
 
@@ -23,10 +28,14 @@ class CollaboratorCompetenceIntegrationTest {
     @Autowired
     private CollaboratorRepository collaboratorRepository;
 
+    /**
+     * Vérifie qu'un collaborateur peut déclarer une compétence issue du catalogue
+     * et que cette déclaration est correctement enregistrée avec son profil.
+     */
     @Test
     void shouldAssociateCompetenceWithCollaborator() {
 
-        // Arrange: create and save a competence in the catalogue
+        // Préparation : crée et enregistre une compétence dans le catalogue.
         Competence competence = new Competence(
                 "Spring Boot",
                 "Java framework for building applications",
@@ -36,16 +45,17 @@ class CollaboratorCompetenceIntegrationTest {
         Competence savedCompetence =
                 competenceRepository.save(competence);
 
-        // Arrange: create a declaration using the generated competence ID
+        // Préparation : crée une déclaration utilisant l'identifiant
+        // de la compétence précédemment enregistrée.
         CompetenceDeclaration declaration = new CompetenceDeclaration(
                 savedCompetence.getId(),
                 null,
                 true,
                 true,
-                "catalogue"
+                CompetenceSource.CATALOGUE
         );
 
-        // Create a collaborator
+        // Préparation : crée un collaborateur et lui associe la déclaration.
         Collaborator collaborator = new Collaborator(
                 "test-ad-integration",
                 "John",
@@ -54,33 +64,37 @@ class CollaboratorCompetenceIntegrationTest {
                 "agency-test-id"
         );
 
+        // La déclaration est intégrée à la liste des compétences du collaborateur.
         collaborator.getCompetences().add(declaration);
 
-        // Act: save the collaborator
+        // Exécution : enregistre le collaborateur avec sa déclaration intégrée.
         Collaborator savedCollaborator =
                 collaboratorRepository.save(collaborator);
 
-        // Retrieve the collaborator
+        // Récupère le collaborateur enregistré à partir de son identifiant.
         Optional<Collaborator> result =
                 collaboratorRepository.findById(savedCollaborator.getId());
 
-        // Assert: verify the collaborator and its declaration
+        // Vérification : confirme que le collaborateur a bien été enregistré.
         assertThat(result).isPresent();
 
         Collaborator retrievedCollaborator = result.orElseThrow();
 
+        // Vérifie que le collaborateur possède une seule déclaration de compétence.
         assertThat(retrievedCollaborator.getCompetences()).hasSize(1);
 
         CompetenceDeclaration retrievedDeclaration =
                 retrievedCollaborator.getCompetences().getFirst();
 
+        // Vérifie que la déclaration conserve la référence vers le catalogue
+        // ainsi que les indicateurs d'expertise et de disponibilité.
         assertThat(retrievedDeclaration.getCompetenceId())
                 .isEqualTo(savedCompetence.getId());
 
         assertThat(retrievedDeclaration.isExpertise()).isTrue();
         assertThat(retrievedDeclaration.isSolicitable()).isTrue();
 
-        // Verify that the referenced competence exists in the catalogue
+        // Vérifie que la compétence référencée existe toujours dans le catalogue.
         Optional<Competence> retrievedCompetence =
                 competenceRepository.findById(
                         retrievedDeclaration.getCompetenceId()
@@ -90,7 +104,7 @@ class CollaboratorCompetenceIntegrationTest {
         assertThat(retrievedCompetence.orElseThrow().getName())
                 .isEqualTo("Spring Boot");
 
-        // Clean up both documents
+        // Nettoyage : supprime les deux documents créés pendant le test.
         collaboratorRepository.deleteById(savedCollaborator.getId());
         competenceRepository.deleteById(savedCompetence.getId());
     }

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="072-insert-missions" author="eca">
+        <mongodb:insertMany collectionName="missions">
+            <mongodb:documents>
+                [
+                {
+                "_id": "MIS-001",
+                "name": "Modernisation du système de gestion des contrats",
+                "clientId": "CLI-001",
+                "startDate": "2024-02-01",
+                "endDate": "2024-10-31",
+                "description": "Refonte et modernisation des outils de gestion des contrats d'assurance afin d'améliorer
+                les processus internes.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-002",
+                "name": "Développement d'un portail client",
+                "clientId": "CLI-001",
+                "startDate": "2025-01-15",
+                "endDate": "2025-09-30",
+                "description": "Conception d'un portail permettant aux assurés de consulter leurs contrats et de suivre
+                leurs demandes.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-003",
+                "name": "Automatisation des processus de gestion",
+                "clientId": "CLI-001",
+                "startDate": "2026-03-01",
+                "endDate": "2027-02-28",
+                "description": "Automatisation de plusieurs processus métier afin de réduire les tâches manuelles et les
+                délais de traitement.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-004",
+                "name": "Évolution de la plateforme e-commerce",
+                "clientId": "CLI-002",
+                "startDate": "2024-03-01",
+                "endDate": "2024-12-31",
+                "description": "Développement de nouvelles fonctionnalités et amélioration des performances de la
+                plateforme de commerce en ligne.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-005",
+                "name": "Optimisation du moteur de recherche produits",
+                "clientId": "CLI-002",
+                "startDate": "2025-04-01",
+                "endDate": "2025-11-30",
+                "description": "Amélioration de la pertinence des résultats de recherche et de l'expérience
+                utilisateur.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-006",
+                "name": "Refonte des outils de suivi logistique",
+                "clientId": "CLI-002",
+                "startDate": "2026-01-15",
+                "endDate": "2026-12-15",
+                "description": "Mise en place d'outils de suivi des commandes, des stocks et des flux logistiques.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-007",
+                "name": "Modernisation du système d'information",
+                "clientId": "CLI-003",
+                "startDate": "2024-01-15",
+                "endDate": "2024-09-30",
+                "description": "Modernisation de composants du système d'information et amélioration de leur
+                maintenabilité.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-008",
+                "name": "Développement d'une plateforme de gestion des interventions",
+                "clientId": "CLI-003",
+                "startDate": "2025-02-01",
+                "endDate": "2025-12-31",
+                "description": "Conception d'une plateforme permettant de centraliser et de suivre les demandes
+                d'assistance et les interventions.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-009",
+                "name": "Migration et sécurisation des données",
+                "clientId": "CLI-003",
+                "startDate": "2026-04-01",
+                "endDate": "2027-03-31",
+                "description": "Migration de données applicatives et renforcement des mécanismes de sécurité et de
+                contrôle d'accès.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-010",
+                "name": "Refonte de l'espace adhérent",
+                "clientId": "CLI-004",
+                "startDate": "2024-04-01",
+                "endDate": "2024-12-31",
+                "description": "Évolution de l'espace numérique des adhérents afin de simplifier l'accès aux services et
+                aux informations personnelles.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-011",
+                "name": "Développement d'API de gestion des contrats",
+                "clientId": "CLI-004",
+                "startDate": "2025-01-01",
+                "endDate": "2025-10-31",
+                "description": "Conception et développement d'API permettant l'échange de données entre les applications
+                métier.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-012",
+                "name": "Amélioration de l'expérience utilisateur mobile",
+                "clientId": "CLI-004",
+                "startDate": "2026-02-01",
+                "endDate": "2026-11-30",
+                "description": "Optimisation des parcours utilisateurs et des fonctionnalités accessibles depuis les
+                appareils mobiles.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-013",
+                "name": "Évolution des applications de gestion des sinistres",
+                "clientId": "CLI-005",
+                "startDate": "2024-02-01",
+                "endDate": "2024-11-30",
+                "description": "Évolution des applications utilisées pour la déclaration, le suivi et le traitement des
+                sinistres.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-014",
+                "name": "Mise en place d'une architecture microservices",
+                "clientId": "CLI-005",
+                "startDate": "2025-03-01",
+                "endDate": "2026-01-31",
+                "description": "Décomposition progressive d'applications métier en services indépendants afin
+                d'améliorer leur évolutivité.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-015",
+                "name": "Développement d'un référentiel de données",
+                "clientId": "CLI-005",
+                "startDate": "2026-03-01",
+                "endDate": "2027-02-28",
+                "description": "Conception d'un référentiel centralisé pour fiabiliser et harmoniser les données
+                utilisées par les applications métier.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-016",
+                "name": "Modernisation des outils de gestion des adhésions",
+                "clientId": "CLI-006",
+                "startDate": "2024-05-01",
+                "endDate": "2025-02-28",
+                "description": "Modernisation des outils de gestion des adhésions et amélioration des parcours de
+                souscription.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-017",
+                "name": "Développement d'une plateforme de reporting",
+                "clientId": "CLI-006",
+                "startDate": "2025-04-01",
+                "endDate": "2025-12-31",
+                "description": "Développement d'une plateforme de reporting destinée au suivi des indicateurs
+                d'activité.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-018",
+                "name": "Intégration de services partenaires",
+                "clientId": "CLI-006",
+                "startDate": "2026-01-01",
+                "endDate": "2026-12-31",
+                "description": "Intégration de services externes et automatisation des échanges avec les partenaires.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-019",
+                "name": "Harmonisation des systèmes de gestion",
+                "clientId": "CLI-007",
+                "startDate": "2024-06-01",
+                "endDate": "2025-03-31",
+                "description": "Harmonisation des systèmes de gestion et des échanges de données entre plusieurs
+                entités.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-020",
+                "name": "Déploiement d'une solution de gestion documentaire",
+                "clientId": "CLI-007",
+                "startDate": "2025-09-01",
+                "endDate": "2026-06-30",
+                "description": "Mise en place d'une solution centralisée de gestion documentaire et d'archivage.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-021",
+                "name": "Modernisation des outils industriels",
+                "clientId": "CLI-008",
+                "startDate": "2025-01-01",
+                "endDate": "2026-03-31",
+                "description": "Modernisation des outils numériques utilisés pour le suivi et l'optimisation des
+                processus industriels.",
+                "isVisible": false
+                },
+                {
+                "_id": "MIS-022",
+                "name": "Développement d'une plateforme de suivi des pièces automobiles",
+                "clientId": "CLI-009",
+                "startDate": "2025-05-01",
+                "endDate": "2026-04-30",
+                "description": "Développement d'une plateforme de suivi des références, des stocks et de la distribution
+                de pièces automobiles.",
+                "isVisible": false
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

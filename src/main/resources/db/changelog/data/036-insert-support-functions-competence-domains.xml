@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="053-insert-support-functions-competence-domains" author="eca">
+
+        <mongodb:insertMany collectionName="competence_domains">
+            <mongodb:documents>
+                [
+                {"_id": "CD-354", "competenceId": "COMP-354", "domainId": "DOM-015"},
+                {"_id": "CD-355", "competenceId": "COMP-355", "domainId": "DOM-015"},
+                {"_id": "CD-356", "competenceId": "COMP-356", "domainId": "DOM-015"},
+                {"_id": "CD-357", "competenceId": "COMP-357", "domainId": "DOM-015"},
+                {"_id": "CD-358", "competenceId": "COMP-358", "domainId": "DOM-015"},
+                {"_id": "CD-359", "competenceId": "COMP-359", "domainId": "DOM-015"},
+                {"_id": "CD-360", "competenceId": "COMP-360", "domainId": "DOM-015"},
+                {"_id": "CD-361", "competenceId": "COMP-361", "domainId": "DOM-015"},
+                {"_id": "CD-362", "competenceId": "COMP-362", "domainId": "DOM-015"},
+                {"_id": "CD-363", "competenceId": "COMP-363", "domainId": "DOM-015"},
+                {"_id": "CD-364", "competenceId": "COMP-364", "domainId": "DOM-015"},
+                {"_id": "CD-365", "competenceId": "COMP-365", "domainId": "DOM-015"},
+                {"_id": "CD-366", "competenceId": "COMP-366", "domainId": "DOM-015"},
+                {"_id": "CD-367", "competenceId": "COMP-367", "domainId": "DOM-015"},
+                {"_id": "CD-368", "competenceId": "COMP-368", "domainId": "DOM-015"},
+                {"_id": "CD-369", "competenceId": "COMP-369", "domainId": "DOM-015"},
+                {"_id": "CD-370", "competenceId": "COMP-370", "domainId": "DOM-015"},
+                {"_id": "CD-371", "competenceId": "COMP-371", "domainId": "DOM-015"},
+                {"_id": "CD-372", "competenceId": "COMP-372", "domainId": "DOM-015"},
+                {"_id": "CD-373", "competenceId": "COMP-373", "domainId": "DOM-015"},
+                {"_id": "CD-374", "competenceId": "COMP-374", "domainId": "DOM-015"},
+                {"_id": "CD-375", "competenceId": "COMP-375", "domainId": "DOM-015"},
+                {"_id": "CD-376", "competenceId": "COMP-376", "domainId": "DOM-015"},
+                {"_id": "CD-377", "competenceId": "COMP-377", "domainId": "DOM-015"}
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+
+    </changeSet>
+
+</databaseChangeLog>

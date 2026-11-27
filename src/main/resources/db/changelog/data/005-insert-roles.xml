@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="022-insert-roles" author="eca">
+
+        <mongodb:insertMany collectionName="roles">
+            <mongodb:documents>
+                [
+                {
+                "_id": "ROLE-001",
+                "name": "COLLABORATOR",
+                "description": "Accès standard à l'espace collaborateur."
+                },
+                {
+                "_id": "ROLE-002",
+                "name": "REDACTEUR",
+                "description": "Gestion des contenus et publications."
+                },
+                {
+                "_id": "ROLE-003",
+                "name": "ADMINISTRATEUR",
+                "description": "Administration de l'application."
+                },
+                {
+                "_id": "ROLE-004",
+                "name": "RH",
+                "description": "Accès aux fonctionnalités dédiées aux ressources humaines."
+                },
+                {
+                "_id": "ROLE-005",
+                "name": "MANAGER",
+                "description": "Accès aux fonctionnalités de gestion d'équipe."
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

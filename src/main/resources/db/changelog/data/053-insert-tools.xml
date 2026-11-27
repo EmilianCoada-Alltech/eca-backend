@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="070-insert-tools" author="eca">
+        <mongodb:insertMany collectionName="tools">
+            <mongodb:documents>
+                [
+                {
+                "_id": "TOOL-001",
+                "name": "MOOCit",
+                "description": "Plateforme de formation en ligne et d'apprentissage.",
+                "url": "https://just.moocit.fr/",
+                "categoryId": "TC-001",
+                "active": true
+                },
+                {
+                "_id": "TOOL-002",
+                "name": "Elevo",
+                "description": "Plateforme de gestion des ressources humaines, des compétences et du développement
+                professionnel.",
+                "url": "https://app.elevo.fr/",
+                "categoryId": "TC-002",
+                "active": true
+                },
+                {
+                "_id": "TOOL-003",
+                "name": "VSA",
+                "description": "Outil de gestion d'activité.",
+                "url": null,
+                "categoryId": "TC-003",
+                "active": true
+                },
+                {
+                "_id": "TOOL-004",
+                "name": "Microsoft Teams",
+                "description": "Plateforme de communication et de collaboration permettant notamment les échanges et les
+                réunions.",
+                "url": "https://teams.microsoft.com/",
+                "categoryId": "TC-004",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

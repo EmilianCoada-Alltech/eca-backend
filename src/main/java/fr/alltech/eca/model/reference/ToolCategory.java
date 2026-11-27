@@ -4,6 +4,9 @@ package fr.alltech.eca.model.reference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Représente une catégorie d'outils disponibles dans l'application ECA.
+ */
 @Document(collection = "tool_categories")
 public class ToolCategory {
 

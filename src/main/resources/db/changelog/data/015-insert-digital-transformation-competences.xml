@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="032-insert-digital-transformation-competences" author="eca">
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-224",
+                "name": "Conseil en systèmes d'information",
+                "description": "Accompagnement des organisations dans l'analyse, l'évolution et l'optimisation de leurs
+                systèmes d'information.",
+                "active": true
+                },
+                {
+                "_id": "COMP-225",
+                "name": "Conseil en transformation numérique",
+                "description": "Accompagnement des organisations dans leur transformation numérique, notamment dans
+                l'évolution des usages, processus et technologies.",
+                "active": true
+                },
+                {
+                "_id": "COMP-226",
+                "name": "Analyse métier (Business Analysis)",
+                "description": "Analyse des besoins métier, identification des problématiques et formalisation de
+                solutions répondant aux objectifs de l'organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-227",
+                "name": "Analyse des processus métier",
+                "description": "Étude des activités, interactions et flux de travail d'une organisation afin d'en
+                comprendre le fonctionnement et les besoins.",
+                "active": true
+                },
+                {
+                "_id": "COMP-228",
+                "name": "Cartographie des processus",
+                "description": "Représentation structurée des processus, activités, acteurs et interactions au sein
+                d'une organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-229",
+                "name": "Optimisation des processus",
+                "description": "Analyse et amélioration des processus métier afin de réduire les inefficacités et
+                d'améliorer leur performance.",
+                "active": true
+                },
+                {
+                "_id": "COMP-230",
+                "name": "Conduite du changement",
+                "description": "Préparation et accompagnement des transformations organisationnelles, humaines et
+                technologiques afin de faciliter leur adoption.",
+                "active": true
+                },
+                {
+                "_id": "COMP-231",
+                "name": "Accompagnement des utilisateurs",
+                "description": "Accompagnement des utilisateurs dans l'appropriation de nouveaux outils, applications et
+                processus métier.",
+                "active": true
+                },
+                {
+                "_id": "COMP-232",
+                "name": "Diagnostic organisationnel",
+                "description": "Évaluation du fonctionnement, de la structure et des pratiques d'une organisation afin
+                d'identifier ses forces et axes d'amélioration.",
+                "active": true
+                },
+                {
+                "_id": "COMP-233",
+                "name": "Audit des systèmes d'information",
+                "description": "Évaluation des systèmes d'information, de leur organisation, de leurs performances, de
+                leur sécurité et de leur adéquation aux besoins métier.",
+                "active": true
+                },
+                {
+                "_id": "COMP-234",
+                "name": "Étude d'opportunité",
+                "description": "Analyse des enjeux, bénéfices et opportunités associés à un projet ou à une initiative
+                avant son lancement.",
+                "active": true
+                },
+                {
+                "_id": "COMP-235",
+                "name": "Étude de faisabilité",
+                "description": "Évaluation de la faisabilité technique, fonctionnelle, organisationnelle et économique
+                d'un projet ou d'une solution.",
+                "active": true
+                },
+                {
+                "_id": "COMP-236",
+                "name": "Rédaction de cahiers des charges",
+                "description": "Formalisation des besoins, exigences, contraintes et critères de réalisation d'un projet
+                dans un document de référence.",
+                "active": true
+                },
+                {
+                "_id": "COMP-237",
+                "name": "Recueil des besoins",
+                "description": "Identification, collecte et formalisation des attentes et besoins des utilisateurs,
+                clients et parties prenantes.",
+                "active": true
+                },
+                {
+                "_id": "COMP-238",
+                "name": "Animation d'ateliers métier",
+                "description": "Préparation et animation d'ateliers avec les parties prenantes métier afin de recueillir
+                les besoins, analyser les processus et définir des solutions.",
+                "active": true
+                },
+                {
+                "_id": "COMP-239",
+                "name": "Assistance à maîtrise d'ouvrage (AMOA)",
+                "description": "Accompagnement du maître d'ouvrage dans l'expression des besoins, la définition des
+                exigences et le suivi de la réalisation d'un projet.",
+                "active": true
+                },
+                {
+                "_id": "COMP-240",
+                "name": "Assistance à maîtrise d'œuvre (AMOE)",
+                "description": "Accompagnement technique et fonctionnel de la maîtrise d'œuvre dans la conception, la
+                réalisation et la mise en œuvre d'une solution.",
+                "active": true
+                },
+                {
+                "_id": "COMP-241",
+                "name": "Schéma directeur informatique",
+                "description": "Élaboration d'une feuille de route stratégique définissant les orientations et
+                évolutions du système d'information à moyen et long terme.",
+                "active": true
+                },
+                {
+                "_id": "COMP-242",
+                "name": "Gouvernance des systèmes d'information",
+                "description": "Définition des règles, responsabilités, processus et mécanismes de pilotage permettant
+                d'aligner les systèmes d'information sur la stratégie de l'organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-243",
+                "name": "Conseil en organisation",
+                "description": "Accompagnement des organisations dans l'analyse et l'évolution de leur structure, de
+                leurs modes de fonctionnement et de leurs pratiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-244",
+                "name": "Formation et accompagnement métier",
+                "description": "Conception et animation de formations et d'actions d'accompagnement pour développer les
+                compétences et l'autonomie des utilisateurs dans leurs activités métier.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

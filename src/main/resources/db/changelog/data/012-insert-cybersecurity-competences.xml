@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="029-insert-cybersecurity-competences" author="eca">
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-149",
+                "name": "Sécurité applicative",
+                "description": "Conception, développement et maintenance d'applications en intégrant des mécanismes de
+                protection contre les menaces et vulnérabilités.",
+                "active": true
+                },
+                {
+                "_id": "COMP-150",
+                "name": "Sécurité réseau",
+                "description": "Protection des infrastructures et communications réseau contre les accès non autorisés,
+                attaques et menaces informatiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-151",
+                "name": "Sécurité des infrastructures",
+                "description": "Protection des systèmes, serveurs, équipements et infrastructures informatiques contre
+                les risques de sécurité.",
+                "active": true
+                },
+                {
+                "_id": "COMP-152",
+                "name": "Sécurité cloud",
+                "description": "Mise en œuvre de mécanismes de protection des environnements, ressources et services
+                hébergés dans le cloud.",
+                "active": true
+                },
+                {
+                "_id": "COMP-153",
+                "name": "Gestion des identités et des accès (IAM)",
+                "description": "Gestion du cycle de vie des identités numériques, des droits d'accès et des politiques
+                d'autorisation aux ressources informatiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-154",
+                "name": "Authentification et autorisation",
+                "description": "Conception et mise en œuvre de mécanismes permettant de vérifier l'identité des
+                utilisateurs et de contrôler leurs permissions.",
+                "active": true
+                },
+                {
+                "_id": "COMP-155",
+                "name": "OAuth 2.0",
+                "description": "Mise en œuvre du protocole OAuth 2.0 pour la délégation sécurisée des autorisations
+                d'accès aux ressources.",
+                "active": true
+                },
+                {
+                "_id": "COMP-156",
+                "name": "OpenID Connect",
+                "description": "Mise en œuvre du protocole OpenID Connect pour l'authentification et la fédération des
+                identités.",
+                "active": true
+                },
+                {
+                "_id": "COMP-157",
+                "name": "SAML",
+                "description": "Mise en œuvre du standard Security Assertion Markup Language pour l'échange sécurisé
+                d'informations d'authentification et d'autorisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-158",
+                "name": "Gestion des certificats",
+                "description": "Gestion du cycle de vie des certificats numériques, incluant leur émission,
+                renouvellement, déploiement et révocation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-159",
+                "name": "Cryptographie",
+                "description": "Utilisation des méthodes cryptographiques pour assurer la confidentialité, l'intégrité,
+                l'authenticité et la protection des informations.",
+                "active": true
+                },
+                {
+                "_id": "COMP-160",
+                "name": "Chiffrement des données",
+                "description": "Protection des données au repos et en transit par l'utilisation de mécanismes de
+                chiffrement adaptés.",
+                "active": true
+                },
+                {
+                "_id": "COMP-161",
+                "name": "Gestion des vulnérabilités",
+                "description": "Identification, évaluation, priorisation et suivi des vulnérabilités affectant les
+                systèmes et applications.",
+                "active": true
+                },
+                {
+                "_id": "COMP-162",
+                "name": "Tests d'intrusion",
+                "description": "Réalisation de tests de sécurité contrôlés afin d'identifier et d'exploiter les
+                faiblesses d'un système dans un cadre autorisé.",
+                "active": true
+                },
+                {
+                "_id": "COMP-163",
+                "name": "Audit de sécurité",
+                "description": "Évaluation des dispositifs de sécurité, des configurations et des pratiques afin
+                d'identifier les écarts et les risques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-164",
+                "name": "Analyse des risques",
+                "description": "Identification, évaluation et hiérarchisation des risques liés à la sécurité des
+                systèmes d'information.",
+                "active": true
+                },
+                {
+                "_id": "COMP-165",
+                "name": "Gestion des incidents de sécurité",
+                "description": "Détection, qualification, traitement et suivi des incidents affectant la sécurité des
+                systèmes d'information.",
+                "active": true
+                },
+                {
+                "_id": "COMP-166",
+                "name": "SIEM",
+                "description": "Collecte, centralisation et corrélation des événements de sécurité afin de détecter les
+                menaces et comportements suspects.",
+                "active": true
+                },
+                {
+                "_id": "COMP-167",
+                "name": "SOC",
+                "description": "Organisation et exploitation d'un centre opérationnel de sécurité chargé de surveiller,
+                détecter et traiter les menaces informatiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-168",
+                "name": "Protection des données",
+                "description": "Mise en œuvre de mesures techniques et organisationnelles visant à protéger les données
+                contre la perte, l'altération, la divulgation et les accès non autorisés.",
+                "active": true
+                },
+                {
+                "_id": "COMP-169",
+                "name": "Sécurité des API",
+                "description": "Protection des interfaces de programmation contre les accès non autorisés, abus,
+                vulnérabilités et attaques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-170",
+                "name": "OWASP",
+                "description": "Application des recommandations, référentiels et bonnes pratiques OWASP pour identifier
+                et prévenir les vulnérabilités applicatives.",
+                "active": true
+                },
+                {
+                "_id": "COMP-171",
+                "name": "Conformité RGPD",
+                "description": "Application des exigences du Règlement général sur la protection des données dans le
+                traitement et la protection des données personnelles.",
+                "active": true
+                },
+                {
+                "_id": "COMP-172",
+                "name": "Sensibilisation à la cybersécurité",
+                "description": "Conception et animation d'actions de sensibilisation aux risques informatiques et aux
+                bonnes pratiques de sécurité.",
+                "active": true
+                },
+                {
+                "_id": "COMP-173",
+                "name": "Gestion des politiques de sécurité",
+                "description": "Définition, formalisation, diffusion et suivi des politiques, règles et procédures de
+                sécurité des systèmes d'information.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

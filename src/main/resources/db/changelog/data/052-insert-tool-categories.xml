@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="069-insert-tool-categories" author="eca">
+
+        <mongodb:insertMany collectionName="tool_categories">
+            <mongodb:documents>
+                [
+                {
+                "_id": "TC-001",
+                "name": "Formation et apprentissage",
+                "description": "Plateformes et ressources dédiées à la formation en ligne, aux parcours de formation et
+                au développement des compétences professionnelles."
+                },
+                {
+                "_id": "TC-002",
+                "name": "Ressources humaines et gestion des talents",
+                "description": "Outils destinés à accompagner les processus RH, le suivi des performances, la gestion
+                des compétences et le développement professionnel des collaborateurs."
+                },
+                {
+                "_id": "TC-003",
+                "name": "Gestion d'activité",
+                "description": "Outils permettant de gérer les activités de l'entreprise, le suivi opérationnel et les
+                processus administratifs."
+                },
+                {
+                "_id": "TC-004",
+                "name": "Communication et collaboration",
+                "description": "Outils dédiés à la communication entre collaborateurs, aux réunions et au travail
+                collaboratif."
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+
+    </changeSet>
+
+</databaseChangeLog>

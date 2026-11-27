@@ -4,6 +4,9 @@ package fr.alltech.eca.model.reference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Représente un rôle attribuable à un collaborateur dans l'application ECA.
+ */
 @Document(collection = "roles")
 public class Role {
 

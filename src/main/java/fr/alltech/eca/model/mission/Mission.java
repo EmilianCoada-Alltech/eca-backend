@@ -5,6 +5,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
+/**
+ * Représente une mission associée à un client,
+ * avec sa période, sa description et son statut de visibilité.
+ */
 @Document(collection = "missions")
 public class Mission {
 

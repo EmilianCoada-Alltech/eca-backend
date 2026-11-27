@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="074-insert-collaborator-missions" author="eca">
+        <mongodb:insertMany collectionName="collaborator_missions">
+            <mongodb:documents>
+                [
+                {
+                "_id": "CM-001",
+                "collaboratorId": "COL-001",
+                "missionId": "MIS-015",
+                "startDate": "2026-03-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-002",
+                "collaboratorId": "COL-002",
+                "missionId": "MIS-003",
+                "startDate": "2026-03-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-003",
+                "collaboratorId": "COL-004",
+                "missionId": "MIS-009",
+                "startDate": "2026-04-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-004",
+                "collaboratorId": "COL-005",
+                "missionId": "MIS-003",
+                "startDate": "2026-03-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-005",
+                "collaboratorId": "COL-006",
+                "missionId": "MIS-015",
+                "startDate": "2026-03-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-006",
+                "collaboratorId": "COL-007",
+                "missionId": "MIS-012",
+                "startDate": "2026-02-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-007",
+                "collaboratorId": "COL-008",
+                "missionId": "MIS-012",
+                "startDate": "2026-02-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-008",
+                "collaboratorId": "COL-009",
+                "missionId": "MIS-003",
+                "startDate": "2026-03-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-009",
+                "collaboratorId": "COL-010",
+                "missionId": "MIS-003",
+                "startDate": "2026-03-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-010",
+                "collaboratorId": "COL-011",
+                "missionId": "MIS-009",
+                "startDate": "2026-04-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-011",
+                "collaboratorId": "COL-012",
+                "missionId": "MIS-012",
+                "startDate": "2026-02-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-012",
+                "collaboratorId": "COL-013",
+                "missionId": "MIS-006",
+                "startDate": "2026-01-15",
+                "endDate": null
+                },
+                {
+                "_id": "CM-013",
+                "collaboratorId": "COL-014",
+                "missionId": "MIS-018",
+                "startDate": "2026-01-01",
+                "endDate": null
+                },
+                {
+                "_id": "CM-014",
+                "collaboratorId": "COL-015",
+                "missionId": "MIS-018",
+                "startDate": "2026-01-01",
+                "endDate": null
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

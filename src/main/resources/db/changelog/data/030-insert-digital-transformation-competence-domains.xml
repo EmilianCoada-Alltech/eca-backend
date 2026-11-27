@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="047-insert-digital-transformation-competence-domains" author="eca">
+
+        <mongodb:insertMany collectionName="competence_domains">
+            <mongodb:documents>
+                [
+                {"_id": "CD-224", "competenceId": "COMP-224", "domainId": "DOM-009"},
+                {"_id": "CD-225", "competenceId": "COMP-225", "domainId": "DOM-009"},
+                {"_id": "CD-226", "competenceId": "COMP-226", "domainId": "DOM-009"},
+                {"_id": "CD-227", "competenceId": "COMP-227", "domainId": "DOM-009"},
+                {"_id": "CD-228", "competenceId": "COMP-228", "domainId": "DOM-009"},
+                {"_id": "CD-229", "competenceId": "COMP-229", "domainId": "DOM-009"},
+                {"_id": "CD-230", "competenceId": "COMP-230", "domainId": "DOM-009"},
+                {"_id": "CD-231", "competenceId": "COMP-231", "domainId": "DOM-009"},
+                {"_id": "CD-232", "competenceId": "COMP-232", "domainId": "DOM-009"},
+                {"_id": "CD-233", "competenceId": "COMP-233", "domainId": "DOM-009"},
+                {"_id": "CD-234", "competenceId": "COMP-234", "domainId": "DOM-009"},
+                {"_id": "CD-235", "competenceId": "COMP-235", "domainId": "DOM-009"},
+                {"_id": "CD-236", "competenceId": "COMP-236", "domainId": "DOM-009"},
+                {"_id": "CD-237", "competenceId": "COMP-237", "domainId": "DOM-009"},
+                {"_id": "CD-238", "competenceId": "COMP-238", "domainId": "DOM-009"},
+                {"_id": "CD-239", "competenceId": "COMP-239", "domainId": "DOM-009"},
+                {"_id": "CD-240", "competenceId": "COMP-240", "domainId": "DOM-009"},
+                {"_id": "CD-241", "competenceId": "COMP-241", "domainId": "DOM-009"},
+                {"_id": "CD-242", "competenceId": "COMP-242", "domainId": "DOM-009"},
+                {"_id": "CD-243", "competenceId": "COMP-243", "domainId": "DOM-009"},
+                {"_id": "CD-244", "competenceId": "COMP-244", "domainId": "DOM-009"}
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+
+    </changeSet>
+
+</databaseChangeLog>

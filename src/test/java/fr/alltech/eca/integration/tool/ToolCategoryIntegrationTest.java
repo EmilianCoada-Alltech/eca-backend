@@ -1,4 +1,3 @@
-
 package fr.alltech.eca.integration.tool;
 
 import fr.alltech.eca.model.reference.ToolCategory;
@@ -12,6 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Test d'intégration de l'association entre un outil et sa catégorie.
+ * Vérifie la persistance de l'outil ainsi que la référence vers sa catégorie.
+ */
 @SpringBootTest
 class ToolCategoryIntegrationTest {
 
@@ -21,15 +24,23 @@ class ToolCategoryIntegrationTest {
     @Autowired
     private ToolCategoryRepository toolCategoryRepository;
 
+    /**
+     * Nettoie les collections utilisées par le test après chaque exécution
+     * afin d'éviter que les données persistent entre les tests.
+     */
     @AfterEach
     void tearDown() {
         toolRepository.deleteAll();
         toolCategoryRepository.deleteAll();
     }
 
+    /**
+     * Vérifie qu'un outil peut être associé à une catégorie existante
+     * et que cette association est correctement conservée en base de données.
+     */
     @Test
     void shouldAssociateToolWithExistingCategory() {
-        // Given
+        // Préparation : crée et enregistre une catégorie d'outils.
         ToolCategory category = toolCategoryRepository.save(
                 new ToolCategory(
                         null,
@@ -38,6 +49,7 @@ class ToolCategoryIntegrationTest {
                 )
         );
 
+        // Préparation : crée un outil en référençant la catégorie enregistrée.
         Tool tool = new Tool(
                 null,
                 "Microsoft Teams",
@@ -47,10 +59,10 @@ class ToolCategoryIntegrationTest {
                 true
         );
 
-        // When
+        // Exécution : enregistre l'outil dans la base de données.
         Tool savedTool = toolRepository.save(tool);
 
-        // Then
+        // Vérification : confirme que l'outil existe et référence la bonne catégorie.
         assertThat(toolRepository.findById(savedTool.getId()))
                 .isPresent()
                 .get()
@@ -61,6 +73,8 @@ class ToolCategoryIntegrationTest {
                             .isEqualTo("Microsoft Teams");
                 });
 
+        // Vérification : confirme que la catégorie référencée existe
+        // et que ses données correspondent à celles enregistrées.
         assertThat(toolCategoryRepository.findById(category.getId()))
                 .isPresent()
                 .get()

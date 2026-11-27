@@ -3,6 +3,10 @@ package fr.alltech.eca.model.mission;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Représente un client de l'entreprise avec ses coordonnées
+ * et son statut de visibilité dans l'application.
+ */
 @Document(collection = "clients")
 public class Client {
 

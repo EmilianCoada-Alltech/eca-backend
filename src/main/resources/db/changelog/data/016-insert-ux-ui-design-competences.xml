@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="033-insert-ux-ui-design-competences" author="eca">
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-245",
+                "name": "UX Design",
+                "description": "Conception d'expériences utilisateur intuitives et adaptées aux besoins, attentes et
+                usages des utilisateurs.",
+                "active": true
+                },
+                {
+                "_id": "COMP-246",
+                "name": "UI Design",
+                "description": "Conception visuelle des interfaces numériques, incluant leur apparence, leur
+                organisation et leurs éléments graphiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-247",
+                "name": "Design d'interaction",
+                "description": "Conception des interactions entre les utilisateurs et les interfaces numériques afin de
+                rendre les usages fluides et compréhensibles.",
+                "active": true
+                },
+                {
+                "_id": "COMP-248",
+                "name": "Design system",
+                "description": "Création et maintenance d'un ensemble cohérent de composants, règles, styles et
+                principes de conception réutilisables.",
+                "active": true
+                },
+                {
+                "_id": "COMP-249",
+                "name": "Prototypage",
+                "description": "Création de représentations interactives ou statiques d'une solution afin de tester et
+                valider des concepts avant leur développement.",
+                "active": true
+                },
+                {
+                "_id": "COMP-250",
+                "name": "Wireframing",
+                "description": "Réalisation de schémas simplifiés représentant la structure, l'organisation et les
+                principaux éléments d'une interface.",
+                "active": true
+                },
+                {
+                "_id": "COMP-251",
+                "name": "Maquettage",
+                "description": "Création de maquettes visuelles détaillées représentant l'apparence et la disposition
+                des éléments d'une interface numérique.",
+                "active": true
+                },
+                {
+                "_id": "COMP-252",
+                "name": "Recherche utilisateur",
+                "description": "Collecte et analyse d'informations sur les besoins, comportements, attentes et
+                difficultés des utilisateurs.",
+                "active": true
+                },
+                {
+                "_id": "COMP-253",
+                "name": "Tests utilisateurs",
+                "description": "Organisation et réalisation de tests avec des utilisateurs afin d'observer leurs
+                interactions avec un produit et identifier les améliorations possibles.",
+                "active": true
+                },
+                {
+                "_id": "COMP-254",
+                "name": "Tests d'utilisabilité",
+                "description": "Évaluation de la facilité d'utilisation, de l'efficacité et de la compréhension d'une
+                interface ou d'un produit numérique.",
+                "active": true
+                },
+                {
+                "_id": "COMP-255",
+                "name": "Architecture de l'information",
+                "description": "Organisation et structuration des contenus, informations et systèmes de navigation afin
+                de faciliter leur compréhension et leur accès.",
+                "active": true
+                },
+                {
+                "_id": "COMP-256",
+                "name": "Conception responsive",
+                "description": "Conception d'interfaces capables de s'adapter à différentes tailles d'écran, résolutions
+                et appareils.",
+                "active": true
+                },
+                {
+                "_id": "COMP-257",
+                "name": "Accessibilité numérique",
+                "description": "Conception et développement de services numériques accessibles aux personnes présentant
+                différents types de handicaps et besoins spécifiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-258",
+                "name": "Design mobile",
+                "description": "Conception d'interfaces et d'expériences adaptées aux smartphones et tablettes, en
+                tenant compte de leurs contraintes et usages spécifiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-259",
+                "name": "Design web",
+                "description": "Conception visuelle et fonctionnelle d'interfaces et d'expériences destinées aux sites
+                et applications web.",
+                "active": true
+                },
+                {
+                "_id": "COMP-260",
+                "name": "Figma",
+                "description": "Conception d'interfaces, création de prototypes et collaboration autour de projets de
+                design avec Figma.",
+                "active": true
+                },
+                {
+                "_id": "COMP-261",
+                "name": "Adobe XD",
+                "description": "Conception de maquettes et de prototypes d'interfaces numériques avec Adobe XD.",
+                "active": true
+                },
+                {
+                "_id": "COMP-262",
+                "name": "Adobe Photoshop",
+                "description": "Création, retouche et traitement d'images et de visuels numériques avec Adobe
+                Photoshop.",
+                "active": true
+                },
+                {
+                "_id": "COMP-263",
+                "name": "Adobe Illustrator",
+                "description": "Création et édition de visuels vectoriels, illustrations et éléments graphiques avec
+                Adobe Illustrator.",
+                "active": true
+                },
+                {
+                "_id": "COMP-264",
+                "name": "Ergonomie des interfaces",
+                "description": "Application des principes ergonomiques afin de rendre les interfaces compréhensibles,
+                efficaces, cohérentes et faciles à utiliser.",
+                "active": true
+                },
+                {
+                "_id": "COMP-265",
+                "name": "Parcours utilisateur",
+                "description": "Analyse et conception des étapes, interactions et points de contact traversés par un
+                utilisateur pour atteindre un objectif.",
+                "active": true
+                },
+                {
+                "_id": "COMP-266",
+                "name": "Conception centrée utilisateur",
+                "description": "Approche de conception reposant sur la compréhension des utilisateurs et leur
+                implication tout au long du processus de conception.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

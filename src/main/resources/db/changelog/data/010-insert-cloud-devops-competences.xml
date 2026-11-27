@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="027-insert-cloud-devops-competences" author="eca">
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-093",
+                "name": "Docker",
+                "description": "Conteneurisation et exécution d'applications dans des environnements isolés avec
+                Docker.",
+                "active": true
+                },
+                {
+                "_id": "COMP-094",
+                "name": "Kubernetes",
+                "description": "Orchestration, déploiement et gestion de conteneurs à grande échelle avec Kubernetes.",
+                "active": true
+                },
+                {
+                "_id": "COMP-095",
+                "name": "Docker Compose",
+                "description": "Définition et gestion d'applications multi-conteneurs avec Docker Compose.",
+                "active": true
+                },
+                {
+                "_id": "COMP-096",
+                "name": "Git",
+                "description": "Gestion de versions du code source, suivi des modifications et collaboration avec Git.",
+                "active": true
+                },
+                {
+                "_id": "COMP-097",
+                "name": "GitHub",
+                "description": "Gestion de dépôts de code, collaboration et suivi de projets logiciels avec GitHub.",
+                "active": true
+                },
+                {
+                "_id": "COMP-098",
+                "name": "GitLab",
+                "description": "Gestion de dépôts, collaboration et automatisation du cycle de développement avec
+                GitLab.",
+                "active": true
+                },
+                {
+                "_id": "COMP-099",
+                "name": "Jenkins",
+                "description": "Automatisation des processus d'intégration et de livraison logicielle avec Jenkins.",
+                "active": true
+                },
+                {
+                "_id": "COMP-100",
+                "name": "GitHub Actions",
+                "description": "Automatisation des workflows de développement, de test et de déploiement avec GitHub
+                Actions.",
+                "active": true
+                },
+                {
+                "_id": "COMP-101",
+                "name": "GitLab CI/CD",
+                "description": "Automatisation des pipelines d'intégration et de déploiement continus avec GitLab
+                CI/CD.",
+                "active": true
+                },
+                {
+                "_id": "COMP-102",
+                "name": "Microsoft Azure",
+                "description": "Conception, déploiement et administration de solutions cloud sur Microsoft Azure.",
+                "active": true
+                },
+                {
+                "_id": "COMP-103",
+                "name": "Amazon Web Services (AWS)",
+                "description": "Conception, déploiement et administration de solutions cloud sur Amazon Web Services.",
+                "active": true
+                },
+                {
+                "_id": "COMP-104",
+                "name": "Google Cloud Platform (GCP)",
+                "description": "Conception, déploiement et administration de solutions cloud sur Google Cloud
+                Platform.",
+                "active": true
+                },
+                {
+                "_id": "COMP-105",
+                "name": "Infrastructure as Code (IaC)",
+                "description": "Gestion et provisionnement d'infrastructures informatiques à partir de définitions
+                déclaratives ou de code.",
+                "active": true
+                },
+                {
+                "_id": "COMP-106",
+                "name": "Terraform",
+                "description": "Provisionnement et gestion d'infrastructures cloud et techniques avec Terraform.",
+                "active": true
+                },
+                {
+                "_id": "COMP-107",
+                "name": "Ansible",
+                "description": "Automatisation de la configuration, du déploiement et de l'administration des
+                infrastructures avec Ansible.",
+                "active": true
+                },
+                {
+                "_id": "COMP-108",
+                "name": "Intégration continue (CI)",
+                "description": "Automatisation de l'intégration régulière des modifications de code avec des processus
+                de compilation et de validation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-109",
+                "name": "Déploiement continu (CD)",
+                "description": "Automatisation de la livraison et du déploiement des applications dans les
+                environnements cibles.",
+                "active": true
+                },
+                {
+                "_id": "COMP-110",
+                "name": "Automatisation des déploiements",
+                "description": "Automatisation des opérations nécessaires à la mise en production et à la mise à jour
+                des applications.",
+                "active": true
+                },
+                {
+                "_id": "COMP-111",
+                "name": "Gestion des environnements",
+                "description": "Configuration, administration et maintenance des environnements de développement, de
+                test, de recette et de production.",
+                "active": true
+                },
+                {
+                "_id": "COMP-112",
+                "name": "Observabilité",
+                "description": "Analyse de l'état et du comportement des systèmes à partir de métriques, journaux et
+                traces.",
+                "active": true
+                },
+                {
+                "_id": "COMP-113",
+                "name": "Supervision applicative",
+                "description": "Surveillance de la disponibilité, des performances et du bon fonctionnement des
+                applications.",
+                "active": true
+                },
+                {
+                "_id": "COMP-114",
+                "name": "Gestion des logs",
+                "description": "Collecte, centralisation, analyse et exploitation des journaux générés par les
+                applications et infrastructures.",
+                "active": true
+                },
+                {
+                "_id": "COMP-115",
+                "name": "Prometheus",
+                "description": "Collecte, stockage et interrogation de métriques pour la supervision des systèmes avec
+                Prometheus.",
+                "active": true
+                },
+                {
+                "_id": "COMP-116",
+                "name": "Grafana",
+                "description": "Création de tableaux de bord et visualisation de métriques pour la supervision des
+                systèmes avec Grafana.",
+                "active": true
+                },
+                {
+                "_id": "COMP-117",
+                "name": "Gestion des configurations",
+                "description": "Définition, centralisation, suivi et maintenance des configurations des applications et
+                infrastructures.",
+                "active": true
+                },
+                {
+                "_id": "COMP-118",
+                "name": "Gestion des secrets",
+                "description": "Stockage, distribution, rotation et protection des mots de passe, clés et autres
+                informations sensibles.",
+                "active": true
+                },
+                {
+                "_id": "COMP-119",
+                "name": "Conteneurisation",
+                "description": "Packaging et exécution d'applications avec leurs dépendances dans des conteneurs isolés
+                et portables.",
+                "active": true
+                },
+                {
+                "_id": "COMP-120",
+                "name": "Administration cloud",
+                "description": "Administration, maintenance et exploitation des ressources et services d'une
+                infrastructure cloud.",
+                "active": true
+                },
+                {
+                "_id": "COMP-121",
+                "name": "Optimisation des coûts cloud",
+                "description": "Analyse et optimisation des dépenses liées à l'utilisation des infrastructures et
+                services cloud.",
+                "active": true
+                },
+                {
+                "_id": "COMP-122",
+                "name": "Site Reliability Engineering (SRE)",
+                "description": "Application de pratiques d'ingénierie logicielle à l'exploitation des systèmes afin
+                d'améliorer leur fiabilité, disponibilité et performance.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

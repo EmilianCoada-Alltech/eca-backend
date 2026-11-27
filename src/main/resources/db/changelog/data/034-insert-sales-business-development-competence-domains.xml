@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="051-insert-sales-business-development-competence-domains" author="eca">
+
+        <mongodb:insertMany collectionName="competence_domains">
+            <mongodb:documents>
+                [
+                {"_id": "CD-314", "competenceId": "COMP-314", "domainId": "DOM-013"},
+                {"_id": "CD-315", "competenceId": "COMP-315", "domainId": "DOM-013"},
+                {"_id": "CD-316", "competenceId": "COMP-316", "domainId": "DOM-013"},
+                {"_id": "CD-317", "competenceId": "COMP-317", "domainId": "DOM-013"},
+                {"_id": "CD-318", "competenceId": "COMP-318", "domainId": "DOM-013"},
+                {"_id": "CD-319", "competenceId": "COMP-319", "domainId": "DOM-013"},
+                {"_id": "CD-320", "competenceId": "COMP-320", "domainId": "DOM-013"},
+                {"_id": "CD-321", "competenceId": "COMP-321", "domainId": "DOM-013"},
+                {"_id": "CD-322", "competenceId": "COMP-322", "domainId": "DOM-013"},
+                {"_id": "CD-323", "competenceId": "COMP-323", "domainId": "DOM-013"},
+                {"_id": "CD-324", "competenceId": "COMP-324", "domainId": "DOM-013"},
+                {"_id": "CD-325", "competenceId": "COMP-325", "domainId": "DOM-013"},
+                {"_id": "CD-326", "competenceId": "COMP-326", "domainId": "DOM-013"},
+                {"_id": "CD-327", "competenceId": "COMP-327", "domainId": "DOM-013"},
+                {"_id": "CD-328", "competenceId": "COMP-328", "domainId": "DOM-013"},
+                {"_id": "CD-329", "competenceId": "COMP-329", "domainId": "DOM-013"},
+                {"_id": "CD-330", "competenceId": "COMP-330", "domainId": "DOM-013"},
+                {"_id": "CD-331", "competenceId": "COMP-331", "domainId": "DOM-013"},
+                {"_id": "CD-332", "competenceId": "COMP-332", "domainId": "DOM-013"},
+                {"_id": "CD-333", "competenceId": "COMP-333", "domainId": "DOM-013"}
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+
+    </changeSet>
+
+</databaseChangeLog>

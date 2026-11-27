@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="071-insert-clients" author="eca">
+        <mongodb:insertMany collectionName="clients">
+            <mongodb:documents>
+                [
+                {
+                "_id": "CLI-001",
+                "name": "Altima Assurances",
+                "streetAddress": "275 rue du Stade",
+                "postalCode": "79180",
+                "city": "Chauray",
+                "country": "France",
+                "phoneNumber": "0102030401",
+                "email": "contact@altima-assurances.fr",
+                "isVisible": false
+                },
+                {
+                "_id": "CLI-002",
+                "name": "Cdiscount",
+                "streetAddress": "120-126 quai de Bacalan",
+                "postalCode": "33000",
+                "city": "Bordeaux",
+                "country": "France",
+                "phoneNumber": "0102030402",
+                "email": "contact@cdiscount.fr",
+                "isVisible": false
+                },
+                {
+                "_id": "CLI-003",
+                "name": "Groupe IMA",
+                "streetAddress": "118 avenue de Paris",
+                "postalCode": "79000",
+                "city": "Niort",
+                "country": "France",
+                "phoneNumber": "0102030403",
+                "email": "contact@groupe-ima.fr",
+                "isVisible": false
+                },
+                {
+                "_id": "CLI-004",
+                "name": "MAIF",
+                "streetAddress": "200 avenue Salvador Allende",
+                "postalCode": "79000",
+                "city": "Niort",
+                "country": "France",
+                "phoneNumber": "0102030404",
+                "email": "contact@maif.fr",
+                "isVisible": false
+                },
+                {
+                "_id": "CLI-005",
+                "name": "MACIF",
+                "streetAddress": "1 rue Jacques Vandier",
+                "postalCode": "79000",
+                "city": "Niort",
+                "country": "France",
+                "phoneNumber": "0102030405",
+                "email": "contact@macif.fr",
+                "isVisible": false
+                },
+                {
+                "_id": "CLI-006",
+                "name": "Kereis",
+                "streetAddress": "112 avenue Kléber",
+                "postalCode": "75116",
+                "city": "Paris",
+                "country": "France",
+                "phoneNumber": "0102030406",
+                "email": "contact@kereis.fr",
+                "isVisible": false
+                },
+                {
+                "_id": "CLI-007",
+                "name": "Covéa",
+                "streetAddress": "86-90 rue Saint-Lazare",
+                "postalCode": "75009",
+                "city": "Paris",
+                "country": "France",
+                "phoneNumber": "0102030407",
+                "email": "contact@covea.fr",
+                "isVisible": false
+                },
+                {
+                "_id": "CLI-008",
+                "name": "Michelin",
+                "streetAddress": "23 place des Carmes-Déchaux",
+                "postalCode": "63000",
+                "city": "Clermont-Ferrand",
+                "country": "France",
+                "phoneNumber": "0102030408",
+                "email": "contact@michelin.fr",
+                "isVisible": false
+                },
+                {
+                "_id": "CLI-009",
+                "name": "Alliance Automotive Group",
+                "streetAddress": "155-159 rue Anatole France",
+                "postalCode": "92300",
+                "city": "Levallois-Perret",
+                "country": "France",
+                "phoneNumber": "0102030409",
+                "email": "contact@alliance-automotive-group.fr",
+                "isVisible": false
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="038-insert-support-functions-competences" author="eca">
+
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-354",
+                "name": "Recrutement",
+                "description": "Identification des besoins en recrutement, recherche de candidats, sélection des profils
+                et accompagnement du processus d'embauche.",
+                "active": true
+                },
+                {
+                "_id": "COMP-355",
+                "name": "Gestion des ressources humaines",
+                "description": "Gestion des activités et processus RH liés aux collaborateurs, aux parcours
+                professionnels et à l'organisation du travail.",
+                "active": true
+                },
+                {
+                "_id": "COMP-356",
+                "name": "Administration du personnel",
+                "description": "Gestion administrative des dossiers collaborateurs, des contrats, des entrées et sorties
+                ainsi que des obligations liées à l'emploi.",
+                "active": true
+                },
+                {
+                "_id": "COMP-357",
+                "name": "Gestion de la paie",
+                "description": "Préparation, traitement et contrôle des éléments de rémunération ainsi que des
+                opérations liées à l'établissement des bulletins de paie.",
+                "active": true
+                },
+                {
+                "_id": "COMP-358",
+                "name": "Gestion de la formation",
+                "description": "Identification des besoins de formation, élaboration des plans de développement et
+                organisation du suivi des actions de formation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-359",
+                "name": "Gestion des talents",
+                "description": "Identification, développement et fidélisation des talents afin de répondre aux besoins
+                actuels et futurs de l'organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-360",
+                "name": "Gestion prévisionnelle des emplois et des compétences (GPEC)",
+                "description": "Anticipation des évolutions des métiers et des compétences afin d'adapter les ressources
+                humaines aux besoins futurs de l'organisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-361",
+                "name": "Droit du travail",
+                "description": "Connaissance et application des règles juridiques encadrant les relations individuelles
+                et collectives de travail.",
+                "active": true
+                },
+                {
+                "_id": "COMP-362",
+                "name": "Gestion administrative",
+                "description": "Organisation et réalisation des activités administratives, gestion des dossiers, suivi
+                des documents et traitement des opérations courantes.",
+                "active": true
+                },
+                {
+                "_id": "COMP-363",
+                "name": "Comptabilité générale",
+                "description": "Enregistrement, suivi et contrôle des opérations comptables conformément aux règles et
+                normes comptables applicables.",
+                "active": true
+                },
+                {
+                "_id": "COMP-364",
+                "name": "Comptabilité analytique",
+                "description": "Analyse des coûts et des charges par activité, produit ou centre de responsabilité afin
+                d'éclairer les décisions de gestion.",
+                "active": true
+                },
+                {
+                "_id": "COMP-365",
+                "name": "Contrôle de gestion",
+                "description": "Suivi des performances économiques, analyse des écarts entre prévisions et réalisations
+                et production d'indicateurs de pilotage.",
+                "active": true
+                },
+                {
+                "_id": "COMP-366",
+                "name": "Gestion financière",
+                "description": "Suivi et optimisation des ressources financières, analyse de la situation financière et
+                contribution aux décisions de financement.",
+                "active": true
+                },
+                {
+                "_id": "COMP-367",
+                "name": "Élaboration budgétaire",
+                "description": "Construction des budgets prévisionnels, consolidation des besoins financiers et
+                préparation des hypothèses budgétaires.",
+                "active": true
+                },
+                {
+                "_id": "COMP-368",
+                "name": "Facturation",
+                "description": "Établissement, émission et suivi des factures clients ou fournisseurs ainsi que contrôle
+                des éléments de facturation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-369",
+                "name": "Gestion des achats",
+                "description": "Organisation et suivi des processus d'achat, de l'expression du besoin à la commande et
+                à la réception des biens ou services.",
+                "active": true
+                },
+                {
+                "_id": "COMP-370",
+                "name": "Gestion des fournisseurs",
+                "description": "Sélection, suivi et évaluation des fournisseurs, gestion des relations commerciales et
+                contrôle des engagements.",
+                "active": true
+                },
+                {
+                "_id": "COMP-371",
+                "name": "Gestion des contrats",
+                "description": "Préparation, suivi, archivage et contrôle des contrats ainsi que des échéances et
+                obligations contractuelles.",
+                "active": true
+                },
+                {
+                "_id": "COMP-372",
+                "name": "Gestion juridique",
+                "description": "Suivi des questions juridiques de l'organisation, gestion des documents légaux et
+                contribution à la conformité des activités.",
+                "active": true
+                },
+                {
+                "_id": "COMP-373",
+                "name": "Communication interne",
+                "description": "Conception et diffusion des informations destinées aux collaborateurs afin de favoriser
+                la circulation de l'information et la cohésion interne.",
+                "active": true
+                },
+                {
+                "_id": "COMP-374",
+                "name": "Communication externe",
+                "description": "Conception et diffusion de communications à destination des clients, partenaires,
+                fournisseurs et autres publics externes.",
+                "active": true
+                },
+                {
+                "_id": "COMP-375",
+                "name": "Marketing digital",
+                "description": "Conception et mise en œuvre d'actions marketing sur les canaux numériques afin de
+                développer la visibilité, l'acquisition et l'engagement.",
+                "active": true
+                },
+                {
+                "_id": "COMP-376",
+                "name": "Gestion documentaire",
+                "description": "Organisation, classement, conservation, recherche et diffusion des documents selon des
+                règles de gestion et de traçabilité définies.",
+                "active": true
+                },
+                {
+                "_id": "COMP-377",
+                "name": "Gestion des services généraux",
+                "description": "Organisation et suivi des services nécessaires au fonctionnement quotidien de
+                l'entreprise, notamment les locaux, équipements, fournitures et prestations générales.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+
+    </changeSet>
+
+</databaseChangeLog>

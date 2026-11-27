@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/mongodb
+        http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="068-insert-support-functions-profession-competences" author="eca">
+        <mongodb:insertMany collectionName="profession_competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "PC-832",
+                "professionId": "PROF-058",
+                "competenceId": "COMP-355"
+                },
+                {
+                "_id": "PC-833",
+                "professionId": "PROF-058",
+                "competenceId": "COMP-356"
+                },
+                {
+                "_id": "PC-834",
+                "professionId": "PROF-058",
+                "competenceId": "COMP-357"
+                },
+                {
+                "_id": "PC-835",
+                "professionId": "PROF-058",
+                "competenceId": "COMP-358"
+                },
+                {
+                "_id": "PC-836",
+                "professionId": "PROF-058",
+                "competenceId": "COMP-359"
+                },
+                {
+                "_id": "PC-837",
+                "professionId": "PROF-058",
+                "competenceId": "COMP-360"
+                },
+                {
+                "_id": "PC-838",
+                "professionId": "PROF-058",
+                "competenceId": "COMP-361"
+                },
+                {
+                "_id": "PC-839",
+                "professionId": "PROF-058",
+                "competenceId": "COMP-362"
+                },
+                {
+                "_id": "PC-840",
+                "professionId": "PROF-058",
+                "competenceId": "COMP-371"
+                },
+                {
+                "_id": "PC-841",
+                "professionId": "PROF-059",
+                "competenceId": "COMP-354"
+                },
+                {
+                "_id": "PC-842",
+                "professionId": "PROF-059",
+                "competenceId": "COMP-355"
+                },
+                {
+                "_id": "PC-843",
+                "professionId": "PROF-059",
+                "competenceId": "COMP-356"
+                },
+                {
+                "_id": "PC-844",
+                "professionId": "PROF-059",
+                "competenceId": "COMP-358"
+                },
+                {
+                "_id": "PC-845",
+                "professionId": "PROF-059",
+                "competenceId": "COMP-359"
+                },
+                {
+                "_id": "PC-846",
+                "professionId": "PROF-059",
+                "competenceId": "COMP-360"
+                },
+                {
+                "_id": "PC-847",
+                "professionId": "PROF-059",
+                "competenceId": "COMP-361"
+                },
+                {
+                "_id": "PC-848",
+                "professionId": "PROF-059",
+                "competenceId": "COMP-373"
+                },
+                {
+                "_id": "PC-849",
+                "professionId": "PROF-060",
+                "competenceId": "COMP-356"
+                },
+                {
+                "_id": "PC-850",
+                "professionId": "PROF-060",
+                "competenceId": "COMP-357"
+                },
+                {
+                "_id": "PC-851",
+                "professionId": "PROF-060",
+                "competenceId": "COMP-362"
+                },
+                {
+                "_id": "PC-852",
+                "professionId": "PROF-060",
+                "competenceId": "COMP-368"
+                },
+                {
+                "_id": "PC-853",
+                "professionId": "PROF-060",
+                "competenceId": "COMP-369"
+                },
+                {
+                "_id": "PC-854",
+                "professionId": "PROF-060",
+                "competenceId": "COMP-370"
+                },
+                {
+                "_id": "PC-855",
+                "professionId": "PROF-060",
+                "competenceId": "COMP-371"
+                },
+                {
+                "_id": "PC-856",
+                "professionId": "PROF-060",
+                "competenceId": "COMP-376"
+                },
+                {
+                "_id": "PC-857",
+                "professionId": "PROF-060",
+                "competenceId": "COMP-377"
+                },
+                {
+                "_id": "PC-858",
+                "professionId": "PROF-061",
+                "competenceId": "COMP-363"
+                },
+                {
+                "_id": "PC-859",
+                "professionId": "PROF-061",
+                "competenceId": "COMP-364"
+                },
+                {
+                "_id": "PC-860",
+                "professionId": "PROF-061",
+                "competenceId": "COMP-365"
+                },
+                {
+                "_id": "PC-861",
+                "professionId": "PROF-061",
+                "competenceId": "COMP-366"
+                },
+                {
+                "_id": "PC-862",
+                "professionId": "PROF-061",
+                "competenceId": "COMP-367"
+                },
+                {
+                "_id": "PC-863",
+                "professionId": "PROF-061",
+                "competenceId": "COMP-368"
+                },
+                {
+                "_id": "PC-864",
+                "professionId": "PROF-061",
+                "competenceId": "COMP-369"
+                },
+                {
+                "_id": "PC-865",
+                "professionId": "PROF-061",
+                "competenceId": "COMP-370"
+                },
+                {
+                "_id": "PC-866",
+                "professionId": "PROF-062",
+                "competenceId": "COMP-363"
+                },
+                {
+                "_id": "PC-867",
+                "professionId": "PROF-062",
+                "competenceId": "COMP-364"
+                },
+                {
+                "_id": "PC-868",
+                "professionId": "PROF-062",
+                "competenceId": "COMP-366"
+                },
+                {
+                "_id": "PC-869",
+                "professionId": "PROF-062",
+                "competenceId": "COMP-367"
+                },
+                {
+                "_id": "PC-870",
+                "professionId": "PROF-062",
+                "competenceId": "COMP-368"
+                },
+                {
+                "_id": "PC-871",
+                "professionId": "PROF-062",
+                "competenceId": "COMP-371"
+                },
+                {
+                "_id": "PC-872",
+                "professionId": "PROF-062",
+                "competenceId": "COMP-372"
+                },
+                {
+                "_id": "PC-873",
+                "professionId": "PROF-062",
+                "competenceId": "COMP-376"
+                },
+                {
+                "_id": "PC-874",
+                "professionId": "PROF-058",
+                "competenceId": "COMP-373"
+                },
+                {
+                "_id": "PC-875",
+                "professionId": "PROF-059",
+                "competenceId": "COMP-375"
+                },
+                {
+                "_id": "PC-876",
+                "professionId": "PROF-060",
+                "competenceId": "COMP-373"
+                },
+                {
+                "_id": "PC-877",
+                "professionId": "PROF-061",
+                "competenceId": "COMP-371"
+                },
+                {
+                "_id": "PC-878",
+                "professionId": "PROF-062",
+                "competenceId": "COMP-372"
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

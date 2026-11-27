@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="025-insert-architecture-competences" author="eca">
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-036",
+                "name": "Architecture logicielle",
+                "description": "Définition de la structure, des composants, des interactions et des principes
+                fondamentaux d'un système logiciel.",
+                "active": true
+                },
+                {
+                "_id": "COMP-037",
+                "name": "Architecture applicative",
+                "description": "Conception de l'organisation et des interactions entre les applications d'un système
+                d'information.",
+                "active": true
+                },
+                {
+                "_id": "COMP-038",
+                "name": "Architecture microservices",
+                "description": "Conception de systèmes composés de services autonomes communiquant par des interfaces
+                définies.",
+                "active": true
+                },
+                {
+                "_id": "COMP-039",
+                "name": "Architecture monolithique",
+                "description": "Conception et organisation d'applications structurées autour d'une unité de déploiement
+                unique.",
+                "active": true
+                },
+                {
+                "_id": "COMP-040",
+                "name": "Architecture orientée événements",
+                "description": "Conception de systèmes dans lesquels les composants communiquent et réagissent à travers
+                des événements.",
+                "active": true
+                },
+                {
+                "_id": "COMP-041",
+                "name": "Architecture distribuée",
+                "description": "Conception de systèmes dont les composants s'exécutent sur plusieurs machines ou
+                environnements interconnectés.",
+                "active": true
+                },
+                {
+                "_id": "COMP-042",
+                "name": "Architecture hexagonale",
+                "description": "Organisation d'applications autour du domaine métier, isolé des dépendances externes
+                grâce à des ports et des adaptateurs.",
+                "active": true
+                },
+                {
+                "_id": "COMP-043",
+                "name": "Domain-Driven Design (DDD)",
+                "description": "Approche de conception logicielle centrée sur le domaine métier, son langage commun et
+                ses modèles.",
+                "active": true
+                },
+                {
+                "_id": "COMP-044",
+                "name": "Clean Architecture",
+                "description": "Organisation logicielle visant à isoler les règles métier des frameworks,
+                infrastructures et mécanismes externes.",
+                "active": true
+                },
+                {
+                "_id": "COMP-045",
+                "name": "Conception de systèmes scalables",
+                "description": "Conception de systèmes capables d'absorber une augmentation de charge et de volume
+                d'utilisation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-046",
+                "name": "Conception de systèmes résilients",
+                "description": "Conception de systèmes capables de continuer à fonctionner ou de récupérer face aux
+                défaillances.",
+                "active": true
+                },
+                {
+                "_id": "COMP-047",
+                "name": "Conception de systèmes haute disponibilité",
+                "description": "Conception d'architectures visant à garantir la continuité et la disponibilité des
+                services.",
+                "active": true
+                },
+                {
+                "_id": "COMP-048",
+                "name": "Architecture cloud",
+                "description": "Conception d'architectures applicatives et techniques exploitant les infrastructures et
+                services cloud.",
+                "active": true
+                },
+                {
+                "_id": "COMP-049",
+                "name": "Architecture des données",
+                "description": "Conception de l'organisation, du stockage, de la circulation et de la gouvernance des
+                données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-050",
+                "name": "Architecture API",
+                "description": "Conception des interfaces, contrats, mécanismes d'accès et interactions entre services
+                via des API.",
+                "active": true
+                },
+                {
+                "_id": "COMP-051",
+                "name": "Architecture de sécurité",
+                "description": "Conception des mécanismes de sécurité et des contrôles destinés à protéger les systèmes
+                d'information.",
+                "active": true
+                },
+                {
+                "_id": "COMP-052",
+                "name": "Modélisation UML",
+                "description": "Modélisation de systèmes logiciels à l'aide du langage graphique Unified Modeling
+                Language.",
+                "active": true
+                },
+                {
+                "_id": "COMP-053",
+                "name": "Modélisation des processus métier",
+                "description": "Représentation et analyse des processus métier, de leurs activités et de leurs
+                interactions.",
+                "active": true
+                },
+                {
+                "_id": "COMP-054",
+                "name": "Analyse et conception technique",
+                "description": "Analyse des besoins techniques et définition des solutions, composants et choix
+                d'implémentation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-055",
+                "name": "Documentation d'architecture",
+                "description": "Formalisation et maintenance de la documentation décrivant les architectures, décisions
+                et choix techniques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-056",
+                "name": "Audit technique",
+                "description": "Évaluation de la qualité, de la sécurité, des performances et de la maintenabilité d'un
+                système technique.",
+                "active": true
+                },
+                {
+                "_id": "COMP-057",
+                "name": "Revue de code",
+                "description": "Analyse du code source afin d'évaluer sa qualité, sa conformité, sa lisibilité et sa
+                maintenabilité.",
+                "active": true
+                },
+                {
+                "_id": "COMP-058",
+                "name": "Refactoring",
+                "description": "Amélioration de la structure interne du code sans modifier son comportement fonctionnel
+                attendu.",
+                "active": true
+                },
+                {
+                "_id": "COMP-059",
+                "name": "Gestion de la dette technique",
+                "description": "Identification, évaluation et réduction des compromis techniques susceptibles
+                d'augmenter les coûts de maintenance.",
+                "active": true
+                },
+                {
+                "_id": "COMP-060",
+                "name": "Définition de standards techniques",
+                "description": "Établissement de conventions, règles et bonnes pratiques communes pour le développement
+                et la maintenance des systèmes.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

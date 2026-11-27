@@ -15,6 +15,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Tests d'intégration de l'association entre un métier et une compétence.
+ * Vérifie la persistance de l'association ainsi que la récupération
+ * des documents auxquels elle fait référence.
+ */
 @DataMongoTest
 class ProfessionCompetenceIntegrationTest {
 
@@ -27,10 +32,14 @@ class ProfessionCompetenceIntegrationTest {
     @Autowired
     private ProfessionCompetenceRepository professionCompetenceRepository;
 
+    /**
+     * Vérifie qu'une compétence peut être associée à un métier
+     * et que les documents liés restent accessibles à partir de leurs identifiants.
+     */
     @Test
     void shouldAssociateProfessionWithCompetence() {
 
-        // Arrange: create and save a profession
+        // Préparation : crée et enregistre un métier.
         Profession profession = new Profession(
                 "Backend developer",
                 "Develops backend services and APIs",
@@ -40,7 +49,7 @@ class ProfessionCompetenceIntegrationTest {
 
         Profession savedProfession = professionRepository.save(profession);
 
-        // Arrange: create and save a competence
+        // Préparation : crée et enregistre une compétence.
         Competence competence = new Competence(
                 "Spring Boot",
                 "Java framework for building applications",
@@ -49,7 +58,8 @@ class ProfessionCompetenceIntegrationTest {
 
         Competence savedCompetence = competenceRepository.save(competence);
 
-        // Arrange: create the association
+        // Préparation : crée l'association à partir des identifiants
+        // des deux documents précédemment enregistrés.
         ProfessionCompetence association = new ProfessionCompetence(
                 savedProfession.getId(),
                 savedCompetence.getId()
@@ -58,39 +68,45 @@ class ProfessionCompetenceIntegrationTest {
         ProfessionCompetence savedAssociation =
                 professionCompetenceRepository.save(association);
 
-        // Act: retrieve the association
+        // Exécution : récupère l'association à partir de son identifiant.
         Optional<ProfessionCompetence> retrievedAssociation =
                 professionCompetenceRepository.findById(savedAssociation.getId());
 
-        // Assert: verify the association
+        // Vérification : confirme que l'association a bien été enregistrée.
         assertThat(retrievedAssociation).isPresent();
 
         ProfessionCompetence foundAssociation = retrievedAssociation.orElseThrow();
 
+        // Vérifie que l'association référence les bons identifiants.
         assertThat(foundAssociation.getProfessionId())
                 .isEqualTo(savedProfession.getId());
 
         assertThat(foundAssociation.getCompetenceId())
                 .isEqualTo(savedCompetence.getId());
 
-        // Act: retrieve the referenced documents
+        // Exécution : récupère les documents référencés par l'association.
         Optional<Profession> retrievedProfession =
                 professionRepository.findById(foundAssociation.getProfessionId());
 
         Optional<Competence> retrievedCompetence =
                 competenceRepository.findById(foundAssociation.getCompetenceId());
 
-        // Assert: verify the referenced documents
+        // Vérification : confirme que les deux documents sont accessibles.
         assertThat(retrievedProfession).isPresent();
         assertThat(retrievedCompetence).isPresent();
 
         Profession foundProfession = retrievedProfession.orElseThrow();
         Competence foundCompetence = retrievedCompetence.orElseThrow();
 
+        // Vérifie que les documents récupérés correspondent aux données initiales.
         assertThat(foundProfession.getName()).isEqualTo("Backend developer");
         assertThat(foundCompetence.getName()).isEqualTo("Spring Boot");
     }
 
+    /**
+     * Nettoie les collections utilisées par le test après chaque exécution
+     * afin d'éviter que les données persistent entre les tests.
+     */
     @AfterEach
     void cleanUp() {
         professionCompetenceRepository.deleteAll();

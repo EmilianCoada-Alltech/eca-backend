@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="035-insert-erp-business-solutions-competences" author="eca">
+
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-289",
+                "name": "SAP",
+                "description": "Connaissance et utilisation de l'écosystème SAP pour la gestion intégrée des processus
+                et des données de l'entreprise.",
+                "active": true
+                },
+                {
+                "_id": "COMP-290",
+                "name": "SAP FI",
+                "description": "Utilisation du module SAP Financial Accounting pour la gestion de la comptabilité
+                générale, clients, fournisseurs et opérations financières.",
+                "active": true
+                },
+                {
+                "_id": "COMP-291",
+                "name": "SAP CO",
+                "description": "Utilisation du module SAP Controlling pour le contrôle de gestion, le suivi des coûts et
+                l'analyse de la rentabilité.",
+                "active": true
+                },
+                {
+                "_id": "COMP-292",
+                "name": "SAP MM",
+                "description": "Utilisation du module SAP Materials Management pour la gestion des achats, des
+                approvisionnements et des stocks.",
+                "active": true
+                },
+                {
+                "_id": "COMP-293",
+                "name": "SAP SD",
+                "description": "Utilisation du module SAP Sales and Distribution pour la gestion des ventes, des
+                commandes, des livraisons et de la facturation.",
+                "active": true
+                },
+                {
+                "_id": "COMP-294",
+                "name": "SAP HR / HCM",
+                "description": "Utilisation des solutions SAP Human Resources et Human Capital Management pour la
+                gestion des données et des processus liés aux ressources humaines.",
+                "active": true
+                },
+                {
+                "_id": "COMP-295",
+                "name": "SAP S/4HANA",
+                "description": "Connaissance et utilisation de SAP S/4HANA, la suite ERP de nouvelle génération de SAP,
+                pour la gestion intégrée des activités de l'entreprise.",
+                "active": true
+                },
+                {
+                "_id": "COMP-296",
+                "name": "Microsoft Dynamics 365",
+                "description": "Utilisation des solutions Microsoft Dynamics 365 pour la gestion des activités
+                commerciales, financières, opérationnelles et de la relation client.",
+                "active": true
+                },
+                {
+                "_id": "COMP-297",
+                "name": "Salesforce",
+                "description": "Utilisation de la plateforme Salesforce pour la gestion de la relation client, des
+                ventes, du service client et des processus commerciaux.",
+                "active": true
+                },
+                {
+                "_id": "COMP-298",
+                "name": "Sage",
+                "description": "Connaissance et utilisation des solutions Sage pour la gestion comptable, financière,
+                commerciale et administrative des entreprises.",
+                "active": true
+                },
+                {
+                "_id": "COMP-299",
+                "name": "Oracle ERP",
+                "description": "Connaissance et utilisation des solutions Oracle ERP pour la gestion intégrée des
+                processus financiers, opérationnels et métiers.",
+                "active": true
+                },
+                {
+                "_id": "COMP-300",
+                "name": "Odoo",
+                "description": "Utilisation et configuration d'Odoo pour la gestion intégrée des activités de
+                l'entreprise à travers ses différents modules métiers.",
+                "active": true
+                },
+                {
+                "_id": "COMP-301",
+                "name": "Intégration ERP",
+                "description": "Connexion d'un ERP avec d'autres applications et systèmes d'information afin d'assurer
+                la cohérence et la circulation des données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-302",
+                "name": "Paramétrage ERP",
+                "description": "Configuration des modules, règles de gestion, référentiels et workflows d'un ERP selon
+                les besoins de l'entreprise.",
+                "active": true
+                },
+                {
+                "_id": "COMP-303",
+                "name": "Administration ERP",
+                "description": "Administration fonctionnelle et technique d'un ERP, incluant la gestion des
+                utilisateurs, des droits, des paramètres et du bon fonctionnement de la solution.",
+                "active": true
+                },
+                {
+                "_id": "COMP-304",
+                "name": "Développement de modules ERP",
+                "description": "Conception, développement et évolution de modules ou extensions permettant d'adapter un
+                ERP aux besoins spécifiques de l'entreprise.",
+                "active": true
+                },
+                {
+                "_id": "COMP-305",
+                "name": "Migration de données ERP",
+                "description": "Préparation, extraction, transformation, contrôle et chargement des données lors d'une
+                migration ou d'une évolution de système ERP.",
+                "active": true
+                },
+                {
+                "_id": "COMP-306",
+                "name": "Gestion des processus métiers",
+                "description": "Analyse, modélisation, optimisation et suivi des processus métiers afin d'améliorer leur
+                efficacité et leur cohérence avec le système d'information.",
+                "active": true
+                },
+                {
+                "_id": "COMP-307",
+                "name": "Gestion commerciale",
+                "description": "Gestion des activités commerciales, notamment les devis, commandes, ventes, facturation
+                et suivi des clients.",
+                "active": true
+                },
+                {
+                "_id": "COMP-308",
+                "name": "Gestion des achats",
+                "description": "Gestion du processus d'approvisionnement, de la sélection des fournisseurs au suivi des
+                commandes et des réceptions.",
+                "active": true
+                },
+                {
+                "_id": "COMP-309",
+                "name": "Gestion des stocks",
+                "description": "Suivi et optimisation des niveaux de stock, des mouvements, des approvisionnements et de
+                la disponibilité des produits.",
+                "active": true
+                },
+                {
+                "_id": "COMP-310",
+                "name": "Gestion de la production",
+                "description": "Planification, organisation et suivi des opérations de production, des ressources et des
+                flux de fabrication.",
+                "active": true
+                },
+                {
+                "_id": "COMP-311",
+                "name": "Gestion des ressources humaines",
+                "description": "Gestion des processus RH, notamment les dossiers collaborateurs, les recrutements, les
+                absences, la formation et l'administration du personnel.",
+                "active": true
+                },
+                {
+                "_id": "COMP-312",
+                "name": "Gestion de la relation client (CRM)",
+                "description": "Gestion et suivi des interactions avec les clients et prospects, des opportunités
+                commerciales et de la relation client dans la durée.",
+                "active": true
+                },
+                {
+                "_id": "COMP-313",
+                "name": "Gestion des services (ITSM)",
+                "description": "Organisation et gestion des services informatiques à travers les processus de support,
+                de demandes, d'incidents, de changements et de suivi des niveaux de service.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+
+    </changeSet>
+
+</databaseChangeLog>

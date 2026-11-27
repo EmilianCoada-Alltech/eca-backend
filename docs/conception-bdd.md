@@ -181,37 +181,50 @@ Le modèle `Collaborator` représente un collaborateur Alltech.
 Il regroupe les informations d'identification, les informations professionnelles, les rôles attribués et les
 déclarations de compétences associées à son profil.
 
-| Attribut              | Type                        | Description                                       |
-|-----------------------|-----------------------------|---------------------------------------------------|
-| `id`                  | String                      | Identifiant du document MongoDB                   |
-| `adIdentifier`        | String                      | Identifiant Active Directory du collaborateur     |
-| `firstName`           | String                      | Prénom                                            |
-| `lastName`            | String                      | Nom                                               |
-| `email`               | String                      | Adresse électronique                              |
-| `agencyId`            | String                      | Référence vers une agence                         |
-| `professionId`        | String                      | Référence vers un métier                          |
-| `experienceLevelId`   | String                      | Référence vers un niveau d'expérience             |
-| `roleIds`             | List<String>                | Identifiants des rôles attribués au collaborateur |
-| `hireDate`            | LocalDate                   | Date d'arrivée chez Alltech                       |
-| `presentation`        | String                      | Présentation professionnelle                      |
-| `photoUrl`            | String                      | Adresse de la photographie du collaborateur       |
-| `profileStatus`       | String                      | Statut du profil                                  |
-| `onboardingCompleted` | boolean                     | Indique si l'onboarding est terminé               |
-| `searchable`          | boolean                     | Indique si le profil est consultable              |
-| `competences`         | List<CompetenceDeclaration> | Déclarations de compétences intégrées au profil   |
+| Attribut              | Type                        | Description                                          |
+|-----------------------|-----------------------------|------------------------------------------------------|
+| `id`                  | String                      | Identifiant du document MongoDB                      |
+| `adIdentifier`        | String                      | Identifiant Active Directory du collaborateur        |
+| `firstName`           | String                      | Prénom                                               |
+| `lastName`            | String                      | Nom                                                  |
+| `email`               | String                      | Adresse électronique                                 |
+| `agencyId`            | String                      | Référence obligatoire vers une agence                |
+| `professionId`        | String                      | Référence facultative vers un métier                 |
+| `experienceLevelId`   | String                      | Référence facultative vers un niveau d'expérience    |
+| `roleIds`             | List<String>                | Identifiants des rôles attribués au collaborateur    |
+| `hireDate`            | LocalDate                   | Date d'arrivée chez Alltech                          |
+| `presentation`        | String                      | Présentation professionnelle                         |
+| `photoUrl`            | String                      | Adresse de la photographie du collaborateur          |
+| `profileStatus`       | String                      | Statut du profil                                     |
+| `onboardingCompleted` | boolean                     | Indique si l'onboarding est terminé                  |
+| `searchable`          | boolean                     | Indique si le profil est consultable dans l'annuaire |
+| `competences`         | List<CompetenceDeclaration> | Déclarations de compétences intégrées au profil      |
 
 **Organisation des données**
 
 Le document `Collaborator` centralise les informations propres à un collaborateur et contient plusieurs références vers
 les collections de données de référence :
 
-- `agencyId` référence un document de la collection `agencies`.
-- `professionId` référence un document de la collection `professions`.
-- `experienceLevelId` référence un document de la collection `experience_levels`.
+- `agencyId` référence un document de la collection `agencies`. Cette référence est obligatoire.
+- `professionId` référence un document de la collection `professions`. Cette référence peut être absente lors de
+  l'onboarding et être renseignée ultérieurement.
+- `experienceLevelId` référence un document de la collection `experience_levels`. Cette référence peut être absente lors
+  de l'onboarding et être renseignée ultérieurement par un administrateur ou les ressources humaines.
 - `roleIds` contient les identifiants des documents de la collection `roles`.
+
+Lorsqu'une référence facultative est renseignée, elle doit correspondre à un document existant dans la collection
+concernée.
 
 Les déclarations de compétences sont intégrées directement au document sous la forme d'un tableau `competences`. Chaque
 élément est un objet `CompetenceDeclaration`.
+
+**Visibilité du profil**
+
+L'attribut `searchable` détermine si le profil peut apparaître dans les résultats de recherche de l'annuaire
+collaborateur.
+
+Les profils pour lesquels `searchable` vaut `false` doivent être exclus des résultats de recherche standards. Cette
+règle relève de la logique applicative et doit être appliquée lors de l'exécution des requêtes de recherche.
 
 Cette organisation permet de regrouper les informations du profil et ses déclarations de compétences dans un même
 document MongoDB.
@@ -297,6 +310,15 @@ Une déclaration peut prendre deux formes :
 
 Une règle de validation impose de renseigner exactement l'un de ces deux attributs. Ils ne peuvent être ni tous les deux
 renseignés, ni tous les deux absents.
+
+**Règles de déclaration**
+
+Chaque collaborateur est soumis aux limites suivantes :
+
+- Un maximum de trois déclarations peuvent être marquées comme expertises (`expertise = true`).
+- Un maximum de deux déclarations peuvent être marquées comme sollicitables (`solicitable = true`).
+
+Aucune limite globale n'est définie sur le nombre total de déclarations de compétences.
 
 **Organisation dans MongoDB**
 
@@ -597,13 +619,21 @@ applicative.
 
 ### 5.1 Relations liées aux collaborateurs
 
-| Modèle source | Attribut            | Modèle cible          | Relation                                                                                 |
-|---------------|---------------------|-----------------------|------------------------------------------------------------------------------------------|
-| Collaborator  | `agencyId`          | Agency                | Plusieurs collaborateurs peuvent être rattachés à une agence.                            |
-| Collaborator  | `professionId`      | Profession            | Plusieurs collaborateurs peuvent exercer une même profession.                            |
-| Collaborator  | `experienceLevelId` | ExperienceLevel       | Plusieurs collaborateurs peuvent partager un même niveau d'expérience.                   |
-| Collaborator  | `roleIds`           | Role                  | Un collaborateur peut posséder plusieurs rôles.                                          |
-| Collaborator  | `competences`       | CompetenceDeclaration | Les déclarations de compétences sont intégrées directement au document du collaborateur. |
+| Modèle source | Attribut            | Modèle cible          | Relation                                                                                      |
+|---------------|---------------------|-----------------------|-----------------------------------------------------------------------------------------------|
+| Collaborator  | `agencyId`          | Agency                | Référence obligatoire. Plusieurs collaborateurs peuvent être rattachés à une même agence.     |
+| Collaborator  | `professionId`      | Profession            | Référence facultative. Plusieurs collaborateurs peuvent exercer une même profession.          |
+| Collaborator  | `experienceLevelId` | ExperienceLevel       | Référence facultative. Plusieurs collaborateurs peuvent partager un même niveau d'expérience. |
+| Collaborator  | `roleIds`           | Role                  | Un collaborateur peut posséder plusieurs rôles.                                               |
+| Collaborator  | `competences`       | CompetenceDeclaration | Les déclarations de compétences sont intégrées directement au document du collaborateur.      |
+
+Les références vers `Agency`, `Profession` et `ExperienceLevel` sont représentées par des identifiants (`String`).
+
+La référence vers une agence est obligatoire. Celle vers une profession peut être absente pendant l'onboarding, tandis
+que celle vers un niveau d'expérience peut être renseignée ultérieurement par un administrateur ou les ressources
+humaines.
+
+Lorsqu'une référence facultative est renseignée, elle doit correspondre à un document existant dans la collection cible.
 
 Les déclarations de compétences peuvent référencer une compétence du référentiel via `competenceId`, ou contenir une
 compétence personnalisée via `customName`.
@@ -682,10 +712,17 @@ Chaque déclaration peut prendre l'une des deux formes suivantes :
 - Une compétence issue du référentiel, identifiée par `competenceId`.
 - Une compétence personnalisée, décrite par `customName`.
 
-Une déclaration doit renseigner exactement l'un de ces deux attributs. Ils ne doivent pas être simultanément renseignés
+Une déclaration doit renseigner exactement l'un de ces deux attributs. Ils ne doivent être ni simultanément renseignés,
 ni simultanément absents.
 
-Les autres attributs (`expertise`, `solicitable` et `source`) complètent la déclaration.
+Les attributs `expertise` et `solicitable` permettent de qualifier chaque déclaration :
+
+- Un collaborateur peut déclarer au maximum trois compétences comme expertises (`expertise = true`).
+- Un collaborateur peut indiquer au maximum deux sujets sur lesquels il accepte d'être sollicité (`solicitable = true`).
+
+Aucune limite globale n'est définie sur le nombre de déclarations de compétences.
+
+L'attribut `source` permet de conserver l'origine de la déclaration.
 
 ### 6.2 Références entre collections
 
@@ -726,13 +763,32 @@ vers les documents concernés.
 
 ### 6.6 Validation des déclarations intégrées
 
-La structure des déclarations de compétences fait l'objet d'une validation avant leur persistance.
+Le modèle `CompetenceDeclaration` contient une méthode de validation qui vérifie la cohérence de chaque déclaration de
+compétence.
 
-Le modèle `CompetenceDeclaration` vérifie la cohérence de ses attributs, tandis que `Collaborator` contrôle les
-déclarations qu'il contient.
+Cette validation impose de renseigner exactement l'un des deux attributs suivants :
 
-Cette validation structurelle ne garantit pas à elle seule l'existence des documents référencés dans les autres
-collections. Ce contrôle relève de la logique applicative.
+- `competenceId`, pour une compétence issue du référentiel.
+- `customName`, pour une compétence personnalisée.
+
+Le modèle `Collaborator` contrôle également les déclarations qu'il contient et applique les limites suivantes :
+
+- Trois déclarations au maximum peuvent être marquées comme expertises.
+- Deux déclarations au maximum peuvent être marquées comme sollicitables.
+
+Ces règles sont implémentées dans les modèles et couvertes par des tests unitaires.
+
+**Limites actuelles de l'implémentation**
+
+Les méthodes de validation ne sont pas exécutées automatiquement par Spring Data MongoDB lors de la persistance d'un
+document. Elles devront être appelées explicitement par la couche service lors de la création ou de la mise à jour d'un
+collaborateur.
+
+De même, la vérification de l'existence des documents référencés dans les autres collections devra être assurée par
+cette couche applicative.
+
+La validation des modèles est donc implémentée et testée, mais son intégration dans le processus complet de persistance
+reste à réaliser.
 
 ## 7. Points à confirmer avec Alltech
 
@@ -754,12 +810,17 @@ métier définitivement confirmées.
 ### 7.2 Profils collaborateurs
 
 - **Identifiant AD :** l'attribut `adIdentifier` doit-il correspondre exactement à l'identifiant de connexion Active
-  Directory ?
-- **Rattachement :** un collaborateur possède-t-il toujours une seule agence et une seule profession ?
-- **Rôles :** un collaborateur peut-il posséder plusieurs rôles simultanément ?
-- **Statut du profil :** quelles sont les valeurs possibles de `profileStatus` et les règles de transition entre ces
-  statuts ?
-- **Visibilité :** quelles règles déterminent les valeurs de `searchable` et `onboardingCompleted` ?
+  Directory ? Quel attribut ou identifiant doit être utilisé comme référence ?
+- **Rattachement à une agence :** quelles sont les règles de gestion du rattachement d'un collaborateur à une agence ?
+  Un changement d'agence doit-il conserver un historique ?
+- **Profession :** le métier peut être absent lors de l'onboarding et renseigné ultérieurement. Existe-t-il des règles
+  particulières concernant le choix ou le changement de profession ?
+- **Rôles :** le modèle permet d'attribuer plusieurs rôles à un collaborateur. Quels rôles doivent être disponibles et
+  quelles permissions sont associées à chacun ?
+- **Statut du profil :** quelles sont les valeurs autorisées pour `profileStatus` et quelles sont les règles de
+  transition entre ces statuts ?
+- **Visibilité :** quelles règles déterminent les valeurs de `searchable` et `onboardingCompleted` ? À quel moment un
+  profil devient-il consultable dans l'annuaire ?
 - **Présentation :** quelles sont les contraintes éventuelles sur le contenu et la longueur de la présentation d'un
   collaborateur ?
 
@@ -797,8 +858,8 @@ Avant de considérer la conception comme définitive, les points suivants doiven
 - Les relations proposées correspondent-elles aux règles métier réelles ?
 - Certaines données doivent-elles être intégrées directement dans un document plutôt que conservées dans une collection
   indépendante ?
-- Des contraintes d'unicité sont-elles nécessaires sur certains attributs, notamment les identifiants AD et les adresses
-  e-mail ?
+- Une contrainte d'unicité est-elle nécessaire sur les adresses e-mail des collaborateurs ? L'unicité de `adIdentifier`
+  est déjà assurée par un index unique dans MongoDB.
 - Des règles de suppression, d'archivage ou de désactivation doivent-elles être définies pour les données de référence
   et les données métier ?
 

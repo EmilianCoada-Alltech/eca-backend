@@ -1,0 +1,1144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="073-insert-collaborators" author="eca">
+        <mongodb:insertMany collectionName="collaborators">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COL-001",
+                "adIdentifier": "cxavier",
+                "firstName": "Charles",
+                "lastName": "Xavier",
+                "email": "charles.xavier@alltech.fr",
+                "agencyId": "AG-001",
+                "professionId": "PROF-056",
+                "experienceLevelId": "EXP-04",
+                "hireDate": "2015-03-16",
+                "presentation": "Je suis passionné par l'innovation, la stratégie numérique et l'accompagnement des
+                équipes. J'aime donner une direction claire aux projets, faire émerger les talents et aider chacun à
+                atteindre son potentiel. Je préfère anticiper les problèmes plutôt que les laisser prendre le contrôle.
+                On me dit parfois que je comprends les gens sans qu'ils aient besoin de parler… disons que c'est un
+                avantage appréciable en réunion !",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-335",
+                "customName": null,
+                "expertise": false,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-337",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-343",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-347",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-348",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-350",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-353",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01", "ROLE-03", "ROLE-05"]
+                },
+                {
+                "_id": "COL-002",
+                "adIdentifier": "ssummers",
+                "firstName": "Scott",
+                "lastName": "Summers",
+                "email": "scott.summers@alltech.fr",
+                "agencyId": "AG-001",
+                "professionId": "PROF-030",
+                "experienceLevelId": "EXP-03",
+                "hireDate": "2017-06-12",
+                "presentation": "J'aime organiser, planifier et mener les projets jusqu'à leur réussite. Je suis
+                particulièrement attentif aux délais, aux priorités et à la coordination des équipes. Même lorsque la
+                situation devient explosive, je garde le cap et je veille à ce que chacun sache où regarder. Les
+                réunions interminables ? Je préfère les garder dans mon viseur et les terminer à l'heure.",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-199",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-202",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-212",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-214",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-216",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-217",
+                "customName": null,
+                "expertise": false,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-219",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01", "ROLE-05"]
+                },
+                {
+                "_id": "COL-003",
+                "adIdentifier": "jgrey",
+                "firstName": "Jean",
+                "lastName": "Grey",
+                "email": "jean.grey@alltech.fr",
+                "agencyId": "AG-002",
+                "professionId": "PROF-058",
+                "experienceLevelId": "EXP-03",
+                "hireDate": "2018-09-03",
+                "presentation": "J'aime découvrir les talents, accompagner les parcours professionnels et contribuer au
+                bien-être des collaborateurs. Je suis convaincue que chaque personne possède un potentiel qui mérite
+                d'être révélé. Je privilégie l'écoute, l'empathie et le dialogue pour trouver les bonnes solutions. Et
+                rassurez-vous, je ne lis pas réellement dans vos pensées pendant les entretiens… enfin, pas toujours !",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-355",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-356",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-358",
+                "customName": null,
+                "expertise": false,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-359",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-360",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-361",
+                "customName": null,
+                "expertise": false,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-371",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01", "ROLE-04"]
+                },
+                {
+                "_id": "COL-004",
+                "adIdentifier": "lhowlett",
+                "firstName": "Logan",
+                "lastName": "Howlett",
+                "email": "logan.howlett@alltech.fr",
+                "agencyId": "AG-004",
+                "professionId": "PROF-024",
+                "experienceLevelId": "EXP-04",
+                "hireDate": "2012-01-09",
+                "presentation": "Je veille à la sécurité des systèmes et des infrastructures avec une vigilance
+                permanente. J'aime traquer les vulnérabilités, comprendre les menaces et intervenir lorsque les choses
+                tournent mal. Je préfère les solutions solides aux grandes présentations et je ne lâche jamais un
+                incident avant de l'avoir résolu. Les hackers peuvent essayer de passer, mais ils risquent de trouver
+                mes griffes sur leur chemin.",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-149",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-150",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-153",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-161",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-162",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-165",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-168",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-005",
+                "adIdentifier": "omunroe",
+                "firstName": "Ororo",
+                "lastName": "Munroe",
+                "email": "ororo.munroe@alltech.fr",
+                "agencyId": "AG-003",
+                "professionId": "PROF-054",
+                "experienceLevelId": "EXP-04",
+                "hireDate": "2014-05-19",
+                "presentation": "J'aime fédérer les équipes, encourager la collaboration et aider chacun à donner le
+                meilleur de lui-même. Je crois au leadership par l'écoute, la confiance et l'exemplarité. Même lorsque
+                la pression monte, je garde mon calme et aide l'équipe à retrouver son équilibre. Mon objectif :
+                maintenir un climat de travail serein, avec une météo toujours favorable à la réussite collective.",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-334",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-335",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-338",
+                "customName": null,
+                "expertise": false,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-339",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-341",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-342",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-352",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01", "ROLE-05"]
+                },
+                {
+                "_id": "COL-006",
+                "adIdentifier": "hmcCoy",
+                "firstName": "Hank",
+                "lastName": "McCoy",
+                "email": "hank.mccoy@alltech.fr",
+                "agencyId": "AG-002",
+                "professionId": "PROF-012",
+                "experienceLevelId": "EXP-04",
+                "hireDate": "2013-11-04",
+                "presentation": "Je suis passionné par les données, les statistiques et les possibilités offertes par
+                l'intelligence artificielle. J'aime explorer des ensembles de données complexes, découvrir des tendances
+                et construire des modèles capables d'éclairer les décisions. La curiosité est mon principal moteur et je
+                ne résiste jamais à un problème qui mérite une bonne analyse. Mon cerveau est peut-être mon meilleur
+                outil, même si mes collègues prétendent parfois que je suis un peu trop cérébral !",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-061",
+                "customName": null,
+                "expertise": false,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-063",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-067",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-072",
+                "customName": null,
+                "expertise": false,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-073",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-074",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-083",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-007",
+                "adIdentifier": "kwagner",
+                "firstName": "Kurt",
+                "lastName": "Wagner",
+                "email": "kurt.wagner@alltech.fr",
+                "agencyId": "AG-004",
+                "professionId": "PROF-039",
+                "experienceLevelId": "EXP-02",
+                "hireDate": "2020-02-17",
+                "presentation": "J'aime concevoir des expériences numériques intuitives, accessibles et agréables. Je
+                m'intéresse particulièrement aux besoins des utilisateurs et à la manière dont ils interagissent avec
+                les interfaces. Pour moi, une bonne expérience doit sembler naturelle, presque magique. Mon objectif est
+                de faire disparaître les obstacles et les frustrations. Si vous vous perdez dans une application, je
+                trouverai toujours un moyen de vous téléporter vers la bonne page !",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-245",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-247",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-249",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-252",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-253",
+                "customName": null,
+                "expertise": false,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-255",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-264",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-008",
+                "adIdentifier": "kpryde",
+                "firstName": "Kitty",
+                "lastName": "Pryde",
+                "email": "kitty.pryde@alltech.fr",
+                "agencyId": "AG-001",
+                "professionId": "PROF-001",
+                "experienceLevelId": "EXP-02",
+                "hireDate": "2021-07-05",
+                "presentation": "J'aime transformer les idées en interfaces modernes, interactives et faciles à
+                utiliser. Je travaille principalement avec les technologies frontend et j'apprécie particulièrement la
+                création de composants réutilisables. J'aime comprendre comment les différentes couches d'une
+                application s'articulent entre elles. Les bugs peuvent parfois se cacher dans les endroits les plus
+                inattendus, mais je sais passer à travers les abstractions pour les retrouver !",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-002",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-003",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-014",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-015",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-016",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-017",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-018",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-025",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-034",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-009",
+                "adIdentifier": "amarie",
+                "firstName": "Anna Marie",
+                "lastName": "Raven",
+                "email": "anna.marie@alltech.fr",
+                "agencyId": "AG-005",
+                "professionId": "PROF-036",
+                "experienceLevelId": "EXP-03",
+                "hireDate": "2016-10-10",
+                "presentation": "J'aime comprendre les besoins métier, analyser les processus et aider les équipes à
+                trouver des solutions adaptées. Je suis particulièrement attentive aux échanges avec les utilisateurs et
+                aux détails qui peuvent faire toute la différence dans un projet. J'ai une bonne capacité à absorber les
+                informations et à en extraire l'essentiel. Attention toutefois : je préfère partager mes connaissances
+                plutôt que vous les emprunter définitivement !",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-226",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-227",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-228",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-234",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-235",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-236",
+                "customName": null,
+                "expertise": false,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-237",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-010",
+                "adIdentifier": "lebeau",
+                "firstName": "Remy",
+                "lastName": "LeBeau",
+                "email": "remy.lebeau@alltech.fr",
+                "agencyId": "AG-003",
+                "professionId": "PROF-003",
+                "experienceLevelId": "EXP-03",
+                "hireDate": "2018-04-23",
+                "presentation": "J'aime travailler aussi bien sur le frontend que sur le backend et trouver le bon
+                équilibre entre les deux. Java, JavaScript, React ou Spring Boot : j'aime jongler avec les technologies
+                et assembler des solutions élégantes. Je suis particulièrement motivé par les défis techniques et les
+                projets qui demandent un peu d'audace. Avec moi, chaque commit est une carte à jouer… et je mise
+                rarement sur une mauvaise main !",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-001",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-002",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-003",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-016",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-019",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-021",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-027",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-011",
+                "adIdentifier": "dloneeagle",
+                "firstName": "Daniel",
+                "lastName": "Lone Eagle",
+                "email": "daniel.loneeagle@alltech.fr",
+                "agencyId": "AG-005",
+                "professionId": "PROF-002",
+                "experienceLevelId": "EXP-04",
+                "hireDate": "2011-08-22",
+                "presentation": "J'aime concevoir des systèmes robustes, développer des API fiables et résoudre des
+                problèmes techniques complexes. Je prends plaisir à comprendre le fonctionnement des architectures et à
+                construire des solutions durables. Mon environnement préféré ? Un bon IDE, quelques outils bien choisis
+                et un problème qui semble impossible à résoudre. Je suis plutôt du genre à fabriquer la solution qu'à
+                attendre qu'elle apparaisse par magie.",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-001",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-013",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-019",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-020",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-021",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-026",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-030",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-012",
+                "adIdentifier": "jlee",
+                "firstName": "Jubilation",
+                "lastName": "Lee",
+                "email": "jubilation.lee@alltech.fr",
+                "agencyId": "AG-002",
+                "professionId": "PROF-001",
+                "experienceLevelId": "EXP-02",
+                "hireDate": "2022-01-10",
+                "presentation": "J'aime donner vie aux interfaces avec de la créativité, de l'énergie et une bonne dose
+                d'interactivité. Je travaille avec les technologies frontend modernes et j'aime expérimenter de
+                nouvelles façons de rendre les applications plus agréables à utiliser. Je crois qu'une interface doit
+                être efficace, mais qu'elle peut aussi avoir du caractère. Mes animations font parfois des étincelles,
+                mais promis, je maîtrise le spectacle !",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-002",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-003",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-014",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-015",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-016",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-017",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-018",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-025",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-034",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-013",
+                "adIdentifier": "prasputin",
+                "firstName": "Piotr",
+                "lastName": "Rasputin",
+                "email": "piotr.rasputin@alltech.fr",
+                "agencyId": "AG-003",
+                "professionId": "PROF-020",
+                "experienceLevelId": "EXP-03",
+                "hireDate": "2016-04-11",
+                "presentation": "Je suis spécialisé dans l'administration des systèmes et la gestion des
+                infrastructures. J'aime construire des environnements fiables, assurer leur stabilité et résoudre les
+                problèmes techniques avec méthode. Je privilégie les solutions robustes et durables, capables de
+                résister aux situations les plus exigeantes. On dit parfois que je suis solide comme un roc… dans mon
+                métier, c'est plutôt un compliment !",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-123",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-124",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-127",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-139",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-140",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-142",
+                "customName": null,
+                "expertise": false,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-143",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-014",
+                "adIdentifier": "bdrake",
+                "firstName": "Bobby",
+                "lastName": "Drake",
+                "email": "bobby.drake@alltech.fr",
+                "agencyId": "AG-004",
+                "professionId": "PROF-015",
+                "experienceLevelId": "EXP-03",
+                "hireDate": "2019-06-17",
+                "presentation": "Je travaille sur les infrastructures Cloud et les pratiques DevOps, avec un intérêt
+                particulier pour l'automatisation, la conteneurisation et la fiabilité des environnements. J'aime
+                simplifier les déploiements, améliorer la supervision et aider les équipes à travailler dans des
+                conditions stables. Je garde toujours la tête froide face aux incidents, même lorsque la température
+                monte dans les environnements de production !",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-093",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-094",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-095",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-102",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-103",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-105",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-106",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-015",
+                "adIdentifier": "worthington",
+                "firstName": "Warren",
+                "lastName": "Worthington III",
+                "email": "warren.worthington@alltech.fr",
+                "agencyId": "AG-005",
+                "professionId": "PROF-030",
+                "experienceLevelId": "EXP-03",
+                "hireDate": "2017-09-18",
+                "presentation": "J'aime accompagner les projets de leur lancement jusqu'à leur réussite, en veillant à
+                la coordination des équipes, à la maîtrise des délais et à la qualité des livrables. Je suis convaincu
+                qu'un bon chef de projet doit savoir prendre de la hauteur, anticiper les difficultés et donner à chacun
+                les moyens de progresser. J'aime aider les équipes à prendre leur envol et faire en sorte que chaque
+                projet puisse atteindre de nouveaux sommets.",
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": true,
+                "searchable": true,
+                "competences": [
+                {
+                "competenceId": "COMP-199",
+                "customName": null,
+                "expertise": true,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-202",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-212",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-214",
+                "customName": null,
+                "expertise": true,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-216",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-217",
+                "customName": null,
+                "expertise": false,
+                "solicitable": true,
+                "source": "CATALOG"
+                },
+                {
+                "competenceId": "COMP-219",
+                "customName": null,
+                "expertise": false,
+                "solicitable": false,
+                "source": "CATALOG"
+                }
+                ],
+                "roleIds": ["ROLE-01"]
+                },
+                {
+                "_id": "COL-016",
+                "adIdentifier": "cassidy",
+                "firstName": "Sean",
+                "lastName": "Cassidy",
+                "email": "sean.cassidy@alltech.fr",
+                "agencyId": "AG-005",
+                "professionId": null,
+                "experienceLevelId": "EXP-01",
+                "hireDate": "2026-11-18",
+                "presentation": null,
+                "photoUrl": null,
+                "profileStatus": "ACTIVE",
+                "onboardingCompleted": false,
+                "searchable": false,
+                "competences": [],
+                "roleIds": ["ROLE-01"]
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+            http://www.liquibase.org/xml/ns/mongodb
+            http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="028-insert-systems-network-competences" author="eca">
+        <mongodb:insertMany collectionName="competences">
+            <mongodb:documents>
+                [
+                {
+                "_id": "COMP-123",
+                "name": "Administration Linux",
+                "description": "Installation, configuration, administration et maintenance de systèmes d'exploitation
+                Linux.",
+                "active": true
+                },
+                {
+                "_id": "COMP-124",
+                "name": "Administration Windows Server",
+                "description": "Installation, configuration et administration de serveurs fonctionnant sous Windows
+                Server.",
+                "active": true
+                },
+                {
+                "_id": "COMP-125",
+                "name": "Administration Active Directory",
+                "description": "Gestion des domaines, utilisateurs, groupes, stratégies et ressources dans un
+                environnement Microsoft Active Directory.",
+                "active": true
+                },
+                {
+                "_id": "COMP-126",
+                "name": "Administration Microsoft Entra ID",
+                "description": "Gestion des identités, utilisateurs, groupes, applications et politiques d'accès avec
+                Microsoft Entra ID.",
+                "active": true
+                },
+                {
+                "_id": "COMP-127",
+                "name": "Administration des serveurs",
+                "description": "Installation, configuration, exploitation et maintenance de serveurs physiques ou
+                virtuels.",
+                "active": true
+                },
+                {
+                "_id": "COMP-128",
+                "name": "Administration des postes de travail",
+                "description": "Configuration, maintenance et gestion des postes de travail et équipements informatiques
+                des utilisateurs.",
+                "active": true
+                },
+                {
+                "_id": "COMP-129",
+                "name": "Administration réseau",
+                "description": "Configuration, exploitation, maintenance et sécurisation des infrastructures réseau.",
+                "active": true
+                },
+                {
+                "_id": "COMP-130",
+                "name": "Architecture réseau",
+                "description": "Conception et organisation des infrastructures réseau, de leurs composants et de leurs
+                interconnexions.",
+                "active": true
+                },
+                {
+                "_id": "COMP-131",
+                "name": "Configuration des routeurs",
+                "description": "Configuration et administration des routeurs, du routage et des interconnexions
+                réseau.",
+                "active": true
+                },
+                {
+                "_id": "COMP-132",
+                "name": "Configuration des commutateurs",
+                "description": "Configuration et administration des commutateurs réseau et de leurs fonctionnalités.",
+                "active": true
+                },
+                {
+                "_id": "COMP-133",
+                "name": "Gestion des VLAN",
+                "description": "Conception, configuration et administration de réseaux locaux virtuels pour segmenter
+                les infrastructures réseau.",
+                "active": true
+                },
+                {
+                "_id": "COMP-134",
+                "name": "TCP/IP",
+                "description": "Maîtrise de la suite de protocoles TCP/IP et de son utilisation dans les communications
+                réseau.",
+                "active": true
+                },
+                {
+                "_id": "COMP-135",
+                "name": "DNS",
+                "description": "Configuration, administration et dépannage des services de résolution de noms DNS.",
+                "active": true
+                },
+                {
+                "_id": "COMP-136",
+                "name": "DHCP",
+                "description": "Configuration et administration des services d'attribution dynamique des paramètres
+                réseau avec DHCP.",
+                "active": true
+                },
+                {
+                "_id": "COMP-137",
+                "name": "VPN",
+                "description": "Configuration et administration de réseaux privés virtuels permettant des connexions
+                sécurisées à distance ou entre sites.",
+                "active": true
+                },
+                {
+                "_id": "COMP-138",
+                "name": "Gestion des pare-feu",
+                "description": "Configuration et administration de pare-feu, de règles de filtrage et de politiques de
+                sécurité réseau.",
+                "active": true
+                },
+                {
+                "_id": "COMP-139",
+                "name": "Virtualisation",
+                "description": "Mise en œuvre et administration de machines virtuelles et d'environnements
+                virtualisés.",
+                "active": true
+                },
+                {
+                "_id": "COMP-140",
+                "name": "VMware",
+                "description": "Déploiement, configuration et administration de solutions de virtualisation VMware.",
+                "active": true
+                },
+                {
+                "_id": "COMP-141",
+                "name": "Hyper-V",
+                "description": "Déploiement, configuration et administration de la plateforme de virtualisation
+                Microsoft Hyper-V.",
+                "active": true
+                },
+                {
+                "_id": "COMP-142",
+                "name": "Stockage et sauvegarde",
+                "description": "Gestion des solutions de stockage, des politiques de sauvegarde et des procédures de
+                restauration des données.",
+                "active": true
+                },
+                {
+                "_id": "COMP-143",
+                "name": "Gestion des infrastructures",
+                "description": "Administration, maintenance et évolution des infrastructures matérielles, systèmes et
+                réseau.",
+                "active": true
+                },
+                {
+                "_id": "COMP-144",
+                "name": "Supervision réseau",
+                "description": "Surveillance de la disponibilité, des performances et de l'état des équipements et
+                services réseau.",
+                "active": true
+                },
+                {
+                "_id": "COMP-145",
+                "name": "Gestion des incidents système",
+                "description": "Diagnostic, résolution et suivi des incidents affectant les systèmes et infrastructures
+                informatiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-146",
+                "name": "Gestion des performances système",
+                "description": "Analyse, surveillance et optimisation des performances des systèmes et infrastructures
+                informatiques.",
+                "active": true
+                },
+                {
+                "_id": "COMP-147",
+                "name": "Automatisation système avec PowerShell",
+                "description": "Automatisation des tâches d'administration et de gestion des systèmes avec PowerShell.",
+                "active": true
+                },
+                {
+                "_id": "COMP-148",
+                "name": "Scripting Bash",
+                "description": "Création de scripts Bash pour automatiser les tâches d'administration et les traitements
+                sous Linux et Unix.",
+                "active": true
+                }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

@@ -5,8 +5,186 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
+    <!-- Structure de la base de données -->
     <include file="db/changelog/changes/001-create-collections.xml"/>
 
+    <!-- Index -->
+    <include file="db/changelog/changes/002-create-indexes.xml"/>
+
+    <!-- Données initiales du référentiel -->
+
+    <!-- Catégories de métiers -->
+    <include file="db/changelog/data/001-insert-profession-categories.xml"/>
+
+    <!-- Métiers -->
+    <include file="db/changelog/data/002-insert-professions.xml"/>
+
+    <!-- Agences -->
+    <include file="db/changelog/data/003-insert-agencies.xml"/>
+
+    <!-- Niveaux d'expérience -->
+    <include file="db/changelog/data/004-insert-experience-levels.xml"/>
+
+    <!-- Rôles -->
+    <include file="db/changelog/data/005-insert-roles.xml"/>
+
+    <!-- Domaines de compétences -->
+    <include file="db/changelog/data/006-insert-domains.xml"/>
+
+    <!-- Compétences en développement -->
+    <include file="db/changelog/data/007-insert-development-competences.xml"/>
+
+    <!-- Compétences en architecture -->
+    <include file="db/changelog/data/008-insert-architecture-competences.xml"/>
+
+    <!-- Compétences en données et intelligence artificielle -->
+    <include file="db/changelog/data/009-insert-data-ai-competences.xml"/>
+
+    <!-- Compétences en Cloud et DevOps -->
+    <include file="db/changelog/data/010-insert-cloud-devops-competences.xml"/>
+
+    <!-- Compétences en systèmes et réseaux -->
+    <include file="db/changelog/data/011-insert-systems-network-competences.xml"/>
+
+    <!-- Compétences en cybersécurité -->
+    <include file="db/changelog/data/012-insert-cybersecurity-competences.xml"/>
+
+    <!-- Compétences en qualité et tests -->
+    <include file="db/changelog/data/013-insert-quality-testing-competences.xml"/>
+
+    <!-- Compétences en gestion de projets et produits -->
+    <include file="db/changelog/data/014-insert-project-product-competences.xml"/>
+
+    <!-- Compétences en transformation numérique -->
+    <include file="db/changelog/data/015-insert-digital-transformation-competences.xml"/>
+
+    <!-- Compétences en UX et UI Design -->
+    <include file="db/changelog/data/016-insert-ux-ui-design-competences.xml"/>
+
+    <!-- Compétences en support et exploitation -->
+    <include file="db/changelog/data/017-insert-support-opperations-competences.xml"/>
+
+    <!-- Compétences en solutions ERP et métiers -->
+    <include file="db/changelog/data/018-insert-erp-business-solutions-competences.xml"/>
+
+    <!-- Compétences en vente et développement commercial -->
+    <include file="db/changelog/data/019-insert-sales-business-development-competences.xml"/>
+
+    <!-- Compétences en management et leadership -->
+    <include file="db/changelog/data/020-insert-managemenet-leadership-competences.xml"/>
+
+    <!-- Compétences des fonctions support -->
+    <include file="db/changelog/data/021-insert-support-functions-competences.xml"/>
+
+    <!-- Associations entre compétences et domaines : développement -->
+    <include file="db/changelog/data/022-insert-development-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : architecture -->
+    <include file="db/changelog/data/023-insert-architecture-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : données et intelligence artificielle -->
+    <include file="db/changelog/data/024-insert-data-ai-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : Cloud et DevOps -->
+    <include file="db/changelog/data/025-insert-cloud-devops-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : systèmes et réseaux -->
+    <include file="db/changelog/data/026-insert-systems-network-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : cybersécurité -->
+    <include file="db/changelog/data/027-insert-cybersecurity-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : qualité et tests -->
+    <include file="db/changelog/data/028-insert-quality-testing-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : gestion de projets et produits -->
+    <include file="db/changelog/data/029-insert-project-product-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : transformation numérique -->
+    <include file="db/changelog/data/030-insert-digital-transformation-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : UX et UI -->
+    <include file="db/changelog/data/031-insert-ux-ui-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : support et exploitation -->
+    <include file="db/changelog/data/032-insert-support-operations-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : solutions ERP et métiers -->
+    <include file="db/changelog/data/033-insert-erp-business-solutions-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : vente et développement commercial -->
+    <include file="db/changelog/data/034-insert-sales-business-development-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : management et leadership -->
+    <include file="db/changelog/data/035-insert-management-leadership-competence-domains.xml"/>
+
+    <!-- Associations entre compétences et domaines : fonctions support -->
+    <include file="db/changelog/data/036-insert-support-functions-competence-domains.xml"/>
+
+    <!-- Associations entre métiers et compétences : développement -->
+    <include file="db/changelog/data/037-insert-development-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : architecture -->
+    <include file="db/changelog/data/038-insert-architecture-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : données et intelligence artificielle -->
+    <include file="db/changelog/data/039-insert-data-ai-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : Cloud et DevOps -->
+    <include file="db/changelog/data/040-insert-cloud-devops-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : systèmes et réseaux -->
+    <include file="db/changelog/data/041-insert-systems-network-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : cybersécurité -->
+    <include file="db/changelog/data/042-insert-cybersecurity-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : qualité et tests -->
+    <include file="db/changelog/data/043-insert-quality-testing-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : gestion de projets et produits -->
+    <include file="db/changelog/data/044-insert-project-product-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : transformation numérique -->
+    <include file="db/changelog/data/045-insert-digital-transformation-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : UX et UI Design -->
+    <include file="db/changelog/data/046-insert-ux-ui-design-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : support et exploitation -->
+    <include file="db/changelog/data/047-insert-support-operations-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : solutions ERP et métiers -->
+    <include file="db/changelog/data/048-insert-erp-business-solutions-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : vente et développement commercial -->
+    <include file="db/changelog/data/049-insert-sales-business-development-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : management et leadership -->
+    <include file="db/changelog/data/050-insert-management-leadership-profession-competences.xml"/>
+
+    <!-- Associations entre métiers et compétences : fonctions support -->
+    <include file="db/changelog/data/051-insert-support-functions-profession-competences.xml"/>
+
+    <!-- Catégories d'outils -->
+    <include file="db/changelog/data/052-insert-tool-categories.xml"/>
+
+    <!-- Outils -->
+    <include file="db/changelog/data/053-insert-tools.xml"/>
+
+    <!-- Clients -->
+    <include file="db/changelog/data/054-insert-clients.xml"/>
+
+    <!-- Missions -->
+    <include file="db/changelog/data/055-insert-missions.xml"/>
+
+    <!-- Collaborateurs -->
+    <include file="db/changelog/data/056-insert-collaborators.xml"/>
+
+    <!-- Affectations des collaborateurs aux missions -->
+    <include file="db/changelog/data/057-insert-collaborator-missions.xml"/>
+
+    <!-- Notifications -->
+    <include file="db/changelog/data/058-insert-notifications.xml"/>
+
 </databaseChangeLog>
-
-

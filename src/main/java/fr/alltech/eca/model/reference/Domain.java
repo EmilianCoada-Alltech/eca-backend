@@ -4,6 +4,9 @@ package fr.alltech.eca.model.reference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Représente un domaine du référentiel ECA.
+ */
 @Document(collection = "domains")
 public class Domain {
 

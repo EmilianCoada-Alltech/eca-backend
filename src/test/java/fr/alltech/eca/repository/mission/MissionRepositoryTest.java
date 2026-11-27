@@ -11,20 +11,33 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Tests d'intégration du repository Mission.
+ * Vérifie la persistance et la récupération des missions
+ * ainsi que la conservation de leurs informations dans MongoDB.
+ */
 @DataMongoTest
 class MissionRepositoryTest {
 
     @Autowired
     private MissionRepository missionRepository;
 
+    /**
+     * Supprime les données de la collection après chaque test
+     * afin d'éviter toute interférence entre les exécutions.
+     */
     @AfterEach
     void cleanUp() {
         missionRepository.deleteAll();
     }
 
+    /**
+     * Vérifie qu'une mission peut être enregistrée puis récupérée
+     * avec ses informations, ses dates et son statut de visibilité.
+     */
     @Test
     void shouldSaveAndRetrieveMission() {
-        // Arrange: create a mission
+        // Préparation : crée une mission associée à un client existant.
         Mission mission = new Mission(
                 "ECA Backend Development",
                 "client-123",
@@ -34,27 +47,33 @@ class MissionRepositoryTest {
                 true
         );
 
-        // Act: save the mission
+        // Exécution : enregistre la mission dans MongoDB.
         Mission savedMission = missionRepository.save(mission);
 
-        // Retrieve the saved mission
+        // Récupération : recherche la mission enregistrée à partir de son identifiant.
         Optional<Mission> result =
                 missionRepository.findById(savedMission.getId());
 
-        // Assert: verify the result
+        // Vérification : confirme que l'enregistrement possède un identifiant
+        // et que le repository retourne bien la mission.
         assertThat(savedMission.getId()).isNotNull();
         assertThat(result).isPresent();
 
         Mission retrievedMission = result.orElseThrow();
 
+        // Vérification : contrôle les informations générales de la mission.
         assertThat(retrievedMission.getName())
                 .isEqualTo("ECA Backend Development");
         assertThat(retrievedMission.getClientId())
                 .isEqualTo("client-123");
+
+        // Vérification : contrôle les dates de début et de fin.
         assertThat(retrievedMission.getStartDate())
                 .isEqualTo(LocalDate.of(2026, 11, 23));
         assertThat(retrievedMission.getEndDate())
                 .isEqualTo(LocalDate.of(2027, 1, 15));
+
+        // Vérification : contrôle la description et le statut de visibilité.
         assertThat(retrievedMission.getDescription())
                 .isEqualTo("Development of the ECA backend application");
         assertThat(retrievedMission.isVisible()).isTrue();
