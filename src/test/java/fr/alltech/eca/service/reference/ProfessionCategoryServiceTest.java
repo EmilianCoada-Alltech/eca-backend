@@ -51,7 +51,9 @@ class ProfessionCategoryServiceTest {
         // Préparation : crée une catégorie qui sera retournée par le repository.
         ProfessionCategory category = new ProfessionCategory(
                 "Development",
-                "Groups professions related to software development."
+                "Groups professions related to software development.",
+                true
+
         );
 
         // Simulation : configure le repository pour retourner cette catégorie.

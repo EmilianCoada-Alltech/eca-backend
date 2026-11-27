@@ -45,6 +45,12 @@ public class ProfessionController {
         return professionService.getAllProfessions();
     }
 
+
+    @GetMapping("/inactive")
+    public List<ProfessionResponse> getAllInactiveProfessions() {
+        return professionService.getAllInactiveProfessions();
+    }
+
     /**
      * GET /api/references/professions/{id}
      * <p>

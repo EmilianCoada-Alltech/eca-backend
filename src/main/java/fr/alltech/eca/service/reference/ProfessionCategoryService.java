@@ -30,7 +30,27 @@ public class ProfessionCategoryService {
      * @return la liste des catégories de métiers
      */
     public List<ProfessionCategoryResponse> getAllProfessionCategories() {
+        System.out.println("ALL: " + professionCategoryRepository.findAll().size());
+        System.out.println("ACTIVE: " + professionCategoryRepository.findByActiveTrue().size());
+        System.out.println("INACTIVE: " + professionCategoryRepository.findByActiveFalse().size());
         return professionCategoryRepository.findAll()
+                .stream()
+                .map(professionCategoryMapper::toResponse)
+                .toList();
+    }
+
+    public List<ProfessionCategoryResponse> getAllActiveProfessionCategories() {
+        System.out.println("ALL: " + professionCategoryRepository.findAll().size());
+        System.out.println("ACTIVE: " + professionCategoryRepository.findByActiveTrue().size());
+        System.out.println("INACTIVE: " + professionCategoryRepository.findByActiveFalse().size());
+        return professionCategoryRepository.findByActiveTrue()
+                .stream()
+                .map(professionCategoryMapper::toResponse)
+                .toList();
+    }
+
+    public List<ProfessionCategoryResponse> getAllInactiveProfessionCategories() {
+        return professionCategoryRepository.findByActiveFalse()
                 .stream()
                 .map(professionCategoryMapper::toResponse)
                 .toList();

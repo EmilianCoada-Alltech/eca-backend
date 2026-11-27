@@ -72,6 +72,13 @@ public class ProfessionService {
                 .toList();
     }
 
+    public List<ProfessionResponse> getAllInactiveProfessions() {
+        return professionRepository.findByActiveFalse()
+                .stream()
+                .map(professionMapper::toResponse)
+                .toList();
+    }
+
     /**
      * Recherche un métier à partir de son identifiant.
      *

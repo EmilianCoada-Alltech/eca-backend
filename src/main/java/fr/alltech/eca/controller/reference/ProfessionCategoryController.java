@@ -30,8 +30,18 @@ public class ProfessionCategoryController {
      *
      * @return la liste des catégories de métiers
      */
-    @GetMapping
+    @GetMapping("/all")
     public List<ProfessionCategoryResponse> getAllProfessionCategories() {
         return professionCategoryService.getAllProfessionCategories();
+    }
+
+    @GetMapping("/active")
+    public List<ProfessionCategoryResponse> getAllActiveProfessionCategories() {
+        return professionCategoryService.getAllActiveProfessionCategories();
+    }
+
+    @GetMapping("/inactive")
+    public List<ProfessionCategoryResponse> getAllInactiveProfessionCategories() {
+        return professionCategoryService.getAllInactiveProfessionCategories();
     }
 }

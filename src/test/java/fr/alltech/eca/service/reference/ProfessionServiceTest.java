@@ -240,7 +240,8 @@ class ProfessionServiceTest {
         // Préparation : crée la catégorie à laquelle la profession sera associée.
         ProfessionCategory category = new ProfessionCategory(
                 "IT",
-                "Information technology"
+                "Information technology",
+                true
         );
 
         category.setId("CAT-001");
@@ -366,7 +367,8 @@ class ProfessionServiceTest {
         // Préparation : crée la nouvelle catégorie associée à la profession.
         ProfessionCategory category = new ProfessionCategory(
                 "Development",
-                "Development professions"
+                "Development professions",
+                true
         );
         category.setId("CAT-002");
 
@@ -442,7 +444,8 @@ class ProfessionServiceTest {
         // Préparation : crée la catégorie associée à la profession.
         ProfessionCategory category = new ProfessionCategory(
                 "IT",
-                "Information technology"
+                "Information technology",
+                true
         );
 
         // Simulation : configure la récupération de la profession et de sa catégorie.
@@ -504,7 +507,8 @@ class ProfessionServiceTest {
         // Préparation : crée la catégorie associée à la profession.
         ProfessionCategory category = new ProfessionCategory(
                 "IT",
-                "Information technology"
+                "Information technology",
+                true
         );
 
         // Simulation : configure la récupération de la profession et de sa catégorie.

@@ -6,10 +6,12 @@ package fr.alltech.eca.dto.reference;
  * @param id          identifiant de la catégorie
  * @param name        nom de la catégorie
  * @param description description de la catégorie
+ * @param active      indique si la catégorie est active
  */
 public record ProfessionCategoryResponse(
         String id,
         String name,
-        String description
+        String description,
+        boolean active
 ) {
 }

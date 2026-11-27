@@ -38,7 +38,8 @@ class ProfessionCategoryControllerTest {
         ProfessionCategoryResponse category = new ProfessionCategoryResponse(
                 "CAT-01",
                 "Development",
-                "Groups professions related to software development."
+                "Groups professions related to software development.",
+                true
         );
 
         // Simule le retour du service avec une catégorie de métier.

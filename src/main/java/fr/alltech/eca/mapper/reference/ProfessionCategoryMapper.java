@@ -20,7 +20,8 @@ public class ProfessionCategoryMapper {
         return new ProfessionCategoryResponse(
                 category.getId(),
                 category.getName(),
-                category.getDescription()
+                category.getDescription(),
+                category.isActive()
         );
     }
 }
