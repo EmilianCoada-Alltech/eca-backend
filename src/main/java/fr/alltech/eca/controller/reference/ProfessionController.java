@@ -48,4 +48,10 @@ public class ProfessionController {
     ) {
         return professionService.updateProfession(id, request);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deactivateProfession(@PathVariable String id) {
+        professionService.deactivateProfession(id);
+    }
 }

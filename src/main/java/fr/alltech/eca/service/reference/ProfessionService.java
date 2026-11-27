@@ -174,4 +174,37 @@ public class ProfessionService {
 
         return professionMapper.toResponse(updatedProfession);
     }
+
+    public void deactivateProfession(String id) {
+
+        Profession profession = professionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Profession not found with id: " + id
+                ));
+
+        // Do nothing if the profession is already inactive.
+        if (!profession.isActive()) {
+            return;
+        }
+
+        LocalDateTime changedAt = LocalDateTime.now();
+
+        AuditLog auditLog = new AuditLog(
+                null,
+                "PROFESSION",
+                id,
+                "active",
+                "true",
+                "false",
+                "ADMIN",
+                changedAt,
+                "DELETE"
+        );
+
+        profession.setActive(false);
+
+        professionRepository.save(profession);
+        auditLogRepository.save(auditLog);
+    }
 }
