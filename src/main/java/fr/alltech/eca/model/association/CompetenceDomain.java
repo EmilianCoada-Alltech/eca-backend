@@ -3,6 +3,9 @@ package fr.alltech.eca.model.association;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Représente l'association entre une compétence et un domaine.
+ */
 @Document(collection = "competence_domains")
 public class CompetenceDomain {
 

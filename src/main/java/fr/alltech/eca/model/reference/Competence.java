@@ -4,6 +4,9 @@ package fr.alltech.eca.model.reference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Représente une compétence du référentiel ECA.
+ */
 @Document(collection = "competences")
 public class Competence {
 

@@ -3,6 +3,10 @@ package fr.alltech.eca.model.reference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Représente un métier du référentiel ECA,
+ * associé à une catégorie et disposant d'un statut d'activité.
+ */
 @Document(collection = "professions")
 public class Profession {
 

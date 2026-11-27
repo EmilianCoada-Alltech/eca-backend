@@ -5,7 +5,15 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
+/**
+ * Fournit les opérations d'accès aux données des métiers.
+ */
 public interface ProfessionRepository extends MongoRepository<Profession, String> {
 
+    /**
+     * Récupère uniquement les métiers actifs.
+     *
+     * @return la liste des métiers actifs
+     */
     List<Profession> findByActiveTrue();
 }

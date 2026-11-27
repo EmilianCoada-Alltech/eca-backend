@@ -1,4 +1,3 @@
-
 package fr.alltech.eca.integration;
 
 import com.mongodb.client.MongoClient;
@@ -14,6 +13,11 @@ import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Test d'intégration de compatibilité entre Liquibase et MongoDB.
+ * Vérifie que l'extension MongoDB de Liquibase permet d'exécuter un changelog
+ * et de créer correctement une collection.
+ */
 class LiquibaseCompatibilityTest {
 
     private static final String MONGO_URL =
@@ -21,10 +25,16 @@ class LiquibaseCompatibilityTest {
 
     private static final String COLLECTION_NAME = "liquibase_probe";
 
+    /**
+     * Vérifie que Liquibase peut créer une collection MongoDB
+     * à partir d'un changelog dédié.
+     *
+     * @throws Exception en cas d'erreur de connexion ou d'exécution du changelog
+     */
     @Test
     void shouldCreateCollectionUsingLiquibase() throws Exception {
 
-        // Open a connection through the Liquibase MongoDB extension.
+        // Connexion à MongoDB via l'extension Liquibase dédiée à MongoDB.
         try (Database database = DatabaseFactory.getInstance()
                 .openDatabase(
                         MONGO_URL,
@@ -34,7 +44,8 @@ class LiquibaseCompatibilityTest {
                         null
                 )) {
 
-            // Load and execute the changelog.
+            // Charge et exécute le changelog de test pour appliquer
+            // les modifications de structure à la base de données.
             try (Liquibase liquibase = new Liquibase(
                     "liquibase/test-changelog.xml",
                     new ClassLoaderResourceAccessor(),
@@ -44,12 +55,15 @@ class LiquibaseCompatibilityTest {
             }
         }
 
-        // Verify independently that the collection was created.
+        // Vérification indépendante de la création de la collection :
+        // utilise le pilote MongoDB directement, sans passer par Liquibase.
         try (MongoClient mongoClient = MongoClients.create(MONGO_URL)) {
 
             MongoDatabase mongoDatabase =
                     mongoClient.getDatabase("liquibase_test");
 
+            // Récupère les noms des collections présentes dans la base
+            // et vérifie que la collection attendue figure dans la liste.
             boolean collectionExists = mongoDatabase
                     .listCollectionNames()
                     .into(new ArrayList<>())

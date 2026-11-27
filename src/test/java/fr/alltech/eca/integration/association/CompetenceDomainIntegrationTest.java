@@ -15,6 +15,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Tests d'intégration de l'association entre une compétence et un domaine.
+ * Vérifie la persistance de l'association ainsi que la récupération
+ * des documents auxquels elle fait référence.
+ */
 @DataMongoTest
 class CompetenceDomainIntegrationTest {
 
@@ -27,10 +32,14 @@ class CompetenceDomainIntegrationTest {
     @Autowired
     private CompetenceDomainRepository competenceDomainRepository;
 
+    /**
+     * Vérifie qu'une compétence peut être associée à un domaine
+     * et que les documents liés restent accessibles à partir de leurs identifiants.
+     */
     @Test
     void shouldAssociateCompetenceWithDomain() {
 
-        // Arrange: create and save a competence
+        // Préparation : crée et enregistre une compétence.
         Competence competence = new Competence(
                 "Spring Boot",
                 "Java framework for building applications",
@@ -39,7 +48,7 @@ class CompetenceDomainIntegrationTest {
 
         Competence savedCompetence = competenceRepository.save(competence);
 
-        // Arrange: create and save a domain
+        // Préparation : crée et enregistre un domaine.
         Domain domain = new Domain(
                 "Backend Development",
                 "Competences related to backend development",
@@ -48,7 +57,8 @@ class CompetenceDomainIntegrationTest {
 
         Domain savedDomain = domainRepository.save(domain);
 
-        // Arrange: create the association
+        // Préparation : crée l'association à partir des identifiants
+        // des deux documents précédemment enregistrés.
         CompetenceDomain association = new CompetenceDomain(
                 savedCompetence.getId(),
                 savedDomain.getId()
@@ -57,39 +67,45 @@ class CompetenceDomainIntegrationTest {
         CompetenceDomain savedAssociation =
                 competenceDomainRepository.save(association);
 
-        // Act: retrieve the association
+        // Exécution : récupère l'association à partir de son identifiant.
         Optional<CompetenceDomain> retrievedAssociation =
                 competenceDomainRepository.findById(savedAssociation.getId());
 
-        // Assert: verify the association
+        // Vérification : confirme que l'association a bien été enregistrée.
         assertThat(retrievedAssociation).isPresent();
 
         CompetenceDomain foundAssociation = retrievedAssociation.orElseThrow();
 
+        // Vérifie que l'association référence les bons identifiants.
         assertThat(foundAssociation.getCompetenceId())
                 .isEqualTo(savedCompetence.getId());
 
         assertThat(foundAssociation.getDomainId())
                 .isEqualTo(savedDomain.getId());
 
-        // Act: retrieve the referenced documents
+        // Exécution : récupère les documents référencés par l'association.
         Optional<Competence> retrievedCompetence =
                 competenceRepository.findById(foundAssociation.getCompetenceId());
 
         Optional<Domain> retrievedDomain =
                 domainRepository.findById(foundAssociation.getDomainId());
 
-        // Assert: verify the referenced documents
+        // Vérification : confirme que les deux documents sont accessibles.
         assertThat(retrievedCompetence).isPresent();
         assertThat(retrievedDomain).isPresent();
 
         Competence foundCompetence = retrievedCompetence.orElseThrow();
         Domain foundDomain = retrievedDomain.orElseThrow();
 
+        // Vérifie que les documents récupérés correspondent aux données initiales.
         assertThat(foundCompetence.getName()).isEqualTo("Spring Boot");
         assertThat(foundDomain.getName()).isEqualTo("Backend Development");
     }
 
+    /**
+     * Nettoie les collections utilisées par le test après chaque exécution
+     * afin d'éviter que les données persistent entre les tests.
+     */
     @AfterEach
     void cleanUp() {
         competenceDomainRepository.deleteAll();

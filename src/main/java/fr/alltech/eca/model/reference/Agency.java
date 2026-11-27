@@ -3,6 +3,9 @@ package fr.alltech.eca.model.reference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Représente une agence de l'entreprise et ses coordonnées.
+ */
 @Document(collection = "agencies")
 public class Agency {
 

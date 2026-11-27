@@ -6,6 +6,10 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertCallback;
 import org.springframework.stereotype.Component;
 
+/**
+ * Valide les données d'un collaborateur avant leur conversion
+ * en document MongoDB.
+ */
 @Component
 public class CollaboratorValidationCallback
         implements BeforeConvertCallback<Collaborator> {

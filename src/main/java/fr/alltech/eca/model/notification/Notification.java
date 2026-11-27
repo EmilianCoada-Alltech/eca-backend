@@ -6,6 +6,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+/**
+ * Représente une notification destinée à un collaborateur,
+ * avec son contenu, son lien éventuel et son statut de lecture.
+ */
 @Document(collection = "notifications")
 public class Notification {
 

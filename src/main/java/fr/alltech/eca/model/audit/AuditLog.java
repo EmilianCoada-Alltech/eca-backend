@@ -6,6 +6,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+/**
+ * Représente une entrée du journal d'audit,
+ * enregistrant les modifications effectuées sur les données de l'application.
+ */
 @Document(collection = "audit_logs")
 public class AuditLog {
 

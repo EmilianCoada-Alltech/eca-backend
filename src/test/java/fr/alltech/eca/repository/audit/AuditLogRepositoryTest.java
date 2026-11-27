@@ -10,24 +10,39 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Tests d'intégration du repository AuditLog.
+ * Vérifie la persistance et la récupération des journaux d'audit
+ * ainsi que la conservation des informations relatives aux modifications.
+ */
 @DataMongoTest
 class AuditLogRepositoryTest {
 
     @Autowired
     private AuditLogRepository auditLogRepository;
 
+    /**
+     * Supprime les données de la collection après chaque test
+     * afin d'éviter toute interférence entre les exécutions.
+     */
     @AfterEach
     void cleanUp() {
         auditLogRepository.deleteAll();
     }
 
+    /**
+     * Vérifie qu'un journal d'audit peut être enregistré puis récupéré
+     * avec ses informations de modification intactes.
+     */
     @Test
     void shouldSaveAndRetrieveAuditLog() {
-        // Given
+        // Préparation : définit une date fixe pour rendre le test reproductible.
         LocalDateTime changedAt = LocalDateTime.of(
                 2026, 11, 25, 10, 30
         );
 
+        // Préparation : crée un journal décrivant une modification
+        // de la présentation d'un collaborateur.
         AuditLog auditLog = new AuditLog(
                 "audit-123",
                 "Collaborator",
@@ -40,12 +55,14 @@ class AuditLogRepositoryTest {
                 "CREATE"
         );
 
-        // When
+        // Exécution : enregistre le journal d'audit dans MongoDB.
         AuditLog savedAuditLog = auditLogRepository.save(auditLog);
 
-        // Then
+        // Vérification : confirme que l'identifiant a été conservé.
         assertThat(savedAuditLog.getId()).isEqualTo("audit-123");
 
+        // Récupération et vérification : recherche le journal par son identifiant
+        // et contrôle les différentes informations enregistrées.
         assertThat(auditLogRepository.findById("audit-123"))
                 .isPresent()
                 .get()

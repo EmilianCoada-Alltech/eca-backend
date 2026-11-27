@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Gère la consultation des catégories de métiers du référentiel ECA.
+ */
 @Service
 public class ProfessionCategoryService {
 
@@ -21,6 +24,11 @@ public class ProfessionCategoryService {
         this.professionCategoryMapper = professionCategoryMapper;
     }
 
+    /**
+     * Récupère toutes les catégories de métiers et les convertit en DTO de réponse.
+     *
+     * @return la liste des catégories de métiers
+     */
     public List<ProfessionCategoryResponse> getAllProfessionCategories() {
         return professionCategoryRepository.findAll()
                 .stream()

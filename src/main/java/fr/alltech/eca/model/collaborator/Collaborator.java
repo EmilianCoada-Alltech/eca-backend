@@ -8,6 +8,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Représente un collaborateur et les informations associées à son profil ECA.
+ */
 @Document(collection = "collaborators")
 public class Collaborator {
 
@@ -181,6 +184,11 @@ public class Collaborator {
         this.roleIds = roleIds != null ? roleIds : new ArrayList<>();
     }
 
+
+    /**
+     * Vérifie la validité des compétences déclarées et applique les limites
+     * de déclarations d'expertise et de compétences sollicitables.
+     */
     public void validate() {
         for (CompetenceDeclaration declaration : competences) {
             declaration.validate();
@@ -195,7 +203,7 @@ public class Collaborator {
                     "A collaborator cannot declare more than 3 areas of expertise."
             );
         }
-        
+
         long solicitableCount = competences.stream()
                 .filter(CompetenceDeclaration::isSolicitable)
                 .count();

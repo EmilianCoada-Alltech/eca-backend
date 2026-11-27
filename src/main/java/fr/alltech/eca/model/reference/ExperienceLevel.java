@@ -4,6 +4,9 @@ package fr.alltech.eca.model.reference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Représente un niveau d'expérience du référentiel ECA.
+ */
 @Document(collection = "experience_levels")
 public class ExperienceLevel {
 

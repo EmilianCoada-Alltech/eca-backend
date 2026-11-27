@@ -5,6 +5,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
+/**
+ * Représente l'affectation d'un collaborateur à une mission,
+ * avec ses dates de début et de fin.
+ */
 @Document(collection = "collaborator_missions")
 public class CollaboratorMission {
 

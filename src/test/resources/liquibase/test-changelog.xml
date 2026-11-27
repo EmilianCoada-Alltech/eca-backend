@@ -11,7 +11,7 @@
 
     <changeSet id="test-001" author="eca">
         <comment>
-            Verify Liquibase MongoDB integration by creating a test collection.
+            Vérifie l'intégration de Liquibase avec MongoDB en créant une collection de test.
         </comment>
 
         <mongodb:createCollection collectionName="liquibase_probe"/>

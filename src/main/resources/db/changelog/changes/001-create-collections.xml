@@ -9,12 +9,12 @@
             http://www.liquibase.org/xml/ns/mongodb
             http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
 
-    <!-- Collaborator domain -->
+    <!-- Collections liées aux collaborateurs et à leurs profils -->
     <changeSet id="001-create-collaborators" author="eca">
         <mongodb:createCollection collectionName="collaborators"/>
     </changeSet>
 
-    <!-- Reference data -->
+    <!-- Collections du référentiel : agences, compétences, métiers et domaines -->
     <changeSet id="002-create-agencies" author="eca">
         <mongodb:createCollection collectionName="agencies"/>
     </changeSet>
@@ -39,6 +39,7 @@
         <mongodb:createCollection collectionName="domains"/>
     </changeSet>
 
+    <!-- Collections gérant les associations entre les éléments du référentiel -->
     <changeSet id="008-create-competence-domains" author="eca">
         <mongodb:createCollection collectionName="competence_domains"/>
     </changeSet>
@@ -47,7 +48,7 @@
         <mongodb:createCollection collectionName="profession_competences"/>
     </changeSet>
 
-    <!-- Mission domain -->
+    <!-- Collections liées aux clients, missions et affectations des collaborateurs -->
     <changeSet id="010-create-clients" author="eca">
         <mongodb:createCollection collectionName="clients"/>
     </changeSet>
@@ -60,12 +61,12 @@
         <mongodb:createCollection collectionName="collaborator_missions"/>
     </changeSet>
 
-    <!-- Roles -->
+    <!-- Collection des rôles attribuables aux collaborateurs -->
     <changeSet id="013-create-roles" author="eca">
         <mongodb:createCollection collectionName="roles"/>
     </changeSet>
 
-    <!-- Tools -->
+    <!-- Collections du catalogue des outils et de leurs catégories -->
     <changeSet id="014-create-tools" author="eca">
         <mongodb:createCollection collectionName="tools"/>
     </changeSet>
@@ -74,7 +75,7 @@
         <mongodb:createCollection collectionName="tool_categories"/>
     </changeSet>
 
-    <!-- Audit and notifications -->
+    <!-- Collections dédiées à la traçabilité et aux notifications -->
     <changeSet id="016-create-audit-logs" author="eca">
         <mongodb:createCollection collectionName="audit_logs"/>
     </changeSet>

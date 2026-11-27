@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Expose les endpoints de consultation des catégories de métiers.
+ */
 @RestController
 @RequestMapping("/api/references/profession-categories")
 public class ProfessionCategoryController {
@@ -20,6 +23,13 @@ public class ProfessionCategoryController {
         this.professionCategoryService = professionCategoryService;
     }
 
+    /**
+     * GET /api/references/profession-categories
+     * <p>
+     * Récupère l'ensemble des catégories de métiers.
+     *
+     * @return la liste des catégories de métiers
+     */
     @GetMapping
     public List<ProfessionCategoryResponse> getAllProfessionCategories() {
         return professionCategoryService.getAllProfessionCategories();

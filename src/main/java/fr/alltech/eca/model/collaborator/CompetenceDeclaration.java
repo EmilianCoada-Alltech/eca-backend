@@ -1,12 +1,17 @@
 package fr.alltech.eca.model.collaborator;
 
+import fr.alltech.eca.common.enums.CompetenceSource;
+
+/**
+ * Représente une compétence déclarée par un collaborateur.
+ */
 public class CompetenceDeclaration {
 
     private String competenceId;
     private String customName;
     private boolean expertise;
     private boolean solicitable;
-    private String source;
+    private CompetenceSource source;
 
     public CompetenceDeclaration() {
     }
@@ -16,7 +21,7 @@ public class CompetenceDeclaration {
             String customName,
             boolean expertise,
             boolean solicitable,
-            String source
+            CompetenceSource source
     ) {
         this.competenceId = competenceId;
         this.customName = customName;
@@ -57,14 +62,18 @@ public class CompetenceDeclaration {
         this.solicitable = solicitable;
     }
 
-    public String getSource() {
+    public CompetenceSource getSource() {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setSource(CompetenceSource source) {
         this.source = source;
     }
 
+    /**
+     * Vérifie qu'une déclaration référence une compétence existante
+     * ou renseigne un nom personnalisé, mais jamais les deux simultanément.
+     */
     public void validate() {
         boolean hasCompetenceId =
                 competenceId != null && !competenceId.isBlank();

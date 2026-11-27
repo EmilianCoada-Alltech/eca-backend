@@ -11,20 +11,33 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Tests d'intégration du repository CollaboratorMission.
+ * Vérifie la persistance et la récupération des associations
+ * entre collaborateurs et missions dans MongoDB.
+ */
 @DataMongoTest
 class CollaboratorMissionRepositoryTest {
 
     @Autowired
     private CollaboratorMissionRepository collaboratorMissionRepository;
 
+    /**
+     * Supprime les données de la collection après chaque test
+     * afin d'éviter toute interférence entre les exécutions.
+     */
     @AfterEach
     void cleanUp() {
         collaboratorMissionRepository.deleteAll();
     }
 
+    /**
+     * Vérifie qu'une association entre un collaborateur et une mission
+     * peut être enregistrée puis récupérée avec ses informations intactes.
+     */
     @Test
     void shouldSaveAndRetrieveCollaboratorMission() {
-        // Arrange: create a collaborator-mission assignment
+        // Préparation : crée une affectation entre un collaborateur et une mission.
         CollaboratorMission collaboratorMission = new CollaboratorMission(
                 "collaborator-123",
                 "mission-456",
@@ -32,24 +45,28 @@ class CollaboratorMissionRepositoryTest {
                 null
         );
 
-        // Act: save the assignment
+        // Exécution : enregistre l'affectation dans MongoDB.
         CollaboratorMission savedCollaboratorMission =
                 collaboratorMissionRepository.save(collaboratorMission);
 
-        // Retrieve the saved assignment
+        // Récupération : recherche l'affectation enregistrée à partir de son identifiant.
         Optional<CollaboratorMission> result =
                 collaboratorMissionRepository.findById(savedCollaboratorMission.getId());
 
-        // Assert: verify the result
+        // Vérification : confirme que l'enregistrement possède un identifiant
+        // et que le repository retourne bien le document.
         assertThat(savedCollaboratorMission.getId()).isNotNull();
         assertThat(result).isPresent();
 
         CollaboratorMission retrievedCollaboratorMission = result.orElseThrow();
 
+        // Vérification : contrôle les références vers le collaborateur et la mission.
         assertThat(retrievedCollaboratorMission.getCollaboratorId())
                 .isEqualTo("collaborator-123");
         assertThat(retrievedCollaboratorMission.getMissionId())
                 .isEqualTo("mission-456");
+
+        // Vérification : contrôle les dates de début et de fin de l'affectation.
         assertThat(retrievedCollaboratorMission.getStartDate())
                 .isEqualTo(LocalDate.of(2026, 11, 23));
         assertThat(retrievedCollaboratorMission.getEndDate()).isNull();
