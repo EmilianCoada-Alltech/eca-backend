@@ -366,4 +366,44 @@ class ProfessionServiceTest {
                 .extracting(AuditLog::getAction)
                 .containsOnly("UPDATE");
     }
+
+    @Test
+    void shouldNotCreateAuditEntriesWhenNothingChanged() {
+        Profession profession = new Profession(
+                "Backend developer",
+                "Develops backend services.",
+                true,
+                "CAT-001"
+        );
+        profession.setId("PROF-001");
+
+        ProfessionRequest request = new ProfessionRequest(
+                "Backend developer",
+                "Develops backend services.",
+                "CAT-001"
+        );
+
+        ProfessionCategory category = new ProfessionCategory(
+                "IT",
+                "Information technology"
+        );
+
+        when(professionRepository.findById("PROF-001"))
+                .thenReturn(Optional.of(profession));
+
+        when(professionCategoryRepository.findById("CAT-001"))
+                .thenReturn(Optional.of(category));
+
+        when(professionRepository.save(any(Profession.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        ProfessionResponse result =
+                professionService.updateProfession("PROF-001", request);
+
+        assertThat(result.id()).isEqualTo("PROF-001");
+
+        verify(professionRepository).save(profession);
+
+        verify(auditLogRepository, never()).saveAll(anyList());
+    }
 }
